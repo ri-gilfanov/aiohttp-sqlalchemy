@@ -1,0 +1,63 @@
+# ===========================================================
+# Untracked file templates by Git version control system
+# Шаблоны файлов неотслеживаемых системой контроля версий Git
+# ===========================================================
+
+# Python programming language
+# Язык программирования Python
+# ============================
+
+# Python bytecode
+# Байт-код Python
+*.pyc
+
+# Python virtual environment
+# Виртуальное окружение Python
+.venv
+
+# Documentation generator Sphinx
+# Генератор документации Sphinx
+docs/_build
+
+# dependency and packaging manager Poetry
+# менеджер зависимостей и пакетирования Poetry
+dist
+*.egg-info
+
+# Checkers
+.mypy_cache
+
+
+# Database (DB)
+# Базы данных
+# =============
+*.sqlite3
+
+# Integrated Development Environment (IDE)
+# Интегрированные среды разработки
+# ========================================
+
+# Atom
+.atom/
+
+# Geany
+*.geany
+
+# JetBrains (AppCode, CLion, DataGrip, GoLand, IntelliJ IDEA, PhpStorm,
+# PyCharm, Rider, RubyMine, WebStorm)
+.idea/
+
+# Sublime Text
+*.sublime-*
+
+# Visual Studio Code
+.vscode
+*.code-workspace
+
+
+# Other text editors
+# Другие текстовые редакторы
+# ==========================
+
+# Nano
+*.swp
