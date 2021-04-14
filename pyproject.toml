@@ -13,6 +13,10 @@ classifiers = [
     "Topic :: Internet",
     "Topic :: Internet :: WWW/HTTP",
 ]
+documentation = "https://aiohttp-sqlalchemy.readthedocs.io/"
+homepage = "https://github.com/ri-gilfanov/aiohttp-sqlalchemy"
+keywords = ["aiohttp", "sqlalchemy"]
+license = "BSD-3-Clause"
 readme = "README.rst"
 repository = "https://github.com/ri-gilfanov/aiohttp-sqlalchemy"
 
@@ -22,6 +26,7 @@ aiohttp = "*"
 SQLAlchemy = "*"
 
 [tool.poetry.dev-dependencies]
+asyncpg = "*"
 aiosqlite = "*"
 mypy = "*"
 pytest = "*"
