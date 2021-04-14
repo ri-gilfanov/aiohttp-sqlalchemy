@@ -31,3 +31,9 @@ Example
    aiohttp_sqlalchemy.setup(app, [sa_engine('sqlite+aiosqlite:///')])
    app.add_routes(routes)
    web.run_app(app)
+
+Documentation
+-------------
+
+See: https://aiohttp-sqlalchemy.readthedocs.io/
+
