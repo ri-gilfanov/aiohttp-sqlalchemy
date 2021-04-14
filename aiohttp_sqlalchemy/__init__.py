@@ -11,7 +11,7 @@ if TYPE_CHECKING:
     from typing import Callable, Iterable, Tuple
 
 
-__version__ = '0.1a1'
+__version__ = '0.1a2'
 
 
 def sa_decorator(key: str = 'sa_main'):
