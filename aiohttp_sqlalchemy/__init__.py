@@ -6,12 +6,12 @@ from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from aiohttp.web import Application, Request, Response
+    from aiohttp.web import Application, Request, StreamResponse
     from sqlalchemy.ext.asyncio import AsyncEngine
     from typing import Callable, Iterable, Tuple
 
 
-__version__ = '0.1a1'
+__version__ = '0.1a3'
 
 
 def sa_decorator(key: str = 'sa_main'):
@@ -39,7 +39,7 @@ def sa_decorator(key: str = 'sa_main'):
 
 def sa_middleware(key: str = 'sa_main') -> 'Callable':
     @middleware
-    async def sa_middleware_(request: 'Request', handler: 'Callable') -> 'Response':
+    async def sa_middleware_(request: 'Request', handler: 'Callable') -> 'StreamResponse':
         async with AsyncSession(request.app[key]) as request[key]:
             return await handler(request)
     return sa_middleware_
