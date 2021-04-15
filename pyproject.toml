@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "aiohttp-sqlalchemy"
-version = "0.1a2"
+version = "0.1a3"
 description = "SQLAlchemy >= 1.4 support for aiohttp."
 authors = [
     "Ruslan Ilyasovich Gilfanov <ri.gilfanov@yandex.ru>",
