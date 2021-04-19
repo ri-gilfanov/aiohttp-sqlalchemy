@@ -19,16 +19,16 @@ def sa_decorator(key: str = 'sa_main'):
         @wraps(handler)
         async def wrapped(*args, **kwargs):
             # Class based view decorating
-            if issubclass(handler, AbstractView):
+            if isinstance(args[0], AbstractView):
                 request = args[0].request
                 async with AsyncSession(request.app[key]) as request[key]:
-                    return await handler(request)
+                    return await handler(*args, **kwargs)
 
             # Coroutine function decorating
             elif iscoroutinefunction(handler):
                 request = args[0]
                 async with AsyncSession(request.app[key]) as request[key]:
-                    return await handler(request)
+                    return await handler(*args, **kwargs)
 
             else:
                 raise TypeError('Unsupported handler type')
