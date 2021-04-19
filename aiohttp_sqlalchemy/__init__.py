@@ -2,7 +2,7 @@ from aiohttp.web import middleware
 from aiohttp.abc import AbstractView
 from asyncio import iscoroutinefunction
 from functools import wraps
-from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
+from sqlalchemy.ext.asyncio import AsyncSession
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
@@ -45,10 +45,10 @@ def sa_middleware(key: str = 'sa_main') -> 'Callable':
     return sa_middleware_
 
 
-def sa_engine(key: str = 'sa_main', *args, **kwargs) -> 'Tuple[str, AsyncEngine]':
-    return key, create_async_engine(*args, **kwargs)
+def sa_engine(engine: 'AsyncEngine', key: str = 'sa_main') -> 'Tuple[AsyncEngine, str]':
+    return engine, key
 
 
-def setup(app: 'Application', engines: 'Iterable[Tuple[str, AsyncEngine]]'):
-    for app_key, engine in engines:
+def setup(app: 'Application', engines: 'Iterable[Tuple[AsyncEngine, str]]'):
+    for engine, app_key in engines:
         app[app_key] = engine

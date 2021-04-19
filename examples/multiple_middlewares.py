@@ -4,6 +4,7 @@ from aiohttp_sqlalchemy import sa_engine, sa_middleware
 from datetime import datetime
 import sqlalchemy as sa
 from sqlalchemy import orm
+from sqlalchemy.ext.asyncio import create_async_engine
 from random import choice
 
 
@@ -49,8 +50,9 @@ app = web.Application(middlewares=[
     sa_middleware('sa_secondary')
 ])
 aiohttp_sqlalchemy.setup(app, [
-    sa_engine(url='sqlite+aiosqlite:///'),
-    sa_engine('sa_secondary', 'sqlite+aiosqlite:///'),
+    sa_engine(create_async_engine('sqlite+aiosqlite:///')),
+    sa_engine(create_async_engine('sqlite+aiosqlite:///')),
+    sa_engine(create_async_engine('sqlite+aiosqlite:///'), 'sa_secondary'),
 ])
 app.add_routes([web.get('/', main)])
 web.run_app(app)

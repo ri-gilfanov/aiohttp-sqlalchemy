@@ -4,6 +4,7 @@ from aiohttp_sqlalchemy import sa_engine, sa_middleware
 from datetime import datetime
 import sqlalchemy as sa
 from sqlalchemy import orm
+from sqlalchemy.ext.asyncio import create_async_engine
 
 
 metadata = sa.MetaData()
@@ -28,6 +29,7 @@ async def main(request):
 
 
 app = web.Application(middlewares=[sa_middleware()])
-aiohttp_sqlalchemy.setup(app, [sa_engine(url='sqlite+aiosqlite:///')])
+engine = create_async_engine('sqlite+aiosqlite:///')
+aiohttp_sqlalchemy.setup(app, [sa_engine(engine)])
 app.add_routes([web.get('/', main)])
 web.run_app(app)
