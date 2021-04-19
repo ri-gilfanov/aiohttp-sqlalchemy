@@ -1,6 +1,6 @@
 from aiohttp import web
 import aiohttp_sqlalchemy
-from aiohttp_sqlalchemy import sa_engine, sa_middleware
+from aiohttp_sqlalchemy import sa_decorator, sa_engine
 from datetime import datetime
 import sqlalchemy as sa
 from sqlalchemy import orm
@@ -18,6 +18,8 @@ class Request(Base):
     timestamp = sa.Column(sa.DateTime(), default=datetime.now)
 
 
+@sa_decorator()
+@sa_decorator('sa_secondary')
 async def main(request):
     async with request.app['sa_main'].begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
@@ -45,10 +47,7 @@ async def main(request):
     return web.json_response(data)
 
 
-app = web.Application(middlewares=[
-    sa_middleware(),
-    sa_middleware('sa_secondary')
-])
+app = web.Application()
 aiohttp_sqlalchemy.setup(app, [
     sa_engine(create_async_engine('sqlite+aiosqlite:///')),
     sa_engine(create_async_engine('sqlite+aiosqlite:///'), 'sa_secondary'),
