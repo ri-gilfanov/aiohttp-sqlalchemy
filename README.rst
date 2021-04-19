@@ -40,7 +40,7 @@ Run this code:
 
 
   async def main(request):
-      async with app['sa_main'].begin() as conn:
+      async with request.app['sa_main'].begin() as conn:
           await conn.run_sync(Base.metadata.create_all)
 
       async with request['sa_main'].begin():
@@ -51,8 +51,8 @@ Run this code:
 
 
   app = web.Application(middlewares=[sa_middleware()])
-  app.router.add_get('/', main)
   aiohttp_sqlalchemy.setup(app, [sa_engine(url='sqlite+aiosqlite:///')])
+  app.add_routes([web.get('/', main)])
   web.run_app(app)
 
 
