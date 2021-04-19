@@ -1,4 +1,4 @@
-from aiohttp.web import middleware
+from aiohttp.web import middleware, View
 from aiohttp.abc import AbstractView
 from asyncio import iscoroutinefunction
 from functools import wraps
@@ -52,3 +52,15 @@ def sa_engine(engine: 'AsyncEngine', key: str = 'sa_main') -> 'Tuple[AsyncEngine
 def setup(app: 'Application', engines: 'Iterable[Tuple[AsyncEngine, str]]'):
     for engine, app_key in engines:
         app[app_key] = engine
+
+
+class SAViewMixin:
+    request: 'Request'
+
+    @property
+    def sa_main(self) -> 'AsyncEngine':
+        return self.request['sa_main']
+
+
+class SAView(View, SAViewMixin):
+    pass
