@@ -13,24 +13,48 @@ Install
 
 Example
 -------
+Install aiosqlite for work with sqlite3: ::
+
+  pip install aiosqlite
+
+Run this code:
 
 .. code-block:: python
 
-   from aiohttp import web
-   import aiohttp_sqlalchemy
-   from aiohttp_sqlalchemy import sa_engine, sa_middleware
+  from aiohttp import web
+  import aiohttp_sqlalchemy
+  from aiohttp_sqlalchemy import sa_engine, sa_middleware
+  from datetime import datetime
+  import sqlalchemy as sa
+  from sqlalchemy import orm
 
-   routes = web.RouteTableDef()
 
-   @routes.get('/')
-   async def main(request):
+  metadata = sa.MetaData()
+  Base = orm.declarative_base(metadata=metadata)
+
+
+  class Request(Base):
+      __tablename__ = 'requests'
+      id = sa.Column(sa.Integer, primary_key=True)
+      timestamp = sa.Column(sa.DateTime(), default=datetime.now)
+
+
+  async def main(request):
+      async with app['sa_main'].begin() as conn:
+          await conn.run_sync(Base.metadata.create_all)
+
       async with request['sa_main'].begin():
-         # some code
+          request['sa_main'].add_all([Request()])
+          result = await request['sa_main'].execute(sa.select(Request))
+          data = {r.id: r.timestamp.isoformat() for r in result.scalars()}
+          return web.json_response(data)
 
-   app = web.Application(middlewares=[sa_middleware()])
-   aiohttp_sqlalchemy.setup(app, [sa_engine('sqlite+aiosqlite:///')])
-   app.add_routes(routes)
-   web.run_app(app)
+
+  app = web.Application(middlewares=[sa_middleware()])
+  app.router.add_get('/', main)
+  aiohttp_sqlalchemy.setup(app, [sa_engine(url='sqlite+aiosqlite:///')])
+  web.run_app(app)
+
 
 Documentation
 -------------
