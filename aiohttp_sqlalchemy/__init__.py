@@ -2,7 +2,7 @@ from aiohttp.web import middleware
 from aiohttp.abc import AbstractView
 from asyncio import iscoroutinefunction
 from functools import wraps
-from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
+from sqlalchemy.ext.asyncio import AsyncSession
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
@@ -11,7 +11,7 @@ if TYPE_CHECKING:
     from typing import Callable, Iterable, Tuple
 
 
-__version__ = '0.1a3'
+__version__ = '0.1a4'
 
 
 def sa_decorator(key: str = 'sa_main'):
@@ -19,16 +19,16 @@ def sa_decorator(key: str = 'sa_main'):
         @wraps(handler)
         async def wrapped(*args, **kwargs):
             # Class based view decorating
-            if issubclass(handler, AbstractView):
+            if isinstance(args[0], AbstractView):
                 request = args[0].request
                 async with AsyncSession(request.app[key]) as request[key]:
-                    return await handler(request)
+                    return await handler(*args, **kwargs)
 
             # Coroutine function decorating
             elif iscoroutinefunction(handler):
                 request = args[0]
                 async with AsyncSession(request.app[key]) as request[key]:
-                    return await handler(request)
+                    return await handler(*args, **kwargs)
 
             else:
                 raise TypeError('Unsupported handler type')
@@ -45,10 +45,10 @@ def sa_middleware(key: str = 'sa_main') -> 'Callable':
     return sa_middleware_
 
 
-def sa_engine(key: str = 'sa_main', *args, **kwargs) -> 'Tuple[str, AsyncEngine]':
-    return key, create_async_engine(*args, **kwargs)
+def sa_engine(engine: 'AsyncEngine', key: str = 'sa_main') -> 'Tuple[AsyncEngine, str]':
+    return engine, key
 
 
-def setup(app: 'Application', engines: 'Iterable[Tuple[str, AsyncEngine]]'):
-    for app_key, engine in engines:
+def setup(app: 'Application', engines: 'Iterable[Tuple[AsyncEngine, str]]'):
+    for engine, app_key in engines:
         app[app_key] = engine
