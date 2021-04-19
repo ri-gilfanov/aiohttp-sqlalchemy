@@ -4,6 +4,7 @@ from asyncio import iscoroutinefunction
 from functools import wraps
 from sqlalchemy.ext.asyncio import AsyncSession
 from typing import TYPE_CHECKING
+from aiohttp_sqlalchemy.exceptions import DuplicatedAppKeyError, DuplicatedRequestKeyError
 
 if TYPE_CHECKING:
     from aiohttp.web import Application, Request, StreamResponse
@@ -21,12 +22,16 @@ def sa_decorator(key: str = 'sa_main'):
             # Class based view decorating
             if isinstance(args[0], AbstractView):
                 request = args[0].request
+                if key in request:
+                    raise DuplicatedRequestKeyError(key)
                 async with AsyncSession(request.app[key]) as request[key]:
                     return await handler(*args, **kwargs)
 
             # Coroutine function decorating
             elif iscoroutinefunction(handler):
                 request = args[0]
+                if key in request:
+                    raise DuplicatedRequestKeyError(key)
                 async with AsyncSession(request.app[key]) as request[key]:
                     return await handler(*args, **kwargs)
 
@@ -40,6 +45,8 @@ def sa_decorator(key: str = 'sa_main'):
 def sa_middleware(key: str = 'sa_main') -> 'Callable':
     @middleware
     async def sa_middleware_(request: 'Request', handler: 'Callable') -> 'StreamResponse':
+        if key in request:
+            raise DuplicatedRequestKeyError(key)
         async with AsyncSession(request.app[key]) as request[key]:
             return await handler(request)
     return sa_middleware_
@@ -52,9 +59,7 @@ def sa_engine(engine: 'AsyncEngine', key: str = 'sa_main') -> 'Tuple[AsyncEngine
 def setup(app: 'Application', engines: 'Iterable[Tuple[AsyncEngine, str]]'):
     for engine, key in engines:
         if key in app:
-            raise ValueError(
-                f'Duplicated app key `{key}`. Check `engines` argument'
-                f'in `aiohttp_sqlalchemy.setup()` call.')
+            raise DuplicatedAppKeyError(key)
         app[key] = engine
 
 
