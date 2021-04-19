@@ -50,8 +50,12 @@ def sa_engine(engine: 'AsyncEngine', key: str = 'sa_main') -> 'Tuple[AsyncEngine
 
 
 def setup(app: 'Application', engines: 'Iterable[Tuple[AsyncEngine, str]]'):
-    for engine, app_key in engines:
-        app[app_key] = engine
+    for engine, key in engines:
+        if key in app:
+            raise ValueError(
+                f'Duplicated app key `{key}`. Check `engines` argument'
+                f'in `aiohttp_sqlalchemy.setup()` call.')
+        app[key] = engine
 
 
 class SAViewMixin:
