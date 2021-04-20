@@ -4,6 +4,11 @@ aiohttp-sqlalchemy
 
 SQLAlchemy 1.4 / 2.0 support for aiohttp.
 
+Library provide:
+
+* ``AsyncSession`` as ``request['sa_main']`` or ``SAView.sa_main_session``
+* ``AsyncEngine`` as ``request.app['sa_main']``
+
 Install
 -------
 ::
