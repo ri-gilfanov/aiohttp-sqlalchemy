@@ -37,11 +37,12 @@ Single middleware
    from aiohttp_sqlalchemy import sa_engine, sa_middleware
 
    async def main(request):
-      async with request['sa_main'].begin():
-         # some code
+       async with request['sa_main'].begin():
+            # some code
 
    app = web.Application(middlewares=[sa_middleware()])
-   aiohttp_sqlalchemy.setup(app, [sa_engine('sqlite+aiosqlite:///')])
+   engine = create_async_engine('sqlite+aiosqlite:///')
+   aiohttp_sqlalchemy.setup(app, [sa_engine(engine)])
 
 
 Multiple middlewares
@@ -54,16 +55,20 @@ Multiple middlewares
    from aiohttp_sqlalchemy import sa_engine, sa_middleware
 
    async def main(request):
-      async with request['sa_main'].begin():
-         # some code
+       async with request['sa_main'].begin():
+            # some code
 
-      async with request['sa_secondary'].begin():
-         # some code
+       async with request['sa_secondary'].begin():
+            # some code
 
-   app = web.Application(middlewares=[sa_middleware(), sa_middleware('sa_secondary')])
+   app = web.Application(middlewares=[
+       sa_middleware(),
+       sa_middleware('sa_secondary')])
+   main_engine = create_async_engine('sqlite+aiosqlite:///')
+   secondary_engine = create_async_engine('sqlite+aiosqlite:///')
    aiohttp_sqlalchemy.setup(app, [
-      sa_engine('sa_primary', 'sqlite+aiosqlite:///'),
-      sa_engine('sa_secondary', 'sqlite+aiosqlite:///'),
+        sa_engine(main_engine),
+        sa_engine(secondary_engine, 'sa_secondary'),
    ])
 
 
@@ -82,11 +87,12 @@ Decorated coroutine function
 
    @sa_decorator()
    async def main(request):
-      async with request['sa_main'].begin():
-         # some code
+       async with request['sa_main'].begin():
+            # some code
 
    app = web.Application()
-   aiohttp_sqlalchemy.setup(app, [sa_engine('sqlite+aiosqlite:///')])
+   engine = create_async_engine('sqlite+aiosqlite:///')
+   aiohttp_sqlalchemy.setup(app, [sa_engine(engine)])
 
 Decorated class based view
 ''''''''''''''''''''''''''
@@ -98,13 +104,14 @@ Decorated class based view
    from aiohttp_sqlalchemy import sa_decorator, sa_engine, sa_middleware
 
    class ClassBasedView(web.View):
-      @sa_decorator()
-      async def get(self):
-         async with request['sa_main'].begin():
-            # some code
+       @sa_decorator()
+       async def get(self):
+            async with request['sa_main'].begin():
+                # some code
 
    app = web.Application()
-   aiohttp_sqlalchemy.setup(app, [sa_engine('sqlite+aiosqlite:///')])
+   engine = create_async_engine('sqlite+aiosqlite:///')
+   aiohttp_sqlalchemy.setup(app, [sa_engine(engine)])
 
 
 Hybrid approach
@@ -120,14 +127,16 @@ And you can combine the middleware approach and the decorator approach.
 
    @sa_decorator('sa_secondary')
    async def main(request):
-       # some your code
+        # some your code
 
    app = web.Application(middlewares=[
-      sa_middleware(),
+       sa_middleware(),
    ])
+   main_engine = create_async_engine('sqlite+aiosqlite:///')
+   secondary_engine = create_async_engine('sqlite+aiosqlite:///')
    aiohttp_sqlalchemy.setup(app, [
-       sa_engine(create_async_engine('sqlite+aiosqlite:///')),
-       sa_engine(create_async_engine('sqlite+aiosqlite:///'), 'sa_secondary'),
+        sa_engine(main_engine),
+        sa_engine(secondary_engine, 'sa_secondary'),
    ])
 
 
