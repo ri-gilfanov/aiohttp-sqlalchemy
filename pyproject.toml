@@ -6,7 +6,7 @@ authors = [
     "Ruslan Ilyasovich Gilfanov <ri.gilfanov@yandex.ru>",
 ]
 classifiers = [
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 4 - Beta",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.8",
@@ -33,6 +33,7 @@ aiosqlite = "*"
 mypy = "*"
 pytest = "*"
 pytest-aiohttp = "*"
+pytest-cov = "*"
 Sphinx = "*"
 sphinx_rtd_theme = "*"
 
