@@ -67,7 +67,7 @@ class SAViewMixin:
     request: 'Request'
 
     @property
-    def sa_main(self) -> 'AsyncEngine':
+    def sa_main_session(self) -> 'AsyncEngine':
         return self.request['sa_main']
 
 
