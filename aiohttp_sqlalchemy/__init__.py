@@ -4,7 +4,7 @@ from asyncio import iscoroutinefunction
 from functools import wraps
 from sqlalchemy.ext.asyncio import AsyncSession
 from typing import TYPE_CHECKING
-from aiohttp_sqlalchemy.exceptions import DuplicatedAppKeyError, DuplicatedRequestKeyError
+from aiohttp_sqlalchemy.exceptions import DuplicateAppKeyError, DuplicateRequestKeyError
 
 if TYPE_CHECKING:
     from aiohttp.web import Application, Request, StreamResponse
@@ -15,7 +15,10 @@ if TYPE_CHECKING:
 __version__ = '0.1b1'
 
 
-def sa_decorator(key: str = 'sa_main'):
+DEFAULT_KEY = 'sa_main'
+
+
+def sa_decorator(key: str = DEFAULT_KEY):
     def wrapper(handler):
         @wraps(handler)
         async def wrapped(*args, **kwargs):
@@ -23,7 +26,7 @@ def sa_decorator(key: str = 'sa_main'):
             if isinstance(args[0], AbstractView):
                 request = args[0].request
                 if key in request:
-                    raise DuplicatedRequestKeyError(key)
+                    raise DuplicateRequestKeyError(key)
                 async with AsyncSession(request.app[key]) as request[key]:
                     return await handler(*args, **kwargs)
 
@@ -31,7 +34,7 @@ def sa_decorator(key: str = 'sa_main'):
             elif iscoroutinefunction(handler):
                 request = args[0]
                 if key in request:
-                    raise DuplicatedRequestKeyError(key)
+                    raise DuplicateRequestKeyError(key)
                 async with AsyncSession(request.app[key]) as request[key]:
                     return await handler(*args, **kwargs)
 
@@ -42,24 +45,24 @@ def sa_decorator(key: str = 'sa_main'):
     return wrapper
 
 
-def sa_middleware(key: str = 'sa_main') -> 'Callable':
+def sa_middleware(key: str = DEFAULT_KEY) -> 'Callable':
     @middleware
     async def sa_middleware_(request: 'Request', handler: 'Callable') -> 'StreamResponse':
         if key in request:
-            raise DuplicatedRequestKeyError(key)
+            raise DuplicateRequestKeyError(key)
         async with AsyncSession(request.app[key]) as request[key]:
             return await handler(request)
     return sa_middleware_
 
 
-def sa_engine(engine: 'AsyncEngine', key: str = 'sa_main') -> 'Tuple[AsyncEngine, str]':
+def sa_engine(engine: 'AsyncEngine', key: str = DEFAULT_KEY) -> 'Tuple[AsyncEngine, str]':
     return engine, key
 
 
 def setup(app: 'Application', engines: 'Iterable[Tuple[AsyncEngine, str]]'):
     for engine, key in engines:
         if key in app:
-            raise DuplicatedAppKeyError(key)
+            raise DuplicateAppKeyError(key)
         app[key] = engine
 
 
@@ -68,7 +71,7 @@ class SAViewMixin:
 
     @property
     def sa_main_session(self) -> 'AsyncEngine':
-        return self.request['sa_main']
+        return self.request[DEFAULT_KEY]
 
 
 class SAView(View, SAViewMixin):

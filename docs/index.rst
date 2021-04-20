@@ -14,7 +14,7 @@ Welcome to aiohttp-sqlalchemy's documentation!
 Overview
 --------
 
-SQLAlchemy >= 1.4 support for aiohttp.
+SQLAlchemy 1.4 / 2.0 support for aiohttp.
 
 Install
 -------
