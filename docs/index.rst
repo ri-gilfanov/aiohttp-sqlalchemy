@@ -16,6 +16,11 @@ Overview
 
 SQLAlchemy 1.4 / 2.0 support for aiohttp.
 
+Library provide:
+
+* AsyncSession as ``request['sa_main']`` or ``SAView.sa_main_session``
+* AsyncEngine as ``request.app['sa_main']``
+
 Install
 -------
 ::
@@ -63,7 +68,8 @@ Multiple middlewares
 
    app = web.Application(middlewares=[
        sa_middleware(),
-       sa_middleware('sa_secondary')])
+       sa_middleware('sa_secondary'),
+   ])
    main_engine = create_async_engine('sqlite+aiosqlite:///')
    secondary_engine = create_async_engine('sqlite+aiosqlite:///')
    aiohttp_sqlalchemy.setup(app, [
@@ -76,7 +82,7 @@ Decorator approach
 ------------------
 But you can use decorators instead of middlewares.
 
-Decorated coroutine function
+Decorating coroutine function
 ''''''''''''''''''''''''''''
 
 .. code-block:: python
@@ -94,8 +100,8 @@ Decorated coroutine function
    engine = create_async_engine('sqlite+aiosqlite:///')
    aiohttp_sqlalchemy.setup(app, [sa_engine(engine)])
 
-Decorated class based view
-''''''''''''''''''''''''''
+Decorating class based view methods
+'''''''''''''''''''''''''''''''''''
 
 .. code-block:: python
 
@@ -116,7 +122,7 @@ Decorated class based view
 
 Hybrid approach
 ---------------
-And you can combine the middleware approach and the decorator approach.
+And you can combine middlewares and decorators.
 
 .. code-block:: python
 
