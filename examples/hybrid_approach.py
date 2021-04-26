@@ -46,12 +46,10 @@ async def main(request):
     return web.json_response(data)
 
 
-app = web.Application(middlewares=[
-    sa_middleware(),
-])
+app = web.Application()
 aiohttp_sqlalchemy.setup(app, [
     sa_engine(create_async_engine('sqlite+aiosqlite:///')),
-    sa_engine(create_async_engine('sqlite+aiosqlite:///'), 'sa_secondary'),
+    sa_engine(create_async_engine('sqlite+aiosqlite:///'), 'sa_secondary', False),
 ])
 app.add_routes([web.get('/', main)])
 web.run_app(app)

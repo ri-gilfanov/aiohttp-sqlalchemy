@@ -45,10 +45,7 @@ async def main(request):
     return web.json_response(data)
 
 
-app = web.Application(middlewares=[
-    sa_middleware(),
-    sa_middleware('sa_secondary')
-])
+app = web.Application()
 aiohttp_sqlalchemy.setup(app, [
     sa_engine(create_async_engine('sqlite+aiosqlite:///')),
     sa_engine(create_async_engine('sqlite+aiosqlite:///'), 'sa_secondary'),
