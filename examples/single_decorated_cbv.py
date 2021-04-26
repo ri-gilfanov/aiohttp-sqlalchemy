@@ -32,6 +32,6 @@ class Main(web.View):
 
 app = web.Application()
 engine = create_async_engine('sqlite+aiosqlite:///')
-aiohttp_sqlalchemy.setup(app, [sa_engine(engine)])
+aiohttp_sqlalchemy.setup(app, [sa_engine(engine, middleware=False)])
 app.add_routes([web.view('/', Main)])
 web.run_app(app)

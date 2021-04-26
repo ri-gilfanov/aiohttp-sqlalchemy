@@ -14,129 +14,113 @@ Welcome to aiohttp-sqlalchemy's documentation!
 Overview
 --------
 
-SQLAlchemy >= 1.4 support for aiohttp.
+SQLAlchemy 1.4 / 2.0 support for aiohttp.
 
-Install
--------
+By default, library provides:
+
+* ``AsyncSession`` as ``request['sa_main']`` or ``SAView.sa_main_session``
+* ``AsyncEngine`` as ``request.app['sa_main']``
+
+Installation
+------------
 ::
 
-   pip install aiohttp-sqlalchemy
+    pip install aiohttp-sqlalchemy
 
+Simple example
+--------------
+Install aiosqlite for work with sqlite3: ::
 
-Middleware approach
--------------------
-Using middlewares is preferred for most users.
+  pip install aiosqlite
 
-Single middleware
-'''''''''''''''''
-
-.. code-block:: python
-
-   from aiohttp import web
-   import aiohttp_sqlalchemy
-   from aiohttp_sqlalchemy import sa_engine, sa_middleware
-
-   async def main(request):
-       async with request['sa_main'].begin():
-            # some code
-
-   app = web.Application(middlewares=[sa_middleware()])
-   engine = create_async_engine('sqlite+aiosqlite:///')
-   aiohttp_sqlalchemy.setup(app, [sa_engine(engine)])
-
-
-Multiple middlewares
-''''''''''''''''''''
+Copy and paste this code in a file and run:
 
 .. code-block:: python
 
    from aiohttp import web
    import aiohttp_sqlalchemy
    from aiohttp_sqlalchemy import sa_engine, sa_middleware
-
-   async def main(request):
-       async with request['sa_main'].begin():
-            # some code
-
-       async with request['sa_secondary'].begin():
-            # some code
-
-   app = web.Application(middlewares=[
-       sa_middleware(),
-       sa_middleware('sa_secondary')])
-   main_engine = create_async_engine('sqlite+aiosqlite:///')
-   secondary_engine = create_async_engine('sqlite+aiosqlite:///')
-   aiohttp_sqlalchemy.setup(app, [
-        sa_engine(main_engine),
-        sa_engine(secondary_engine, 'sa_secondary'),
-   ])
-
-
-Decorator approach
-------------------
-But you can use decorators instead of middlewares.
-
-Decorated coroutine function
-''''''''''''''''''''''''''''
-
-.. code-block:: python
-
-   from aiohttp import web
-   import aiohttp_sqlalchemy
-   from aiohttp_sqlalchemy import sa_decorator, sa_engine, sa_middleware
-
-   @sa_decorator()
-   async def main(request):
-       async with request['sa_main'].begin():
-            # some code
-
-   app = web.Application()
-   engine = create_async_engine('sqlite+aiosqlite:///')
-   aiohttp_sqlalchemy.setup(app, [sa_engine(engine)])
-
-Decorated class based view
-''''''''''''''''''''''''''
-
-.. code-block:: python
-
-   from aiohttp import web
-   import aiohttp_sqlalchemy
-   from aiohttp_sqlalchemy import sa_decorator, sa_engine, sa_middleware
-
-   class ClassBasedView(web.View):
-       @sa_decorator()
-       async def get(self):
-            async with request['sa_main'].begin():
-                # some code
-
-   app = web.Application()
-   engine = create_async_engine('sqlite+aiosqlite:///')
-   aiohttp_sqlalchemy.setup(app, [sa_engine(engine)])
-
-
-Hybrid approach
----------------
-And you can combine the middleware approach and the decorator approach.
-
-.. code-block:: python
-
-   from aiohttp import web
-   import aiohttp_sqlalchemy
-   from aiohttp_sqlalchemy import sa_decorator, sa_engine, sa_middleware
+   from datetime import datetime
+   import sqlalchemy as sa
+   from sqlalchemy import orm
    from sqlalchemy.ext.asyncio import create_async_engine
 
-   @sa_decorator('sa_secondary')
-   async def main(request):
-        # some your code
 
-   app = web.Application(middlewares=[
-       sa_middleware(),
-   ])
-   main_engine = create_async_engine('sqlite+aiosqlite:///')
-   secondary_engine = create_async_engine('sqlite+aiosqlite:///')
+   metadata = sa.MetaData()
+   Base = orm.declarative_base(metadata=metadata)
+
+
+   class MyModel(Base):
+       __tablename__ = 'my_table'
+       id = sa.Column(sa.Integer, primary_key=True)
+       timestamp = sa.Column(sa.DateTime(), default=datetime.now)
+
+
+   async def main(request):
+       async with request.app['sa_main'].begin() as conn:
+           await conn.run_sync(Base.metadata.create_all)
+
+       async with request['sa_main'].begin():
+           request['sa_main'].add_all([MyModel()])
+           result = await request['sa_main'].execute(sa.select(MyModel))
+           data = {r.id: r.timestamp.isoformat() for r in result.scalars()}
+           return web.json_response(data)
+
+
+   app = web.Application()
+
+   engine = create_async_engine('sqlite+aiosqlite:///')
+   aiohttp_sqlalchemy.setup(app, [sa_engine(engine)])
+
+   app.add_routes([web.get('/', main)])
+   web.run_app(app)
+
+
+Bind multiple engines
+---------------------
+
+.. code-block:: python
+
+  main_engine = create_async_engine('postgresql+asyncpg://user:password@host/database')
+  second_engine = create_async_engine('mysql+aiomysql://user:password@host/database')
+  third_engine = create_async_engine('sqlite+aiosqlite:///')
+
+  aiohttp_sqlalchemy.setup(app, [
+      sa_engine(main_engine),
+      sa_engine(second_engine, 'sa_second'),
+      sa_engine(third_engine, 'sa_third'),
+  ])
+
+
+Class based views
+-----------------
+
+.. code-block:: python
+
+   from aiohttp_sqlalchemy import SAView
+
+   class Handler(SAView):
+       async def get(self):
+           async with sa_main_session.begin():
+               # some your code
+
+
+Decorating coroutine functions
+------------------------------
+
+.. code-block:: python
+
+   @sa_decorator('sa_fourth')
+   async def handler(request):
+       # some your code
+
+   class Handler(SAView):
+      @sa_decorator('sa_fourth')
+       async def get(self):
+           # some your code
+
    aiohttp_sqlalchemy.setup(app, [
-        sa_engine(main_engine),
-        sa_engine(secondary_engine, 'sa_secondary'),
+       sa_engine(third_engine, 'sa_fourth', False),
    ])
 
 
