@@ -13,10 +13,10 @@ if TYPE_CHECKING:
     TSAEngine = Tuple[AsyncEngine, str, bool]
 
 
-__version__ = '0.1b2'
+__version__ = '0.1.0'
 
 
-def sa_engine(engine: 'AsyncEngine', key: str = DEFAULT_KEY,
+def sa_engine(engine: 'AsyncEngine', key: str = DEFAULT_KEY, *,
               middleware: bool = True) -> 'TSAEngine':
     """ AsyncEngine wrapper for setup. """
     return engine, key, middleware

@@ -76,8 +76,8 @@ Copy and paste this code in a file and run:
    web.run_app(app)
 
 
-Bind multiple engines
----------------------
+Binding multiple engines
+------------------------
 
 .. code-block:: python
 
@@ -105,8 +105,8 @@ Class based views
                # some your code
 
 
-Decorating coroutine functions
-------------------------------
+Decorating handlers
+-------------------
 
 .. code-block:: python
 
@@ -120,7 +120,7 @@ Decorating coroutine functions
            # some your code
 
    aiohttp_sqlalchemy.setup(app, [
-       sa_engine(third_engine, 'sa_fourth', False),
+       sa_engine(third_engine, 'sa_fourth', middleware=False),
    ])
 
 
