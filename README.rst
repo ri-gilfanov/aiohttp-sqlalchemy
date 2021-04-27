@@ -28,7 +28,7 @@ Install aiosqlite for work with sqlite3: ::
 
   pip install aiosqlite
 
-Run this code:
+Copy and paste this code in a file and run:
 
 .. code-block:: python
 

@@ -18,7 +18,7 @@ __version__ = '0.1.0'
 
 def sa_engine(engine: 'AsyncEngine', key: str = DEFAULT_KEY, *,
               middleware: bool = True) -> 'TSAEngine':
-    """ AsyncEngine wrapper for setup. """
+    """ AsyncEngine wrapper for binding in setup. """
     return engine, key, middleware
 
 
