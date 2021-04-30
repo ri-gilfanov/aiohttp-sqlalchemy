@@ -24,18 +24,18 @@ repository = "https://github.com/ri-gilfanov/aiohttp-sqlalchemy"
 
 [tool.poetry.dependencies]
 python = "^3.8"
-aiohttp = "*"
-SQLAlchemy = "*"
+aiohttp = "^3.7.4.post0"
+SQLAlchemy = "^1.4.12"
 
 [tool.poetry.dev-dependencies]
-asyncpg = "*"
-aiosqlite = "*"
-mypy = "*"
-pytest = "*"
-pytest-aiohttp = "*"
-pytest-cov = "*"
-Sphinx = "*"
-sphinx_rtd_theme = "*"
+asyncpg = "^0.22.0"
+aiosqlite = "^0.17.0"
+mypy = "^0.812"
+pytest = "^6.2.3"
+pytest-aiohttp = "^0.3.0"
+pytest-cov = "^2.11.1"
+Sphinx = "^3.5.4"
+sphinx_rtd_theme = "^0.5.2"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
