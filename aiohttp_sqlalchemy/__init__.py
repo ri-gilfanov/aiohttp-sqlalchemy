@@ -18,11 +18,12 @@ __version__ = '0.1.0'
 
 def sa_engine(engine: 'AsyncEngine', key: str = DEFAULT_KEY, *,
               middleware: bool = True) -> 'TSAEngine':
-    """ AsyncEngine wrapper for binding in setup. """
+    """ AsyncEngine wrapper for binding in setup function. """
     return engine, key, middleware
 
 
 def setup(app: 'Application', engines: 'Iterable[TSAEngine]'):
+    """ Setup function for binding SQLAlchemy engines. """
     for engine, key, middleware in engines:
         if key in app:
             raise DuplicateAppKeyError(key)
