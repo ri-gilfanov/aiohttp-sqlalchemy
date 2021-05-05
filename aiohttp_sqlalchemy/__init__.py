@@ -13,7 +13,7 @@ if TYPE_CHECKING:
     TSAEngine = Tuple[AsyncEngine, str, bool]
 
 
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 
 
 def sa_engine(engine: 'AsyncEngine', key: str = DEFAULT_KEY, *,
