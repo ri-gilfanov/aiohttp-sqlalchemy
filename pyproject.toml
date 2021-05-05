@@ -25,13 +25,13 @@ repository = "https://github.com/ri-gilfanov/aiohttp-sqlalchemy"
 [tool.poetry.dependencies]
 python = "^3.8"
 aiohttp = "^3.7.4.post0"
-SQLAlchemy = "^1.4.12"
+SQLAlchemy = "^1.4.13"
 
 [tool.poetry.dev-dependencies]
 asyncpg = "^0.22.0"
 aiosqlite = "^0.17.0"
 mypy = "^0.812"
-pytest = "^6.2.3"
+pytest = "^6.2.4"
 pytest-aiohttp = "^0.3.0"
 pytest-cov = "^2.11.1"
 Sphinx = "^3.5.4"
