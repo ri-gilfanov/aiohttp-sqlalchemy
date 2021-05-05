@@ -11,21 +11,25 @@ Welcome to aiohttp-sqlalchemy's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+
 Overview
 --------
 
 SQLAlchemy 1.4 / 2.0 support for aiohttp.
 
-By default, library provides:
+By default, library forwards:
 
-* ``AsyncSession`` as ``request['sa_main']`` or ``SAView.sa_main_session``
-* ``AsyncEngine`` as ``request.app['sa_main']``
+* ``sqlalchemy.ext.asyncio.AsyncSession`` object as ``request['sa_main']``
+  or ``SAView.sa_main_session``
+* ``sqlalchemy.ext.asyncio.AsyncEngine`` object as ``request.app['sa_main']``
+
 
 Installation
 ------------
 ::
 
     pip install aiohttp-sqlalchemy
+
 
 Simple example
 --------------
@@ -76,6 +80,13 @@ Copy and paste this code in a file and run:
    web.run_app(app)
 
 
+SQLAlchemy and Asyncio
+----------------------
+
+See `Asynchronous I/O (asyncio) <https://docs.sqlalchemy.org/en/14/orm/extensions/asyncio.html>`_
+section in SQLAlchemy 1.4 Documentation.
+
+
 Binding multiple engines
 ------------------------
 
@@ -94,6 +105,10 @@ Binding multiple engines
 
 Class based views
 -----------------
+.. warning::
+
+   For use a ``SAView`` in class based view inheritance, you must bind an
+   ``AsyncEngine`` with default key.
 
 .. code-block:: python
 
@@ -104,9 +119,17 @@ Class based views
            async with sa_main_session.begin():
                # some your code
 
+   engine = create_async_engine('sqlite+aiosqlite:///')
+   aiohttp_sqlalchemy.setup(app, [sa_engine(engine)])
+
 
 Decorating handlers
 -------------------
+.. warning::
+
+   For use a some ``AsyncEngine`` in decorators, you must set a ``middleware``
+   argument to ``False`` in ``sa_engine`` call. Else will raise an exception
+   ``DuplicateRequestKeyError``.
 
 .. code-block:: python
 
@@ -119,8 +142,9 @@ Decorating handlers
        async def get(self):
            # some your code
 
+   engine = create_async_engine('sqlite+aiosqlite:///')
    aiohttp_sqlalchemy.setup(app, [
-       sa_engine(third_engine, 'sa_fourth', middleware=False),
+       sa_engine(engine, 'sa_fourth', middleware=False),
    ])
 
 
