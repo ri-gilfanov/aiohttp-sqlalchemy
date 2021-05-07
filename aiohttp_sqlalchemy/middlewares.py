@@ -17,7 +17,8 @@ def sa_middleware(key: str = DEFAULT_KEY) -> 'Callable':
         if key in request:
             raise DuplicateRequestKeyError(key)
 
-        async with AsyncSession(request.app[key]) as request[key]:
+        engine = request.config_dict.get(key)
+        async with AsyncSession(engine) as request[key]:
             return await handler(request)
 
     return sa_middleware_

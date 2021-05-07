@@ -25,7 +25,8 @@ def sa_decorator(key: str = DEFAULT_KEY):
             if key in request:
                 raise DuplicateRequestKeyError(key)
 
-            async with AsyncSession(request.app[key]) as request[key]:
+            engine = request.config_dict.get(key)
+            async with AsyncSession(engine) as request[key]:
                 return await handler(*args, **kwargs)
 
         return wrapped
