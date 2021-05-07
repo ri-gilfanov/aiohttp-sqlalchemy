@@ -25,7 +25,7 @@ repository = "https://github.com/ri-gilfanov/aiohttp-sqlalchemy"
 [tool.poetry.dependencies]
 python = "^3.8"
 aiohttp = "^3.7.4.post0"
-SQLAlchemy = "^1.4.13"
+SQLAlchemy = "^1.4.14"
 
 [tool.poetry.dev-dependencies]
 asyncpg = "^0.22.0"
