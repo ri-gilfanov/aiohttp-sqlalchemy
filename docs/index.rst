@@ -148,6 +148,34 @@ Decorating handlers
    ])
 
 
+Nested apps
+-----------
+If you need access to ``AsyncEngine`` object from nested app, then you must
+use ``request.config_dict.get()`` method.
+
+Access to ``AsyncSession`` object from nested app has no differences.
+
+.. code-block:: python
+
+   async def main(request):
+       async with request.config_dict.get('sa_main').begin() as conn:
+           # some operations with AsyncEngine object
+
+       async with request['sa_main'].begin():
+           # some operations with AsyncSession object
+
+   app = web.Application()
+
+   engine = create_async_engine('sqlite+aiosqlite:///')
+   aiohttp_sqlalchemy.setup(app, [sa_engine(engine)])
+
+   subapp = web.Application()
+   subapp.add_routes([web.get('', main)])
+
+   app.add_subapp(prefix='/subapp', subapp=subapp)
+
+
+
 Indices and tables
 ------------------
 
