@@ -15,7 +15,7 @@ if TYPE_CHECKING:
     TSABinding = Tuple[AsyncEngine, str, bool]
 
 
-__version__ = '0.2.post0'
+__version__ = '0.3.0'
 
 
 def sa_bind(engine: 'AsyncEngine', key: str = DEFAULT_KEY, *,
