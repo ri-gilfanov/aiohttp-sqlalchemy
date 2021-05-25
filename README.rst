@@ -35,7 +35,7 @@ Copy and paste this code in a file and run:
 
    from aiohttp import web
    import aiohttp_sqlalchemy
-   from aiohttp_sqlalchemy import sa_engine, sa_middleware
+   from aiohttp_sqlalchemy import sa_bind, sa_middleware
    from datetime import datetime
    import sqlalchemy as sa
    from sqlalchemy import orm
@@ -66,7 +66,7 @@ Copy and paste this code in a file and run:
    app = web.Application()
 
    engine = create_async_engine('sqlite+aiosqlite:///')
-   aiohttp_sqlalchemy.setup(app, [sa_engine(engine)])
+   aiohttp_sqlalchemy.setup(app, [sa_bind(engine)])
 
    app.add_routes([web.get('/', main)])
    web.run_app(app)
