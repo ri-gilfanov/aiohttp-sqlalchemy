@@ -1,6 +1,6 @@
 from aiohttp import web
 import aiohttp_sqlalchemy
-from aiohttp_sqlalchemy import sa_bind
+from aiohttp_sqlalchemy import sa_decorator, sa_bind
 from datetime import datetime
 import sqlalchemy as sa
 from sqlalchemy import orm
@@ -18,11 +18,12 @@ class Request(Base):
     timestamp = sa.Column(sa.DateTime(), default=datetime.now)
 
 
+@sa_decorator('sa_secondary')
 async def main(request):
-    async with request.app['sa_main'].begin() as conn:
+    async with request.config_dict.get('sa_main').begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
 
-    async with request.app['sa_secondary'].begin() as conn:
+    async with request.config_dict.get('sa_secondary').begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
 
     session = choice(['sa_main', 'sa_secondary'])
@@ -52,7 +53,11 @@ secondary_engine = create_async_engine('sqlite+aiosqlite:///')
 
 aiohttp_sqlalchemy.setup(app, [
     sa_bind(main_engine),
-    sa_bind(secondary_engine, 'sa_secondary'),
+    sa_bind(secondary_engine, 'sa_secondary', middleware=False),
 ])
-app.add_routes([web.get('/', main)])
+
+subapp = web.Application()
+subapp.add_routes([web.get('', main)])
+
+app.add_subapp(prefix='/subapp', subapp=subapp)
 web.run_app(app)
