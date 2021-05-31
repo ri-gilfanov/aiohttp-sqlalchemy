@@ -28,7 +28,7 @@ def sa_engine(engine: 'AsyncEngine', key: str = DEFAULT_KEY, *,
               middleware: bool = True) -> 'TSABinding':
     msg = "aiohttp_sqlalchemy.sa_engine() is deprecated. " \
           "Use aiohttp_sqlalchemy.sa_bind()."
-    warnings.warn(msg)
+    warnings.warn(msg, DeprecationWarning, stacklevel=2)
     return engine, key, middleware
 
 
