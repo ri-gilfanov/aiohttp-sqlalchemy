@@ -10,6 +10,8 @@ Welcome to aiohttp-sqlalchemy's documentation!
   :maxdepth: 2
   :caption: Contents:
 
+.. contents:: Table of Contents
+
 
 Overview
 --------
@@ -31,7 +33,7 @@ Installation
 
 Simple example
 --------------
-Install aiosqlite for work with sqlite3: ::
+Install ``aiosqlite`` for work with sqlite3: ::
 
   pip install aiosqlite
 
@@ -187,12 +189,3 @@ Deprecated
 """"""""""
 ``aiohttp_sqlalchemy.sa_engine()`` function is deprecated. Use
 ``aiohttp_sqlalchemy.sa_bind()``.
-
-
-Indices and tables
-------------------
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
-
