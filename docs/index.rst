@@ -179,6 +179,13 @@ Access to ``AsyncSession`` object from nested app has no differences.
 
 Change log
 ----------
+Version 0.5.0
+^^^^^^^^^^^^^
+Deprecated
+""""""""""
+Undocumented class ``views.SAViewMixin`` is deprecated. Use
+``views.SAAbstractView``.
+
 Version 0.4.0
 ^^^^^^^^^^^^^
 Added

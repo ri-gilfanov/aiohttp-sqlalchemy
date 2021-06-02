@@ -16,6 +16,10 @@ class SAViewMixin:
     """ SQLAlchemy class based view mixin. """
     request: 'Request'
 
+    def __init__(self):
+        msg = "SAViewMixin is deprecated. Use SAAbstractView."
+        warnings.warn(msg, DeprecationWarning, stacklevel=2)
+
     @property
     def sa_main_session(self) -> 'AsyncSession':
         msg = "SAViewMixin.sa_main_session is deprecated. " \
@@ -31,11 +35,21 @@ class SAOneModelMixin(SAViewMixin):
     sa_model: 'Any'  # Not all developers use declarative mapping
 
 
-class SAAbstractView(AbstractView, SAViewMixin, metaclass=ABCMeta):
+class SAAbstractView(AbstractView, metaclass=ABCMeta):
     """ SQLAlchemy view based on aiohttp.abc.AbstractView """
 
+    @property
+    def sa_main_session(self) -> 'AsyncSession':
+        msg = "SAAbstractView.sa_main_session is deprecated. " \
+              "Use SAAbstractView.sa_session()."
+        warnings.warn(msg, DeprecationWarning, stacklevel=2)
+        return self.request[DEFAULT_KEY]
 
-class SABaseView(View, SAViewMixin):
+    def sa_session(self, key: str = DEFAULT_KEY) -> 'AsyncSession':
+        return self.request[key]
+
+
+class SABaseView(View, SAAbstractView):
     """ Simple SQLAlchemy view based on aiohttp.web.View """
 
 
