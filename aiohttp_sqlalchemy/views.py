@@ -19,6 +19,9 @@ class SAViewMixin:
     def sa_main_session(self) -> 'AsyncSession':
         return self.request[DEFAULT_KEY]
 
+    def sa_session(self, key: str = DEFAULT_KEY) -> 'AsyncSession':
+        return self.request[key]
+
 
 class SAOneModelMixin(SAViewMixin):
     sa_model: 'Any'  # Not all developers use declarative mapping
