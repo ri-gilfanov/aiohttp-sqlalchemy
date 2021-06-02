@@ -15,7 +15,7 @@ if TYPE_CHECKING:
     TSABinding = Tuple[AsyncEngine, str, bool]
 
 
-__version__ = '0.3.0'
+__version__ = '0.4.0'
 
 
 def sa_bind(engine: 'AsyncEngine', key: str = DEFAULT_KEY, *,
@@ -28,7 +28,7 @@ def sa_engine(engine: 'AsyncEngine', key: str = DEFAULT_KEY, *,
               middleware: bool = True) -> 'TSABinding':
     msg = "aiohttp_sqlalchemy.sa_engine() is deprecated. " \
           "Use aiohttp_sqlalchemy.sa_bind()."
-    warnings.warn(msg)
+    warnings.warn(msg, DeprecationWarning, stacklevel=2)
     return engine, key, middleware
 
 

@@ -10,6 +10,10 @@ Welcome to aiohttp-sqlalchemy's documentation!
   :maxdepth: 2
   :caption: Contents:
 
+.. contents:: Table of Contents
+  :depth: 2
+  :local:
+
 
 Overview
 --------
@@ -18,7 +22,7 @@ SQLAlchemy 1.4 / 2.0 support for aiohttp.
 By default, library forwards:
 
 * ``sqlalchemy.ext.asyncio.AsyncSession`` object as ``request['sa_main']``
-  or ``SAView.sa_main_session``
+  or ``SAView.sa_session()``
 * ``sqlalchemy.ext.asyncio.AsyncEngine`` object as ``request.app['sa_main']``
 
 
@@ -31,7 +35,7 @@ Installation
 
 Simple example
 --------------
-Install aiosqlite for work with sqlite3: ::
+Install ``aiosqlite`` for work with sqlite3: ::
 
   pip install aiosqlite
 
@@ -114,7 +118,7 @@ Class based views
 
   class Handler(SAView):
       async def get(self):
-          async with sa_main_session.begin():
+          async with self.sa_session().begin():
               # some your code
 
   engine = create_async_engine('sqlite+aiosqlite:///')
@@ -146,8 +150,47 @@ Decorating handlers
   ])
 
 
+Nested apps
+-----------
+If you need access to ``AsyncEngine`` object from nested app, then you must
+use ``request.config_dict.get()`` method.
+
+Access to ``AsyncSession`` object from nested app has no differences.
+
+.. code-block:: python
+
+  async def main(request):
+      async with request.config_dict.get('sa_main').begin() as conn:
+          # some operations with AsyncEngine object
+
+      async with request['sa_main'].begin():
+          # some operations with AsyncSession object
+
+  app = web.Application()
+
+  engine = create_async_engine('sqlite+aiosqlite:///')
+  aiohttp_sqlalchemy.setup(app, [sa_engine(engine)])
+
+  subapp = web.Application()
+  subapp.add_routes([web.get('', main)])
+
+  app.add_subapp(prefix='/subapp', subapp=subapp)
+
+
 Change log
 ----------
+Version 0.4.0
+^^^^^^^^^^^^^
+Added
+"""""
+``SAView.sa_session(key: str ='sa_main')`` function is added instead
+``SAView.sa_main_session``.
+
+Deprecated
+""""""""""
+``SAView.sa_main_session`` is deprecated. Use
+``SAView.sa_session(key: str ='sa_main')``.
+
 Version 0.3.0
 ^^^^^^^^^^^^^
 Added
@@ -155,16 +198,7 @@ Added
 ``aiohttp_sqlalchemy.sa_bind()`` function is added instead
 ``aiohttp_sqlalchemy.sa_engine()``.
 
-
 Deprecated
 """"""""""
 ``aiohttp_sqlalchemy.sa_engine()`` function is deprecated. Use
 ``aiohttp_sqlalchemy.sa_bind()``.
-
-
-Indices and tables
-------------------
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
