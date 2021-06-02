@@ -181,6 +181,11 @@ Change log
 ----------
 Version 0.5.0
 ^^^^^^^^^^^^^
+Remove
+""""""
+Deprecated function ``aiohttp_sqlalchemy.sa_engine()`` is removed. Use
+``aiohttp_sqlalchemy.sa_bind()``.
+
 Deprecated
 """"""""""
 Undocumented class ``views.SAViewMixin`` is deprecated. Use

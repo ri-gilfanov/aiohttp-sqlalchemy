@@ -24,14 +24,6 @@ def sa_bind(engine: 'AsyncEngine', key: str = DEFAULT_KEY, *,
     return engine, key, middleware
 
 
-def sa_engine(engine: 'AsyncEngine', key: str = DEFAULT_KEY, *,
-              middleware: bool = True) -> 'TSABinding':
-    msg = "aiohttp_sqlalchemy.sa_engine() is deprecated. " \
-          "Use aiohttp_sqlalchemy.sa_bind()."
-    warnings.warn(msg, DeprecationWarning, stacklevel=2)
-    return engine, key, middleware
-
-
 def setup(app: 'Application', bindings: 'Iterable[TSABinding]'):
     """ Setup function for binding SQLAlchemy engines. """
     for engine, key, middleware in bindings:
