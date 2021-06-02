@@ -1,4 +1,5 @@
 from typing import TYPE_CHECKING
+
 from aiohttp_sqlalchemy.constants import DEFAULT_KEY
 from aiohttp_sqlalchemy.decorators import sa_decorator
 from aiohttp_sqlalchemy.exceptions import DuplicateAppKeyError, DuplicateRequestKeyError

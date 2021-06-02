@@ -3,6 +3,7 @@ from asyncio import iscoroutinefunction
 from functools import wraps
 from sqlalchemy.ext.asyncio import AsyncSession
 from typing import TYPE_CHECKING
+
 from aiohttp_sqlalchemy.constants import DEFAULT_KEY
 from aiohttp_sqlalchemy.exceptions import DuplicateRequestKeyError
 

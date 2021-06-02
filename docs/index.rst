@@ -84,14 +84,12 @@ Copy and paste this code in a file and run:
 
 SQLAlchemy and Asyncio
 ----------------------
-
 See `Asynchronous I/O (asyncio) <https://docs.sqlalchemy.org/en/14/orm/extensions/asyncio.html>`_
 section in SQLAlchemy 1.4 Documentation.
 
 
 Binding multiple engines
 ------------------------
-
 .. code-block:: python
 
   main_engine = create_async_engine('postgresql+asyncpg://user:password@host/database')
@@ -197,13 +195,13 @@ Version 0.4.0
 ^^^^^^^^^^^^^
 Added
 """""
-``SAView.sa_session(key: str ='sa_main')`` function is added instead
+``SAView.sa_session(key: str = 'sa_main')`` function is added instead
 ``SAView.sa_main_session``.
 
 Deprecated
 """"""""""
 ``SAView.sa_main_session`` is deprecated. Use
-``SAView.sa_session(key: str ='sa_main')``.
+``SAView.sa_session(key: str = 'sa_main')``.
 
 Version 0.3.0
 ^^^^^^^^^^^^^
