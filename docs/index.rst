@@ -84,14 +84,12 @@ Copy and paste this code in a file and run:
 
 SQLAlchemy and Asyncio
 ----------------------
-
 See `Asynchronous I/O (asyncio) <https://docs.sqlalchemy.org/en/14/orm/extensions/asyncio.html>`_
 section in SQLAlchemy 1.4 Documentation.
 
 
 Binding multiple engines
 ------------------------
-
 .. code-block:: python
 
   main_engine = create_async_engine('postgresql+asyncpg://user:password@host/database')
@@ -107,11 +105,6 @@ Binding multiple engines
 
 Class based views
 -----------------
-.. warning::
-
-  For use a ``SAView`` in class based view inheritance, you must bind an
-  ``AsyncEngine`` with default key.
-
 .. code-block:: python
 
   from aiohttp_sqlalchemy import SAView
@@ -121,8 +114,15 @@ Class based views
           async with self.sa_session().begin():
               # some your code
 
-  engine = create_async_engine('sqlite+aiosqlite:///')
-  aiohttp_sqlalchemy.setup(app, [sa_bind(engine)])
+          async with self.sa_session('sa_second').begin():
+              # some your code
+
+  main_engine = create_async_engine('sqlite+aiosqlite:///')
+  second_engine = create_async_engine('sqlite+aiosqlite:///')
+  aiohttp_sqlalchemy.setup(app, [
+    sa_bind(main_engine),
+    sa_bind(second_engine, 'sa_second'),
+  ])
 
 
 Decorating handlers
@@ -179,17 +179,29 @@ Access to ``AsyncSession`` object from nested app has no differences.
 
 Change log
 ----------
+Version 0.5.0
+^^^^^^^^^^^^^
+Removed
+"""""""
+Deprecated function ``aiohttp_sqlalchemy.sa_engine()`` is removed. Use
+``aiohttp_sqlalchemy.sa_bind()``.
+
+Deprecated
+""""""""""
+Undocumented class ``views.SAViewMixin`` is deprecated. Use
+``views.SAAbstractView``.
+
 Version 0.4.0
 ^^^^^^^^^^^^^
 Added
 """""
-``SAView.sa_session(key: str ='sa_main')`` function is added instead
+``SAView.sa_session(key: str = 'sa_main')`` function is added instead
 ``SAView.sa_main_session``.
 
 Deprecated
 """"""""""
 ``SAView.sa_main_session`` is deprecated. Use
-``SAView.sa_session(key: str ='sa_main')``.
+``SAView.sa_session(key: str = 'sa_main')``.
 
 Version 0.3.0
 ^^^^^^^^^^^^^

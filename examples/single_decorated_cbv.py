@@ -1,6 +1,6 @@
 from aiohttp import web
 import aiohttp_sqlalchemy
-from aiohttp_sqlalchemy import sa_decorator, sa_bind
+from aiohttp_sqlalchemy import sa_decorator, sa_bind, SAView
 from datetime import datetime
 import sqlalchemy as sa
 from sqlalchemy import orm
@@ -17,13 +17,13 @@ class Request(Base):
     timestamp = sa.Column(sa.DateTime(), default=datetime.now)
 
 
-class Main(web.View):
+class Main(SAView):
     @sa_decorator()
     async def get(self):
         async with self.request.app['sa_main'].begin() as conn:
             await conn.run_sync(Base.metadata.create_all)
 
-        async with self.request['sa_main'].begin():
+        async with self.sa_session().begin():
             self.request['sa_main'].add_all([Request()])
             result = await self.request['sa_main'].execute(sa.select(Request))
             data = {r.id: r.timestamp.isoformat() for r in result.scalars()}
