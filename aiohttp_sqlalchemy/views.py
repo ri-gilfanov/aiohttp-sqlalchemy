@@ -2,6 +2,7 @@ from abc import ABCMeta
 from aiohttp.abc import AbstractView
 from aiohttp.web import View
 from typing import TYPE_CHECKING
+import warnings
 
 from aiohttp_sqlalchemy.constants import DEFAULT_KEY
 
@@ -17,6 +18,9 @@ class SAViewMixin:
 
     @property
     def sa_main_session(self) -> 'AsyncSession':
+        msg = "SAViewMixin.sa_main_session is deprecated. " \
+              "Use SAViewMixin.sa_session()."
+        warnings.warn(msg, DeprecationWarning, stacklevel=2)
         return self.request[DEFAULT_KEY]
 
     def sa_session(self, key: str = DEFAULT_KEY) -> 'AsyncSession':
