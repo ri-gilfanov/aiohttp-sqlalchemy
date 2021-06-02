@@ -14,7 +14,7 @@ if TYPE_CHECKING:
     TSABinding = Tuple[AsyncEngine, str, bool]
 
 
-__version__ = '0.4.0'
+__version__ = '0.5.0'
 
 __all__ = ['DuplicateAppKeyError', 'DuplicateRequestKeyError', 'SABaseView',
            'sa_bind', 'sa_decorator', 'sa_middleware', 'SAView',

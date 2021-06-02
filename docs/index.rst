@@ -181,8 +181,8 @@ Change log
 ----------
 Version 0.5.0
 ^^^^^^^^^^^^^
-Remove
-""""""
+Removed
+"""""""
 Deprecated function ``aiohttp_sqlalchemy.sa_engine()`` is removed. Use
 ``aiohttp_sqlalchemy.sa_bind()``.
 
