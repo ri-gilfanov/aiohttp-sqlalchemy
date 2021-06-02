@@ -107,11 +107,6 @@ Binding multiple engines
 
 Class based views
 -----------------
-.. warning::
-
-  For use a ``SAView`` in class based view inheritance, you must bind an
-  ``AsyncEngine`` with default key.
-
 .. code-block:: python
 
   from aiohttp_sqlalchemy import SAView
@@ -121,8 +116,15 @@ Class based views
           async with self.sa_session().begin():
               # some your code
 
-  engine = create_async_engine('sqlite+aiosqlite:///')
-  aiohttp_sqlalchemy.setup(app, [sa_bind(engine)])
+          async with self.sa_session('sa_second').begin():
+              # some your code
+
+  main_engine = create_async_engine('sqlite+aiosqlite:///')
+  second_engine = create_async_engine('sqlite+aiosqlite:///')
+  aiohttp_sqlalchemy.setup(app, [
+    sa_bind(main_engine),
+    sa_bind(second_engine, 'sa_second'),
+  ])
 
 
 Decorating handlers
