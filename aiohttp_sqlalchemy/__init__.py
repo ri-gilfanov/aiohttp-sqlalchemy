@@ -1,10 +1,9 @@
 from typing import TYPE_CHECKING
-import warnings
 from aiohttp_sqlalchemy.constants import DEFAULT_KEY
 from aiohttp_sqlalchemy.decorators import sa_decorator
-from aiohttp_sqlalchemy.exceptions import DuplicateAppKeyError
+from aiohttp_sqlalchemy.exceptions import DuplicateAppKeyError, DuplicateRequestKeyError
 from aiohttp_sqlalchemy.middlewares import sa_middleware
-from aiohttp_sqlalchemy.views import SAView, SAViewMixin
+from aiohttp_sqlalchemy.views import SABaseView, SAView, SAViewMixin
 
 
 if TYPE_CHECKING:
@@ -16,6 +15,10 @@ if TYPE_CHECKING:
 
 
 __version__ = '0.4.0'
+
+__all__ = ['DuplicateAppKeyError', 'DuplicateRequestKeyError', 'SABaseView',
+           'sa_bind', 'sa_decorator', 'sa_middleware', 'SAView',
+           'SAViewMixin', 'setup',]
 
 
 def sa_bind(engine: 'AsyncEngine', key: str = DEFAULT_KEY, *,
