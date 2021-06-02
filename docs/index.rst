@@ -179,13 +179,24 @@ Access to ``AsyncSession`` object from nested app has no differences.
 
 Change log
 ----------
+Version 0.4.0
+^^^^^^^^^^^^^
+Added
+"""""
+``SAView.sa_session(key: str ='sa_main')`` function is added instead
+``SAView.sa_main_session``.
+
+Deprecated
+""""""""""
+``SAView.sa_main_session`` is deprecated. Use
+``SAView.sa_session(key: str ='sa_main')``.
+
 Version 0.3.0
 ^^^^^^^^^^^^^
 Added
 """""
 ``aiohttp_sqlalchemy.sa_bind()`` function is added instead
 ``aiohttp_sqlalchemy.sa_engine()``.
-
 
 Deprecated
 """"""""""
