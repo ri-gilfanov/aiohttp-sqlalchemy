@@ -31,10 +31,6 @@ class SAViewMixin:
         return self.request[key]
 
 
-class SAOneModelMixin(SAViewMixin):
-    sa_model: 'Any'  # Not all developers use declarative mapping
-
-
 class SAAbstractView(AbstractView, metaclass=ABCMeta):
     """ SQLAlchemy view based on aiohttp.abc.AbstractView """
 
@@ -47,6 +43,10 @@ class SAAbstractView(AbstractView, metaclass=ABCMeta):
 
     def sa_session(self, key: str = DEFAULT_KEY) -> 'AsyncSession':
         return self.request[key]
+
+
+class SAOneModelMixin(SAAbstractView, metaclass=ABCMeta):
+    sa_model: 'Any'  # Not all developers use declarative mapping
 
 
 class SABaseView(View, SAAbstractView):
