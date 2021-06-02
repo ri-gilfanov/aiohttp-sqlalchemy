@@ -30,5 +30,9 @@ class SAAbstractView(AbstractView, SAViewMixin, metaclass=ABCMeta):
     """ SQLAlchemy view based on aiohttp.abc.AbstractView """
 
 
-class SAView(View, SAViewMixin):
-    """ SQLAlchemy view based on aiohttp.web.View """
+class SABaseView(View, SAViewMixin):
+    """ Simple SQLAlchemy view based on aiohttp.web.View """
+
+
+class SAView(View, SAOneModelMixin):
+    """ One model SQLAlchemy view """
