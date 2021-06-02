@@ -26,7 +26,7 @@ class SAOneModelMixin(SAViewMixin):
     sa_model: 'Any'  # Not all developers use declarative mapping
 
 
-class AbstractSAView(AbstractView, SAViewMixin, metaclass=ABCMeta):
+class SAAbstractView(AbstractView, SAViewMixin, metaclass=ABCMeta):
     """ SQLAlchemy view based on aiohttp.abc.AbstractView """
 
 
