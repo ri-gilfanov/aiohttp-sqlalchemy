@@ -21,7 +21,7 @@ class Request(Base):
 @sa_decorator()
 @sa_decorator('sa_secondary')
 async def main(request):
-    async with request.app['sa_main'].begin() as conn:
+    async with request['sa_main'].bind.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
 
     async with request.app['sa_secondary'].begin() as conn:

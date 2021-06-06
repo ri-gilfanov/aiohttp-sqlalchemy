@@ -1,5 +1,6 @@
 from aiohttp.web import middleware
-from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession
+from sqlalchemy.orm import sessionmaker
 from typing import TYPE_CHECKING
 
 from aiohttp_sqlalchemy.constants import DEFAULT_KEY
@@ -18,8 +19,12 @@ def sa_middleware(key: str = DEFAULT_KEY) -> 'Callable':
         if key in request:
             raise DuplicateRequestKeyError(key)
 
-        engine = request.config_dict.get(key)
-        async with AsyncSession(engine) as request[key]:
-            return await handler(request)
+        arg = request.config_dict.get(key)
+        if isinstance(arg, AsyncEngine):
+            async with AsyncSession(arg) as request[key]:
+                return await handler(request)
+        elif isinstance(arg, sessionmaker):
+            async with arg() as request[key]:
+                return await handler(request)
 
     return sa_middleware_
