@@ -16,7 +16,7 @@ if TYPE_CHECKING:
     TSABinding = Tuple[Union[AsyncEngine, sessionmaker], str, bool]
 
 
-__version__ = '0.5.0'
+__version__ = '0.6.0'
 
 __all__ = ['DuplicateAppKeyError', 'DuplicateRequestKeyError', 'SABaseView',
            'sa_bind', 'sa_decorator', 'sa_middleware', 'SAView', 'setup',]

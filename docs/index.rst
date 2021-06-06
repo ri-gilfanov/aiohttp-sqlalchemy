@@ -19,7 +19,7 @@ Overview
 --------
 SQLAlchemy 1.4 / 2.0 support for aiohttp.
 
-Library forwarding ``sqlalchemy.ext.asyncio.AsyncSession`` object as
+Library forward a ``sqlalchemy.ext.asyncio.AsyncSession`` object as
 ``request['sa_main']`` or ``SAView.sa_session()`` by default.
 
 
@@ -172,8 +172,8 @@ Nested apps
 
 Change log
 ----------
-Unreleased
-^^^^^^^^^^
+Version 0.6.0
+^^^^^^^^^^^^^
 Added
 """""
 Add support ``sqlalchemy.orm.sessionmaker`` as a first argument in function
