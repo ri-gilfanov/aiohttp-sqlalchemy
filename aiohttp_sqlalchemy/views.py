@@ -2,56 +2,48 @@ from abc import ABCMeta
 from aiohttp.abc import AbstractView
 from aiohttp.web import View
 from typing import TYPE_CHECKING
-import warnings
 
 from aiohttp_sqlalchemy.constants import DEFAULT_KEY
 
 if TYPE_CHECKING:
-    from aiohttp.web import Request
     from sqlalchemy.ext.asyncio import AsyncSession
     from typing import Any
 
 
-class SAViewMixin:
-    """ SQLAlchemy class based view mixin. """
-    request: 'Request'
-
-    def __init__(self):
-        msg = "SAViewMixin is deprecated. Use SAAbstractView."
-        warnings.warn(msg, DeprecationWarning, stacklevel=2)
-
-    @property
-    def sa_main_session(self) -> 'AsyncSession':
-        msg = "SAViewMixin.sa_main_session is deprecated. " \
-              "Use SAViewMixin.sa_session()."
-        warnings.warn(msg, DeprecationWarning, stacklevel=2)
-        return self.request[DEFAULT_KEY]
-
-    def sa_session(self, key: str = DEFAULT_KEY) -> 'AsyncSession':
-        return self.request[key]
-
-
 class SAAbstractView(AbstractView, metaclass=ABCMeta):
-    """ SQLAlchemy view based on aiohttp.abc.AbstractView """
+    """
+    Simple SQLAlchemy view based on aiohttp.abc.AbstractView.
 
-    @property
-    def sa_main_session(self) -> 'AsyncSession':
-        msg = "SAAbstractView.sa_main_session is deprecated. " \
-              "Use SAAbstractView.sa_session()."
-        warnings.warn(msg, DeprecationWarning, stacklevel=2)
-        return self.request[DEFAULT_KEY]
+    The `__await__` method must be implemented in child classes.
 
+    Suitable for a specific usage with multiple models.
+    """
     def sa_session(self, key: str = DEFAULT_KEY) -> 'AsyncSession':
         return self.request[key]
 
 
 class SAOneModelMixin(SAAbstractView, metaclass=ABCMeta):
+    """
+    One model SQLAlchemy view based on aiohttp.abc.AbstractView.
+
+    The `__await__` method must be implemented in child classes.
+
+    Suitable for a usually usage with one model.
+    """
     sa_model: 'Any'  # Not all developers use declarative mapping
 
 
 class SABaseView(View, SAAbstractView):
-    """ Simple SQLAlchemy view based on aiohttp.web.View """
+    """
+    Simple SQLAlchemy view based on aiohttp.web.View.
+
+    Recomended for a specific usage with multiple models.
+    """
 
 
 class SAView(View, SAOneModelMixin):
-    """ One model SQLAlchemy view """
+    """
+    One model SQLAlchemy view based on aiohttp.web.View.
+
+    Recomended for a usually usage with one model.
+    """

@@ -20,7 +20,7 @@ class Request(Base):
 class Main(SAView):
     @sa_decorator()
     async def get(self):
-        async with self.request.app['sa_main'].begin() as conn:
+        async with self.request['sa_main'].bind.begin() as conn:
             await conn.run_sync(Base.metadata.create_all)
 
         async with self.sa_session().begin():

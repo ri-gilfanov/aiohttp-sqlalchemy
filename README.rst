@@ -4,11 +4,8 @@ aiohttp-sqlalchemy
 
 SQLAlchemy 1.4 / 2.0 support for aiohttp.
 
-By default, library forwards:
-
-* ``sqlalchemy.ext.asyncio.AsyncSession`` object as ``request['sa_main']``
-  or ``SAView.sa_session()``
-* ``sqlalchemy.ext.asyncio.AsyncEngine`` object as ``request.app['sa_main']``
+Library forward a ``sqlalchemy.ext.asyncio.AsyncSession`` object as
+``request['sa_main']`` or ``SAView.sa_session()`` by default.
 
 
 Documentation
@@ -53,7 +50,7 @@ Copy and paste this code in a file and run:
 
 
    async def main(request):
-       async with request.app['sa_main'].begin() as conn:
+       async with request['sa_main'].bind.begin() as conn:
            await conn.run_sync(Base.metadata.create_all)
 
        async with request['sa_main'].begin():

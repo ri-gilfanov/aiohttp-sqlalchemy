@@ -19,11 +19,8 @@ Overview
 --------
 SQLAlchemy 1.4 / 2.0 support for aiohttp.
 
-By default, library forwards:
-
-* ``sqlalchemy.ext.asyncio.AsyncSession`` object as ``request['sa_main']``
-  or ``SAView.sa_session()``
-* ``sqlalchemy.ext.asyncio.AsyncEngine`` object as ``request.app['sa_main']``
+Library forward a ``sqlalchemy.ext.asyncio.AsyncSession`` object as
+``request['sa_main']`` or ``SAView.sa_session()`` by default.
 
 
 Installation
@@ -63,7 +60,7 @@ Copy and paste this code in a file and run:
 
 
   async def main(request):
-      async with request.app['sa_main'].begin() as conn:
+      async with request['sa_main'].bind.begin() as conn:
           await conn.run_sync(Base.metadata.create_all)
 
       async with request['sa_main'].begin():
@@ -152,16 +149,12 @@ Decorating handlers
 
 Nested apps
 -----------
-If you need access to ``AsyncEngine`` object from nested app, then you must
-use ``request.config_dict.get()`` method.
-
-Access to ``AsyncSession`` object from nested app has no differences.
-
 .. code-block:: python
 
   async def main(request):
-      async with request.config_dict.get('sa_main').begin() as conn:
-          # some operations with AsyncEngine object
+      async with request['sa_main'].bind.begin() as conn:
+          # some operations with AsyncConnection object with
+          # an AsyncTransaction established.
 
       async with request['sa_main'].begin():
           # some operations with AsyncSession object
@@ -179,6 +172,32 @@ Access to ``AsyncSession`` object from nested app has no differences.
 
 Change log
 ----------
+Version 0.6.0
+^^^^^^^^^^^^^
+Added
+"""""
+Add support ``sqlalchemy.orm.sessionmaker`` as a first argument in function
+``sa_bind(arg, key, middleware)``.
+
+Changed
+"""""""
+Argument ``engine: AsyncEngine`` changed to ``arg: Union[AsyncEngine,
+sessionmaker]`` in ``sa_bind()`` signature.
+
+Deprecated
+""""""""""
+Expressions ``request.config_dict.get('sa_main')`` and
+``request.app['sa_main']`` is deprecated. Use expression
+``request['sa_main'].bind``.
+
+Removed
+"""""""
+Deprecated class ``views.SAViewMixin`` is removed. Use
+``views.SAAbstractView``.
+
+Deprecated attribute ``SAView.sa_main_session`` is removed. Use method
+``SAView.sa_session(key: str = 'sa_main')``.
+
 Version 0.5.0
 ^^^^^^^^^^^^^
 Removed

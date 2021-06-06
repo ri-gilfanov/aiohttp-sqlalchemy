@@ -1,7 +1,8 @@
 from aiohttp.abc import AbstractView
 from asyncio import iscoroutinefunction
 from functools import wraps
-from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession
+from sqlalchemy.orm import sessionmaker
 from typing import TYPE_CHECKING
 
 from aiohttp_sqlalchemy.constants import DEFAULT_KEY
@@ -26,9 +27,13 @@ def sa_decorator(key: str = DEFAULT_KEY):
             if key in request:
                 raise DuplicateRequestKeyError(key)
 
-            engine = request.config_dict.get(key)
-            async with AsyncSession(engine) as request[key]:
-                return await handler(*args, **kwargs)
+            arg = request.config_dict.get(key)
+            if isinstance(arg, AsyncEngine):
+                async with AsyncSession(arg) as request[key]:
+                    return await handler(*args, **kwargs)
+            elif isinstance(arg, sessionmaker):
+                async with arg() as request[key]:
+                    return await handler(*args, **kwargs)
 
         return wrapped
     return wrapper
