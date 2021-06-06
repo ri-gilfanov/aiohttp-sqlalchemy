@@ -172,6 +172,14 @@ Nested apps
 
 Change log
 ----------
+Version 0.7.0
+^^^^^^^^^^^^^
+Removed
+"""""""
+Removed support of ``request.config_dict.get('sa_main')`` and
+``request.app['sa_main']`` expressions. Use a ``request['sa_main'].bind``
+expression.
+
 Version 0.6.0
 ^^^^^^^^^^^^^
 Added
@@ -186,9 +194,9 @@ sessionmaker]`` in ``sa_bind()`` signature.
 
 Deprecated
 """"""""""
-Expressions ``request.config_dict.get('sa_main')`` and
-``request.app['sa_main']`` is deprecated. Use expression
-``request['sa_main'].bind``.
+Deprecated support of ``request.config_dict.get('sa_main')`` and
+``request.app['sa_main']`` expressions. Use a ``request['sa_main'].bind``
+expression.
 
 Removed
 """""""
