@@ -42,7 +42,7 @@ Copy and paste this code in a file and run:
 
    from aiohttp import web
    import aiohttp_sqlalchemy
-   from aiohttp_sqlalchemy import sa_bind, sa_middleware
+   from aiohttp_sqlalchemy import sa_bind
    from datetime import datetime
    import sqlalchemy as sa
    from sqlalchemy import orm

@@ -1,7 +1,6 @@
 ==================
 aiohttp-sqlalchemy
 ==================
-
 SQLAlchemy 1.4 / 2.0 support for aiohttp.
 
 Library forward a ``sqlalchemy.ext.asyncio.AsyncSession`` object as
@@ -22,7 +21,7 @@ Installation
 
 Simple example
 --------------
-Install aiosqlite for work with sqlite3: ::
+Install ``aiosqlite`` for work with sqlite3: ::
 
   pip install aiosqlite
 
@@ -32,7 +31,7 @@ Copy and paste this code in a file and run:
 
    from aiohttp import web
    import aiohttp_sqlalchemy
-   from aiohttp_sqlalchemy import sa_bind, sa_middleware
+   from aiohttp_sqlalchemy import sa_bind
    from datetime import datetime
    import sqlalchemy as sa
    from sqlalchemy import orm
