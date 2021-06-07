@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "aiohttp-sqlalchemy"
-version = "0.7.0"
+version = "0.8.0"
 description = "SQLAlchemy 1.4 / 2.0 support for aiohttp."
 authors = [
     "Ruslan Ilyasovich Gilfanov <ri.gilfanov@yandex.ru>",
@@ -15,11 +15,12 @@ classifiers = [
     "Topic :: Internet",
     "Topic :: Internet :: WWW/HTTP",
 ]
-documentation = "https://aiohttp-sqlalchemy.readthedocs.io/"
-homepage = "https://github.com/ri-gilfanov/aiohttp-sqlalchemy"
 keywords = ["aiohttp", "sqlalchemy"]
 license = "BSD-3-Clause"
 readme = "README.rst"
+
+documentation = "https://aiohttp-sqlalchemy.readthedocs.io/"
+homepage = "https://github.com/ri-gilfanov/aiohttp-sqlalchemy"
 repository = "https://github.com/ri-gilfanov/aiohttp-sqlalchemy"
 
 [tool.poetry.dependencies]
