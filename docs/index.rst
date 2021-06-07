@@ -175,8 +175,8 @@ Nested apps
 
 Change log
 ----------
-Unreleased
-^^^^^^^^^^
+Version 0.8.0
+^^^^^^^^^^^^^
 Changed
 """""""
 Rename first argument from ``arg`` to ``factory`` in ``sa_bind()`` signature.
