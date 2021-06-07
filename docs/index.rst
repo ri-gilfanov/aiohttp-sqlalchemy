@@ -175,6 +175,14 @@ Nested apps
 
 Change log
 ----------
+Unreleased
+^^^^^^^^^^
+Removed
+"""""""
+Removed support of ``AsyncEngine`` type in ``sa_bind()`` signature. Use
+``sessionmaker(engine, AsyncSession)`` or custom session factory returning
+``AsyncSession`` instance.
+
 Version 0.8.0
 ^^^^^^^^^^^^^
 Changed
@@ -184,7 +192,7 @@ Rename first argument from ``arg`` to ``factory`` in ``sa_bind()`` signature.
 Deprecated
 """"""""""
 ``AsyncEngine`` type is deprecated in ``sa_bind()`` signature. Use
-``sessionmaker(engine, AsyncSession)`` or custom session  factory returning
+``sessionmaker(engine, AsyncSession)`` or custom session factory returning
 ``AsyncSession`` instance.
 
 Version 0.7.0

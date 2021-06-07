@@ -1,8 +1,6 @@
 from aiohttp.abc import AbstractView
 from asyncio import iscoroutinefunction
 from functools import wraps
-from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession
-from sqlalchemy.orm import sessionmaker
 from typing import TYPE_CHECKING
 
 from aiohttp_sqlalchemy.constants import DEFAULT_KEY
