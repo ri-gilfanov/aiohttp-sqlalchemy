@@ -1,5 +1,4 @@
 from aiohttp.abc import AbstractView
-from asyncio import iscoroutinefunction
 from functools import wraps
 from typing import TYPE_CHECKING
 
@@ -15,12 +14,9 @@ def sa_decorator(key: str = DEFAULT_KEY):
     def wrapper(handler):
         @wraps(handler)
         async def wrapped(*args, **kwargs) -> 'StreamResponse':
-            if isinstance(args[0], AbstractView):
-                request = args[0].request
-            elif iscoroutinefunction(handler):
-                request = args[0]
-            else:
-                raise TypeError('Unsupported handler type')
+            request = args[0].request \
+                      if isinstance(args[0], AbstractView) \
+                      else args[-1]
 
             if key in request:
                 raise DuplicateRequestKeyError(key)

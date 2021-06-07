@@ -23,6 +23,11 @@ documentation = "https://aiohttp-sqlalchemy.readthedocs.io/"
 homepage = "https://github.com/ri-gilfanov/aiohttp-sqlalchemy"
 repository = "https://github.com/ri-gilfanov/aiohttp-sqlalchemy"
 
+[tool.coverage.report]
+exclude_lines = [
+    "if TYPE_CHECKING",
+]
+
 [tool.poetry.dependencies]
 python = "^3.8"
 aiohttp = "^3.7.4.post0"
@@ -33,7 +38,6 @@ asyncpg = ">=0.23.0"
 aiosqlite = ">=0.17.0"
 mypy = ">=0.812"
 pytest = ">=6.2.4"
-pytest-aiohttp = ">=0.3.0"
 pytest-cov = ">=2.12.1"
 Sphinx = ">=4.0.2"
 sphinx_rtd_theme = ">=0.5.2"
