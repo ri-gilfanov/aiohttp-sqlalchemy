@@ -175,12 +175,25 @@ Nested apps
 
 Change log
 ----------
+Unreleased
+^^^^^^^^^^
+Changed
+"""""""
+Rename first argument from ``arg`` to ``factory`` in ``sa_bind()`` signature.
+
+Deprecated
+""""""""""
+``AsyncEngine`` type is deprecated in ``sa_bind()`` signature. Use
+``sessionmaker(engine, AsyncSession)`` or custom session  factory returning
+``AsyncSession`` instance.
+
 Version 0.7.0
 ^^^^^^^^^^^^^
 Changed
 """""""
-Usage ``sqlalchemy.orm.sessionmaker`` object is recomended as a first argument
-of ``aiohttp_sqlalchemy.sa_bind()``. See examples on documetation.
+Usage ``sqlalchemy.orm.sessionmaker`` instance is recomended as a first
+argument for ``aiohttp_sqlalchemy.sa_bind()`` signature. See examples
+in documetation.
 
 Removed
 """""""
