@@ -23,7 +23,7 @@ async def main(request):
     async with request['sa_main'].bind.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
 
-    async with request.app['sa_second'].begin() as conn:
+    async with request['sa_second'].bind.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
 
     session = choice(['sa_main', 'sa_second'])
