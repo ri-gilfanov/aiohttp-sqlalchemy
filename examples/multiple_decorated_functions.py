@@ -4,7 +4,7 @@ from aiohttp_sqlalchemy import sa_decorator, sa_bind
 from datetime import datetime
 import sqlalchemy as sa
 from sqlalchemy import orm
-from sqlalchemy.ext.asyncio import create_async_engine
+from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from random import choice
 
 
@@ -19,15 +19,15 @@ class Request(Base):
 
 
 @sa_decorator()
-@sa_decorator('sa_secondary')
+@sa_decorator('sa_second')
 async def main(request):
     async with request['sa_main'].bind.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
 
-    async with request.app['sa_secondary'].begin() as conn:
+    async with request['sa_second'].bind.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
 
-    session = choice(['sa_main', 'sa_secondary'])
+    session = choice(['sa_main', 'sa_second'])
 
     async with request[session].begin():
         request[session].add_all([Request()])
@@ -36,8 +36,8 @@ async def main(request):
         result = await request['sa_main'].execute(sa.select(Request))
         main_result = {r.id: r.timestamp.isoformat() for r in result.scalars()}
 
-    async with request['sa_secondary'].begin():
-        result = await request['sa_secondary'].execute(sa.select(Request))
+    async with request['sa_second'].begin():
+        result = await request['sa_second'].execute(sa.select(Request))
         secondary_result = {r.id: r.timestamp.isoformat() for r in result.scalars()}
 
     data = {
@@ -50,11 +50,14 @@ async def main(request):
 app = web.Application()
 
 main_engine = create_async_engine('sqlite+aiosqlite:///')
-secondary_engine = create_async_engine('sqlite+aiosqlite:///')
+second_engine = create_async_engine('sqlite+aiosqlite:///')
+
+MainSession = orm.sessionmaker(main_engine, AsyncSession)
+SecondSession = orm.sessionmaker(second_engine, AsyncSession)
 
 aiohttp_sqlalchemy.setup(app, [
-    sa_bind(main_engine, middleware=False),
-    sa_bind(secondary_engine, 'sa_secondary', middleware=False),
+    sa_bind(MainSession, middleware=False),
+    sa_bind(SecondSession, 'sa_second', middleware=False),
 ])
 
 app.add_routes([web.get('/', main)])

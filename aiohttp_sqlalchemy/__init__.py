@@ -11,34 +11,37 @@ from aiohttp_sqlalchemy.views import SABaseView, SAView
 
 if TYPE_CHECKING:
     from aiohttp.web import Application
-    from typing import Iterable, Union, Tuple
+    from typing import Callable, Iterable, Union, Tuple
 
-    TSABinding = Tuple[Union[AsyncEngine, sessionmaker], str, bool]
+    TSessionFactory = Callable[..., AsyncSession]
+    TEngineOrFactory = Union[AsyncEngine, TSessionFactory]
+    TSABinding = Tuple[TSessionFactory, str, bool]
 
 
-__version__ = '0.6.0'
+__version__ = '0.7.0'
 
 __all__ = ['DuplicateAppKeyError', 'DuplicateRequestKeyError', 'SABaseView',
            'sa_bind', 'sa_decorator', 'sa_middleware', 'SAView', 'setup',]
 
 
 def sa_bind(
-    arg: 'Union[AsyncEngine, sessionmaker]',
-    key: str = DEFAULT_KEY,
-    *,
-    middleware: bool = True,
-) -> 'TSABinding':
-    """ AsyncEngine wrapper for binding in setup function. """
+    arg: 'TEngineOrFactory', key: str = DEFAULT_KEY, *,
+    middleware: bool = True) -> 'TSABinding':
+    """ Session factory wrapper for binding in setup function. """
+
+    if isinstance(arg, AsyncEngine):
+        arg = sessionmaker(arg, AsyncSession)
+
     return arg, key, middleware
 
 
 def setup(app: 'Application', bindings: 'Iterable[TSABinding]'):
     """ Setup function for binding SQLAlchemy engines. """
-    for arg, key, middleware in bindings:
+    for Session, key, middleware in bindings:
         if key in app:
             raise DuplicateAppKeyError(key)
 
-        app[key] = arg
+        app[key] = Session
 
         if middleware:
             app.middlewares.append(sa_middleware(key))

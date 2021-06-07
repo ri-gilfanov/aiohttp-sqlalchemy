@@ -40,43 +40,44 @@ Copy and paste this code in a file and run:
 
 .. code-block:: python
 
-  from aiohttp import web
-  import aiohttp_sqlalchemy
-  from aiohttp_sqlalchemy import sa_bind, sa_middleware
-  from datetime import datetime
-  import sqlalchemy as sa
-  from sqlalchemy import orm
-  from sqlalchemy.ext.asyncio import create_async_engine
+   from aiohttp import web
+   import aiohttp_sqlalchemy
+   from aiohttp_sqlalchemy import sa_bind, sa_middleware
+   from datetime import datetime
+   import sqlalchemy as sa
+   from sqlalchemy import orm
+   from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 
 
-  metadata = sa.MetaData()
-  Base = orm.declarative_base(metadata=metadata)
+   metadata = sa.MetaData()
+   Base = orm.declarative_base(metadata=metadata)
 
 
-  class MyModel(Base):
-      __tablename__ = 'my_table'
-      id = sa.Column(sa.Integer, primary_key=True)
-      timestamp = sa.Column(sa.DateTime(), default=datetime.now)
+   class MyModel(Base):
+       __tablename__ = 'my_table'
+       id = sa.Column(sa.Integer, primary_key=True)
+       timestamp = sa.Column(sa.DateTime(), default=datetime.now)
 
 
-  async def main(request):
-      async with request['sa_main'].bind.begin() as conn:
-          await conn.run_sync(Base.metadata.create_all)
+   async def main(request):
+       async with request['sa_main'].bind.begin() as conn:
+           await conn.run_sync(Base.metadata.create_all)
 
-      async with request['sa_main'].begin():
-          request['sa_main'].add_all([MyModel()])
-          result = await request['sa_main'].execute(sa.select(MyModel))
-          data = {r.id: r.timestamp.isoformat() for r in result.scalars()}
-          return web.json_response(data)
+       async with request['sa_main'].begin():
+           request['sa_main'].add_all([MyModel()])
+           result = await request['sa_main'].execute(sa.select(MyModel))
+           data = {r.id: r.timestamp.isoformat() for r in result.scalars()}
+           return web.json_response(data)
 
 
-  app = web.Application()
+   app = web.Application()
 
-  engine = create_async_engine('sqlite+aiosqlite:///')
-  aiohttp_sqlalchemy.setup(app, [sa_bind(engine)])
+   engine = create_async_engine('sqlite+aiosqlite:///')
+   Session = orm.sessionmaker(engine, AsyncSession)
+   aiohttp_sqlalchemy.setup(app, [sa_bind(Session)])
 
-  app.add_routes([web.get('/', main)])
-  web.run_app(app)
+   app.add_routes([web.get('/', main)])
+   web.run_app(app)
 
 
 SQLAlchemy and Asyncio
@@ -93,10 +94,14 @@ Binding multiple engines
   second_engine = create_async_engine('mysql+aiomysql://user:password@host/database')
   third_engine = create_async_engine('sqlite+aiosqlite:///')
 
+  MainSession = orm.sessionmaker(main_engine, AsyncSession)
+  SecondSession = orm.sessionmaker(second_engine, AsyncSession)
+  ThirdSession = orm.sessionmaker(third_engine, AsyncSession)
+
   aiohttp_sqlalchemy.setup(app, [
-      sa_bind(main_engine),
-      sa_bind(second_engine, 'sa_second'),
-      sa_bind(third_engine, 'sa_third'),
+      sa_bind(MainSession),
+      sa_bind(SecondSession, 'sa_second'),
+      sa_bind(ThirdSession, 'sa_third'),
   ])
 
 
@@ -114,11 +119,9 @@ Class based views
           async with self.sa_session('sa_second').begin():
               # some your code
 
-  main_engine = create_async_engine('sqlite+aiosqlite:///')
-  second_engine = create_async_engine('sqlite+aiosqlite:///')
   aiohttp_sqlalchemy.setup(app, [
-    sa_bind(main_engine),
-    sa_bind(second_engine, 'sa_second'),
+    sa_bind(MainSession),
+    sa_bind(SecondSession, 'sa_second'),
   ])
 
 
@@ -132,18 +135,17 @@ Decorating handlers
 
 .. code-block:: python
 
-  @sa_decorator('sa_fourth')
+  @sa_decorator('sa_optional')
   async def handler(request):
       # some your code
 
   class Handler(SAView):
-      @sa_decorator('sa_fourth')
+      @sa_decorator('sa_optional')
       async def get(self):
           # some your code
 
-  engine = create_async_engine('sqlite+aiosqlite:///')
   aiohttp_sqlalchemy.setup(app, [
-      sa_bind(engine, 'sa_fourth', middleware=False),
+      sa_bind(Session, 'sa_optional', middleware=False),
   ])
 
 
@@ -162,7 +164,8 @@ Nested apps
   app = web.Application()
 
   engine = create_async_engine('sqlite+aiosqlite:///')
-  aiohttp_sqlalchemy.setup(app, [sa_engine(engine)])
+  Session = orm.sessionmaker(engine, AsyncSession)
+  aiohttp_sqlalchemy.setup(app, [sa_engine(Session)])
 
   subapp = web.Application()
   subapp.add_routes([web.get('', main)])
@@ -172,6 +175,19 @@ Nested apps
 
 Change log
 ----------
+Version 0.7.0
+^^^^^^^^^^^^^
+Changed
+"""""""
+Usage ``sqlalchemy.orm.sessionmaker`` object is recomended as a first argument
+of ``aiohttp_sqlalchemy.sa_bind()``. See examples on documetation.
+
+Removed
+"""""""
+Removed support of ``request.config_dict.get('sa_main')`` and
+``request.app['sa_main']`` expressions. Use a ``request['sa_main'].bind``
+expression.
+
 Version 0.6.0
 ^^^^^^^^^^^^^
 Added
@@ -186,9 +202,9 @@ sessionmaker]`` in ``sa_bind()`` signature.
 
 Deprecated
 """"""""""
-Expressions ``request.config_dict.get('sa_main')`` and
-``request.app['sa_main']`` is deprecated. Use expression
-``request['sa_main'].bind``.
+Deprecated support of ``request.config_dict.get('sa_main')`` and
+``request.app['sa_main']`` expressions. Use a ``request['sa_main'].bind``
+expression.
 
 Removed
 """""""

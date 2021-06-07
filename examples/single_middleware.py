@@ -4,7 +4,7 @@ from aiohttp_sqlalchemy import sa_bind
 from datetime import datetime
 import sqlalchemy as sa
 from sqlalchemy import orm
-from sqlalchemy.ext.asyncio import create_async_engine
+from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 
 
 metadata = sa.MetaData()
@@ -31,7 +31,8 @@ async def main(request):
 app = web.Application()
 
 engine = create_async_engine('sqlite+aiosqlite:///')
-aiohttp_sqlalchemy.setup(app, [sa_bind(engine)])
+Session = orm.sessionmaker(engine, AsyncSession)
+aiohttp_sqlalchemy.setup(app, [sa_bind(Session)])
 
 app.add_routes([web.get('/', main)])
 web.run_app(app)
