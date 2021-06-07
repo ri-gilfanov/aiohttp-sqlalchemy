@@ -3,7 +3,7 @@ import aiohttp_sqlalchemy
 from aiohttp_sqlalchemy import sa_bind
 import pytest
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import declarative_base, sessionmaker
 from aiohttp_sqlalchemy.exceptions import DuplicateAppKeyError, DuplicateRequestKeyError
 
 

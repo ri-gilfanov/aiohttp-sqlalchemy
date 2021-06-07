@@ -59,4 +59,6 @@ aiohttp_sqlalchemy.setup(app, [
 ])
 
 app.add_routes([web.get('/', main)])
-web.run_app(app)
+
+if __name__ == '__main__':
+    web.run_app(app)
