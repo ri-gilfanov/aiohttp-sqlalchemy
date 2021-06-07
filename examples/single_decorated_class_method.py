@@ -17,15 +17,15 @@ class Request(Base):
     timestamp = sa.Column(sa.DateTime(), default=datetime.now)
 
 
-class Main(SAView):
+class Main:
     @sa_decorator()
-    async def get(self):
-        async with self.request['sa_main'].bind.begin() as conn:
+    async def get(self, request):
+        async with request['sa_main'].bind.begin() as conn:
             await conn.run_sync(Base.metadata.create_all)
 
-        async with self.sa_session().begin():
-            self.sa_session().add_all([Request()])
-            result = await self.sa_session().execute(sa.select(Request))
+        async with request['sa_main'].begin():
+            request['sa_main'].add_all([Request()])
+            result = await request['sa_main'].execute(sa.select(Request))
             data = {r.id: r.timestamp.isoformat() for r in result.scalars()}
             return web.json_response(data)
 
@@ -36,7 +36,8 @@ engine = create_async_engine('sqlite+aiosqlite:///')
 Session = orm.sessionmaker(engine, AsyncSession)
 aiohttp_sqlalchemy.setup(app, [sa_bind(Session, middleware=False)])
 
-app.add_routes([web.view('/', Main)])
+main = Main()
+app.add_routes([web.get('/', main.get)])
 
 if __name__ == '__main__':
     web.run_app(app)
