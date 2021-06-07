@@ -18,7 +18,7 @@ if TYPE_CHECKING:
     TSABinding = Tuple[TSessionFactory, str, bool]
 
 
-__version__ = '0.6.0'
+__version__ = '0.7.0'
 
 __all__ = ['DuplicateAppKeyError', 'DuplicateRequestKeyError', 'SABaseView',
            'sa_bind', 'sa_decorator', 'sa_middleware', 'SAView', 'setup',]

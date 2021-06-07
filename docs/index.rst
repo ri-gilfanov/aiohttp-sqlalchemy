@@ -177,6 +177,11 @@ Change log
 ----------
 Version 0.7.0
 ^^^^^^^^^^^^^
+Changed
+"""""""
+Usage ``sqlalchemy.orm.sessionmaker`` object is recomended as a first argument
+of ``aiohttp_sqlalchemy.sa_bind()``. See examples on documetation.
+
 Removed
 """""""
 Removed support of ``request.config_dict.get('sa_main')`` and
