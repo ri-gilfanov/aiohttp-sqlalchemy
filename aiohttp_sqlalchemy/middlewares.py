@@ -1,6 +1,4 @@
 from aiohttp.web import middleware
-from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession
-from sqlalchemy.orm import sessionmaker
 from typing import TYPE_CHECKING
 
 from aiohttp_sqlalchemy.constants import DEFAULT_KEY

@@ -63,4 +63,6 @@ subapp = web.Application()
 subapp.add_routes([web.get('', main)])
 
 app.add_subapp(prefix='/subapp', subapp=subapp)
-web.run_app(app)
+
+if __name__ == '__main__':
+    web.run_app(app)

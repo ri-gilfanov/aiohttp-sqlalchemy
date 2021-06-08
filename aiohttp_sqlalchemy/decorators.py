@@ -1,8 +1,5 @@
 from aiohttp.abc import AbstractView
-from asyncio import iscoroutinefunction
 from functools import wraps
-from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession
-from sqlalchemy.orm import sessionmaker
 from typing import TYPE_CHECKING
 
 from aiohttp_sqlalchemy.constants import DEFAULT_KEY
@@ -17,12 +14,10 @@ def sa_decorator(key: str = DEFAULT_KEY):
     def wrapper(handler):
         @wraps(handler)
         async def wrapped(*args, **kwargs) -> 'StreamResponse':
-            if isinstance(args[0], AbstractView):
-                request = args[0].request
-            elif iscoroutinefunction(handler):
-                request = args[0]
-            else:
-                raise TypeError('Unsupported handler type')
+            print(*args)
+            request = args[0].request \
+                      if isinstance(args[0], AbstractView) \
+                      else args[-1]
 
             if key in request:
                 raise DuplicateRequestKeyError(key)

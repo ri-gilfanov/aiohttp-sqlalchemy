@@ -25,6 +25,7 @@ dist
 *.egg-info
 
 # Checkers
+.coverage
 .mypy_cache
 
 

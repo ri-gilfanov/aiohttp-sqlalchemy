@@ -1,7 +1,5 @@
-from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.asyncio import AsyncSession
 from typing import TYPE_CHECKING
-import warnings
 
 from aiohttp_sqlalchemy.constants import DEFAULT_KEY
 from aiohttp_sqlalchemy.decorators import sa_decorator
@@ -12,13 +10,13 @@ from aiohttp_sqlalchemy.views import SABaseView, SAView
 
 if TYPE_CHECKING:
     from aiohttp.web import Application
-    from typing import Callable, Iterable, Union, Tuple
+    from typing import Callable, Iterable, Tuple
 
     TSessionFactory = Callable[..., AsyncSession]
     TSABinding = Tuple[TSessionFactory, str, bool]
 
 
-__version__ = '0.8.0'
+__version__ = '0.9.0'
 
 __all__ = ['DuplicateAppKeyError', 'DuplicateRequestKeyError', 'SABaseView',
            'sa_bind', 'sa_decorator', 'sa_middleware', 'SAView', 'setup',]
@@ -27,16 +25,6 @@ __all__ = ['DuplicateAppKeyError', 'DuplicateRequestKeyError', 'SABaseView',
 def sa_bind(factory: 'TSessionFactory', key: str = DEFAULT_KEY, *,
             middleware: bool = True) -> 'TSABinding':
     """ Session factory wrapper for binding in setup function. """
-
-    if isinstance(factory, AsyncEngine):
-        msg = (
-            "`AsyncEngine` type is deprecated in `sa_bind()` signature. "
-            "Use `sessionmaker(engine, AsyncSession)` or custom session "
-            "factory returning `AsyncSession` instance."
-        )
-        warnings.warn(msg, stacklevel=2)
-        factory = sessionmaker(factory, AsyncSession)
-
     return factory, key, middleware
 
 

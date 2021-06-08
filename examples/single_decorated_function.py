@@ -36,4 +36,6 @@ Session = orm.sessionmaker(engine, AsyncSession)
 aiohttp_sqlalchemy.setup(app, [sa_bind(Session, middleware=False)])
 
 app.add_routes([web.get('/', main)])
-web.run_app(app)
+
+if __name__ == '__main__':
+    web.run_app(app)

@@ -40,44 +40,46 @@ Copy and paste this code in a file and run:
 
 .. code-block:: python
 
-   from aiohttp import web
-   import aiohttp_sqlalchemy
-   from aiohttp_sqlalchemy import sa_bind, sa_middleware
-   from datetime import datetime
-   import sqlalchemy as sa
-   from sqlalchemy import orm
-   from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
+  from aiohttp import web
+  import aiohttp_sqlalchemy
+  from aiohttp_sqlalchemy import sa_bind
+  from datetime import datetime
+  import sqlalchemy as sa
+  from sqlalchemy import orm
+  from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 
 
-   metadata = sa.MetaData()
-   Base = orm.declarative_base(metadata=metadata)
+  metadata = sa.MetaData()
+  Base = orm.declarative_base(metadata=metadata)
 
 
-   class MyModel(Base):
-       __tablename__ = 'my_table'
-       id = sa.Column(sa.Integer, primary_key=True)
-       timestamp = sa.Column(sa.DateTime(), default=datetime.now)
+  class MyModel(Base):
+      __tablename__ = 'my_table'
+      id = sa.Column(sa.Integer, primary_key=True)
+      timestamp = sa.Column(sa.DateTime(), default=datetime.now)
 
 
-   async def main(request):
-       async with request['sa_main'].bind.begin() as conn:
-           await conn.run_sync(Base.metadata.create_all)
+  async def main(request):
+      async with request['sa_main'].bind.begin() as conn:
+          await conn.run_sync(Base.metadata.create_all)
 
-       async with request['sa_main'].begin():
-           request['sa_main'].add_all([MyModel()])
-           result = await request['sa_main'].execute(sa.select(MyModel))
-           data = {r.id: r.timestamp.isoformat() for r in result.scalars()}
-           return web.json_response(data)
+      async with request['sa_main'].begin():
+          request['sa_main'].add_all([MyModel()])
+          result = await request['sa_main'].execute(sa.select(MyModel))
+          data = {r.id: r.timestamp.isoformat() for r in result.scalars()}
+          return web.json_response(data)
 
 
-   app = web.Application()
+  app = web.Application()
 
-   engine = create_async_engine('sqlite+aiosqlite:///')
-   Session = orm.sessionmaker(engine, AsyncSession)
-   aiohttp_sqlalchemy.setup(app, [sa_bind(Session)])
+  engine = create_async_engine('sqlite+aiosqlite:///')
+  Session = orm.sessionmaker(engine, AsyncSession)
+  aiohttp_sqlalchemy.setup(app, [sa_bind(Session)])
 
-   app.add_routes([web.get('/', main)])
-   web.run_app(app)
+  app.add_routes([web.get('/', main)])
+
+  if __name__ == '__main__':
+      web.run_app(app)
 
 
 SQLAlchemy and Asyncio
@@ -175,6 +177,19 @@ Nested apps
 
 Change log
 ----------
+Version 0.9.0
+^^^^^^^^^^^^^
+Added
+"""""
+Added support of handlers in class for a ``sa_decorator(key)``. For example
+``app.add_routes([web.get('/', MyClass().my_get_method)])``.
+
+Removed
+"""""""
+Removed support of ``AsyncEngine`` type in ``sa_bind()`` signature. Use
+``sessionmaker(engine, AsyncSession)`` or custom session factory returning
+``AsyncSession`` instance.
+
 Version 0.8.0
 ^^^^^^^^^^^^^
 Changed
@@ -184,7 +199,7 @@ Rename first argument from ``arg`` to ``factory`` in ``sa_bind()`` signature.
 Deprecated
 """"""""""
 ``AsyncEngine`` type is deprecated in ``sa_bind()`` signature. Use
-``sessionmaker(engine, AsyncSession)`` or custom session  factory returning
+``sessionmaker(engine, AsyncSession)`` or custom session factory returning
 ``AsyncSession`` instance.
 
 Version 0.7.0
