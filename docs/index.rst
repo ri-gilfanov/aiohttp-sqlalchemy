@@ -179,6 +179,11 @@ Change log
 ----------
 Unreleased
 ^^^^^^^^^^
+Added
+"""""
+Added support of handlers in class for a ``sa_decorator(key)``. For example
+``app.add_routes([web.get('/', MyClass().my_get_method)])``.
+
 Removed
 """""""
 Removed support of ``AsyncEngine`` type in ``sa_bind()`` signature. Use
