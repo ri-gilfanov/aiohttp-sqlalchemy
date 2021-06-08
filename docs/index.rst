@@ -177,8 +177,8 @@ Nested apps
 
 Change log
 ----------
-Unreleased
-^^^^^^^^^^
+Version 0.9.0
+^^^^^^^^^^^^^
 Added
 """""
 Added support of handlers in class for a ``sa_decorator(key)``. For example
