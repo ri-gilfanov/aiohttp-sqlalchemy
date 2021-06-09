@@ -17,6 +17,23 @@ Welcome to aiohttp-sqlalchemy's documentation!
 
 Overview
 --------
+.. image:: https://readthedocs.org/projects/aiohttp-sqlalchemy/badge/?version=latest
+  :target: https://aiohttp-sqlalchemy.readthedocs.io/en/latest/?badge=latest
+  :alt: Documentation Status
+
+.. image:: https://badge.fury.io/py/aiohttp-sqlalchemy.svg
+  :target: https://badge.fury.io/py/aiohttp-sqlalchemy
+
+.. image:: https://img.shields.io/pypi/dm/aiohttp-sqlalchemy
+  :target: https://pypistats.org/packages/aiohttp-sqlalchemy
+  :alt: Downloads count
+
+.. image:: https://travis-ci.com/ri-gilfanov/aiohttp-sqlalchemy.svg?branch=master
+  :target: https://travis-ci.com/ri-gilfanov/aiohttp-sqlalchemy
+
+.. image:: https://coveralls.io/repos/github/ri-gilfanov/aiohttp-sqlalchemy/badge.svg?branch=master
+  :target: https://coveralls.io/github/ri-gilfanov/aiohttp-sqlalchemy?branch=master
+
 SQLAlchemy 1.4 / 2.0 support for aiohttp.
 
 Library forward a ``sqlalchemy.ext.asyncio.AsyncSession`` object as
