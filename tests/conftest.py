@@ -5,6 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 
 import aiohttp_sqlalchemy
 from aiohttp_sqlalchemy import sa_bind, sa_middleware
+from aiohttp_sqlalchemy.constants import DEFAULT_KEY
 
 
 pytest_plugins = 'aiohttp.pytest_plugin'
@@ -23,7 +24,7 @@ def sa_session(sa_session_factory):
 
 @pytest.fixture
 def sa_main_middleware():
-    return sa_middleware('sa_main')
+    return sa_middleware(DEFAULT_KEY)
 
 
 from aiohttp.hdrs import METH_GET
