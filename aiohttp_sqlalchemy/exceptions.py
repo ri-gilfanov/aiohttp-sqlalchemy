@@ -4,7 +4,7 @@ class AbstractDuplicateKeyError(ValueError):
 
 class DuplicateAppKeyError(AbstractDuplicateKeyError):
     def __init__(self, key: str):
-        self.message = f'Duplicated app key `{key}`. Check `engines` ' \
+        self.message = f'Duplicated app key `{key}`. Check `bindings` ' \
                        f' argument in `aiohttp_sqlalchemy.setup()` call.'
         super().__init__(self.message)
 

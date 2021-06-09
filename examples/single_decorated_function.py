@@ -1,14 +1,19 @@
 from aiohttp import web
-import aiohttp_sqlalchemy
-from aiohttp_sqlalchemy import sa_decorator, sa_bind
 from datetime import datetime
 import sqlalchemy as sa
 from sqlalchemy import orm
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
+from typing import TYPE_CHECKING
+
+import aiohttp_sqlalchemy
+from aiohttp_sqlalchemy import sa_bind, sa_decorator
+
+if TYPE_CHECKING:
+    from typing import Any
 
 
 metadata = sa.MetaData()
-Base = orm.declarative_base(metadata=metadata)
+Base: 'Any' = orm.declarative_base(metadata=metadata)
 
 
 class Request(Base):

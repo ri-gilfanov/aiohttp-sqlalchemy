@@ -177,12 +177,12 @@ Nested apps
 
 Change log
 ----------
-Version 0.9.0
-^^^^^^^^^^^^^
+Version 0.9
+^^^^^^^^^^^
 Added
 """""
-Added support of handlers in class for a ``sa_decorator(key)``. For example
-``app.add_routes([web.get('/', MyClass().my_get_method)])``.
+``sa_decorator(key)`` added support of `organized handlers in class
+<https://docs.aiohttp.org/en/stable/web_quickstart.html#organizing-handlers-in-classes>`_.
 
 Removed
 """""""
@@ -190,8 +190,8 @@ Removed support of ``AsyncEngine`` type in ``sa_bind()`` signature. Use
 ``sessionmaker(engine, AsyncSession)`` or custom session factory returning
 ``AsyncSession`` instance.
 
-Version 0.8.0
-^^^^^^^^^^^^^
+Version 0.8
+^^^^^^^^^^^
 Changed
 """""""
 Rename first argument from ``arg`` to ``factory`` in ``sa_bind()`` signature.
@@ -202,8 +202,8 @@ Deprecated
 ``sessionmaker(engine, AsyncSession)`` or custom session factory returning
 ``AsyncSession`` instance.
 
-Version 0.7.0
-^^^^^^^^^^^^^
+Version 0.7
+^^^^^^^^^^^
 Changed
 """""""
 Usage ``sqlalchemy.orm.sessionmaker`` instance is recomended as a first
@@ -216,8 +216,8 @@ Removed support of ``request.config_dict.get('sa_main')`` and
 ``request.app['sa_main']`` expressions. Use a ``request['sa_main'].bind``
 expression.
 
-Version 0.6.0
-^^^^^^^^^^^^^
+Version 0.6
+^^^^^^^^^^^
 Added
 """""
 Add support ``sqlalchemy.orm.sessionmaker`` as a first argument in function
@@ -242,8 +242,8 @@ Deprecated class ``views.SAViewMixin`` is removed. Use
 Deprecated attribute ``SAView.sa_main_session`` is removed. Use method
 ``SAView.sa_session(key: str = 'sa_main')``.
 
-Version 0.5.0
-^^^^^^^^^^^^^
+Version 0.5
+^^^^^^^^^^^
 Removed
 """""""
 Deprecated function ``aiohttp_sqlalchemy.sa_engine()`` is removed. Use
@@ -254,8 +254,8 @@ Deprecated
 Undocumented class ``views.SAViewMixin`` is deprecated. Use
 ``views.SAAbstractView``.
 
-Version 0.4.0
-^^^^^^^^^^^^^
+Version 0.4
+^^^^^^^^^^^
 Added
 """""
 ``SAView.sa_session(key: str = 'sa_main')`` function is added instead
@@ -266,8 +266,8 @@ Deprecated
 ``SAView.sa_main_session`` is deprecated. Use
 ``SAView.sa_session(key: str = 'sa_main')``.
 
-Version 0.3.0
-^^^^^^^^^^^^^
+Version 0.3
+^^^^^^^^^^^
 Added
 """""
 ``aiohttp_sqlalchemy.sa_bind()`` function is added instead

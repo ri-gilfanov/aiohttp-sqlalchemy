@@ -16,7 +16,7 @@ if TYPE_CHECKING:
     TSABinding = Tuple[TSessionFactory, str, bool]
 
 
-__version__ = '0.9.0'
+__version__ = '0.9.1'
 
 __all__ = ['DuplicateAppKeyError', 'DuplicateRequestKeyError', 'SABaseView',
            'sa_bind', 'sa_decorator', 'sa_middleware', 'SAView', 'setup',]
@@ -30,11 +30,11 @@ def sa_bind(factory: 'TSessionFactory', key: str = DEFAULT_KEY, *,
 
 def setup(app: 'Application', bindings: 'Iterable[TSABinding]'):
     """ Setup function for binding SQLAlchemy engines. """
-    for Session, key, middleware in bindings:
+    for factory, key, middleware in bindings:
         if key in app:
             raise DuplicateAppKeyError(key)
 
-        app[key] = Session
+        app[key] = factory
 
         if middleware:
             app.middlewares.append(sa_middleware(key))
