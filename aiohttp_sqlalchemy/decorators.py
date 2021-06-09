@@ -6,10 +6,12 @@ from aiohttp_sqlalchemy.constants import DEFAULT_KEY
 from aiohttp_sqlalchemy.exceptions import DuplicateRequestKeyError
 
 if TYPE_CHECKING:
-    from aiohttp.web import StreamResponse
+    from aiohttp.web import Request, StreamResponse
+    from typing import Awaitable, Callable, Union, Type
 
 
-def sa_decorator(key: str = DEFAULT_KEY):
+def sa_decorator(key: str = DEFAULT_KEY) \
+        -> 'Callable[..., Union[Type[AbstractView], Callable[..., Request]]]':
     """ SQLAlchemy asynchronous handler decorator. """
     def wrapper(handler):
         @wraps(handler)

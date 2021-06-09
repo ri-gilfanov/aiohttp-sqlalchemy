@@ -6,10 +6,14 @@ import sqlalchemy as sa
 from sqlalchemy import orm
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from random import choice
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from typing import Any
 
 
 metadata = sa.MetaData()
-Base = orm.declarative_base(metadata=metadata)
+Base: 'Any' = orm.declarative_base(metadata=metadata)
 
 
 class Request(Base):
