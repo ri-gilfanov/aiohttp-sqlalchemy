@@ -2,7 +2,10 @@
 aiohttp-sqlalchemy
 ==================
 .. image:: https://travis-ci.com/ri-gilfanov/aiohttp-sqlalchemy.svg?branch=master
-    :target: https://travis-ci.com/ri-gilfanov/aiohttp-sqlalchemy
+  :target: https://travis-ci.com/ri-gilfanov/aiohttp-sqlalchemy
+
+.. image:: https://coveralls.io/repos/github/ri-gilfanov/aiohttp-sqlalchemy/badge.svg?branch=master
+  :target: https://coveralls.io/github/ri-gilfanov/aiohttp-sqlalchemy?branch=master
 
 SQLAlchemy 1.4 / 2.0 support for aiohttp.
 
