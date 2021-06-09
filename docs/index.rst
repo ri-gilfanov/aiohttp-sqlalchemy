@@ -202,6 +202,12 @@ Nested apps
 
 Change log
 ----------
+Version 0.10
+^^^^^^^^^^^^
+Added
+"""""
+* Added support Python 3.7.
+
 Version 0.9
 ^^^^^^^^^^^
 Added
