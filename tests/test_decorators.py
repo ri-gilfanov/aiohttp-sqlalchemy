@@ -1,8 +1,7 @@
 import pytest
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from aiohttp_sqlalchemy import sa_decorator
-from aiohttp_sqlalchemy.exceptions import DuplicateRequestKeyError
+from aiohttp_sqlalchemy import DuplicateRequestKeyError, sa_decorator
 from tests.conftest import ClassBasedView, ClassHandler, function_handler
 
 

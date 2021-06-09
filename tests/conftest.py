@@ -1,11 +1,10 @@
-from aiohttp_sqlalchemy.middlewares import sa_middleware
 from aiohttp import web
 import pytest
 from sqlalchemy import orm
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 
 import aiohttp_sqlalchemy
-from aiohttp_sqlalchemy import sa_bind
+from aiohttp_sqlalchemy import sa_bind, sa_middleware
 
 
 pytest_plugins = 'aiohttp.pytest_plugin'

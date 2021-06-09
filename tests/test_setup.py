@@ -2,8 +2,7 @@ from aiohttp import web
 import pytest
 
 import aiohttp_sqlalchemy
-from aiohttp_sqlalchemy import sa_bind
-from aiohttp_sqlalchemy.exceptions import DuplicateAppKeyError
+from aiohttp_sqlalchemy import DuplicateAppKeyError, sa_bind
 
 
 async def test_duplicate_app_key_error(sa_session_factory):
