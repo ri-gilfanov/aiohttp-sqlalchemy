@@ -9,9 +9,17 @@ if TYPE_CHECKING:
     from aiohttp.web import Request, StreamResponse
     from typing import Awaitable, Callable, Union, Type
 
+    TSADecoratorResult = Callable[
+        ...,
+        Union[
+            Type[AbstractView],
+            Callable[[Request], Awaitable[StreamResponse]]
+        ]
+    ]
+
 
 def sa_decorator(key: str = DEFAULT_KEY) \
-        -> 'Callable[..., Union[Type[AbstractView], Callable[[Request], Awaitable[StreamResponse]]]]':
+        -> 'TSADecoratorResult':
     """ SQLAlchemy asynchronous handler decorator. """
     def wrapper(handler):
         @wraps(handler)

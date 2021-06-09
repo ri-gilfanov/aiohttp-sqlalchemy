@@ -1,5 +1,4 @@
-from aiohttp_sqlalchemy import SABaseView
-from aiohttp_sqlalchemy.constants import DEFAULT_KEY
+from aiohttp_sqlalchemy import DEFAULT_KEY, SABaseView
 
 
 def test_sa_session(mocked_request, sa_session):
