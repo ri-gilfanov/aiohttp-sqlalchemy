@@ -1,6 +1,9 @@
 ==================
 aiohttp-sqlalchemy
 ==================
+.. image:: https://travis-ci.com/ri-gilfanov/aiohttp-sqlalchemy.svg?branch=master
+    :target: https://travis-ci.com/ri-gilfanov/aiohttp-sqlalchemy
+
 SQLAlchemy 1.4 / 2.0 support for aiohttp.
 
 Library forward a ``sqlalchemy.ext.asyncio.AsyncSession`` object as
