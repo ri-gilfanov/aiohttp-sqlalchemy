@@ -2,7 +2,8 @@ from typing import TYPE_CHECKING
 
 from aiohttp_sqlalchemy.constants import DEFAULT_KEY
 from aiohttp_sqlalchemy.decorators import sa_decorator
-from aiohttp_sqlalchemy.exceptions import DuplicateAppKeyError, DuplicateRequestKeyError
+from aiohttp_sqlalchemy.exceptions import DuplicateAppKeyError, \
+                                          DuplicateRequestKeyError
 from aiohttp_sqlalchemy.middlewares import sa_middleware
 from aiohttp_sqlalchemy.views import SAAbstractView, SABaseView, SAView
 
@@ -16,7 +17,7 @@ if TYPE_CHECKING:
     TSABinding = Tuple[TSessionFactory, str, bool]
 
 
-__version__ = '0.9.2'
+__version__ = '0.9.3'
 
 __all__ = ['DuplicateAppKeyError', 'DuplicateRequestKeyError',
            'SAAbstractView', 'SABaseView', 'sa_bind', 'sa_decorator',

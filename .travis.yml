@@ -4,6 +4,9 @@ python:
 before_install:
 - pip install poetry
 install:
+- pip install coveralls
 - poetry install
 script:
-- pytest --cov=aiohttp_sqlalchemy tests/
+- pytest --cov=aiohttp_sqlalchemy
+after_success:
+- coveralls

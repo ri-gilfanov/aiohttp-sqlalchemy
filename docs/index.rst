@@ -17,10 +17,35 @@ Welcome to aiohttp-sqlalchemy's documentation!
 
 Overview
 --------
+.. image:: https://readthedocs.org/projects/aiohttp-sqlalchemy/badge/?version=latest
+  :target: https://aiohttp-sqlalchemy.readthedocs.io/en/latest/?badge=latest
+  :alt: Documentation Status
+
+.. image:: https://badge.fury.io/py/aiohttp-sqlalchemy.svg
+  :target: https://badge.fury.io/py/aiohttp-sqlalchemy
+
+.. image:: https://img.shields.io/pypi/dm/aiohttp-sqlalchemy
+  :target: https://pypistats.org/packages/aiohttp-sqlalchemy
+  :alt: Downloads count
+
+.. image:: https://travis-ci.com/ri-gilfanov/aiohttp-sqlalchemy.svg?branch=master
+  :target: https://travis-ci.com/ri-gilfanov/aiohttp-sqlalchemy
+
+.. image:: https://coveralls.io/repos/github/ri-gilfanov/aiohttp-sqlalchemy/badge.svg?branch=master
+  :target: https://coveralls.io/github/ri-gilfanov/aiohttp-sqlalchemy?branch=master
+
 SQLAlchemy 1.4 / 2.0 support for aiohttp.
 
-Library forward a ``sqlalchemy.ext.asyncio.AsyncSession`` object as
-``request['sa_main']`` or ``SAView.sa_session()`` by default.
+The library provides the next features:
+
+* forwarding SQLAlchemy asynchronous sessions for function handlers, class
+  organized handlers, and class based view methods;
+* a middleware factory ``sa_middleware(key: str = 'sa_main')'`` for forwarding
+  sessions as ``request[key]`` for all your request handlers;
+* a decorator ``sa_decorator(key: str = 'sa_main')`` for forwarding sessions
+  as ``request[key]`` for your chosen handlers;
+* a parent class ``SAView`` for forwarding sessions as
+  ``SAView.sa_session(key: str = 'sa_main')`` method.
 
 
 Installation
