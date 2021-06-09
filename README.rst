@@ -1,6 +1,10 @@
 ==================
 aiohttp-sqlalchemy
 ==================
+.. image:: https://readthedocs.org/projects/aiohttp-sqlalchemy/badge/?version=latest
+  :target: https://aiohttp-sqlalchemy.readthedocs.io/en/latest/?badge=latest
+  :alt: Documentation Status
+
 .. image:: https://badge.fury.io/py/aiohttp-sqlalchemy.svg
   :target: https://badge.fury.io/py/aiohttp-sqlalchemy
 
