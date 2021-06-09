@@ -22,7 +22,7 @@ copyright = '2021, Ruslan Ilyasovich Gilfanov'
 author = 'Ruslan Ilyasovich Gilfanov'
 
 # The full version, including alpha/beta/rc tags
-release = '0.9.2'
+release = '0.9.3'
 
 
 # -- General configuration ---------------------------------------------------
