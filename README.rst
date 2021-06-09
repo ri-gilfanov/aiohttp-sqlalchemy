@@ -8,6 +8,10 @@ aiohttp-sqlalchemy
 .. image:: https://badge.fury.io/py/aiohttp-sqlalchemy.svg
   :target: https://badge.fury.io/py/aiohttp-sqlalchemy
 
+.. image:: https://img.shields.io/pypi/dm/aiohttp-sqlalchemy
+  :target: https://pypistats.org/packages/aiohttp-sqlalchemy
+  :alt: Downloads count
+
 .. image:: https://travis-ci.com/ri-gilfanov/aiohttp-sqlalchemy.svg?branch=master
   :target: https://travis-ci.com/ri-gilfanov/aiohttp-sqlalchemy
 
