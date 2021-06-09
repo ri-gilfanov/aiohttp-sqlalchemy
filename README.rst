@@ -1,6 +1,9 @@
 ==================
 aiohttp-sqlalchemy
 ==================
+.. image:: https://badge.fury.io/py/aiohttp-sqlalchemy.svg
+  :target: https://badge.fury.io/py/aiohttp-sqlalchemy
+
 .. image:: https://travis-ci.com/ri-gilfanov/aiohttp-sqlalchemy.svg?branch=master
   :target: https://travis-ci.com/ri-gilfanov/aiohttp-sqlalchemy
 
