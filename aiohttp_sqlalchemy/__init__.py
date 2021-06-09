@@ -1,25 +1,26 @@
-from sqlalchemy.ext.asyncio import AsyncSession
 from typing import TYPE_CHECKING
 
 from aiohttp_sqlalchemy.constants import DEFAULT_KEY
 from aiohttp_sqlalchemy.decorators import sa_decorator
 from aiohttp_sqlalchemy.exceptions import DuplicateAppKeyError, DuplicateRequestKeyError
 from aiohttp_sqlalchemy.middlewares import sa_middleware
-from aiohttp_sqlalchemy.views import SABaseView, SAView
+from aiohttp_sqlalchemy.views import SAAbstractView, SABaseView, SAView
 
 
 if TYPE_CHECKING:
     from aiohttp.web import Application
+    from sqlalchemy.ext.asyncio import AsyncSession
     from typing import Callable, Iterable, Tuple
 
     TSessionFactory = Callable[..., AsyncSession]
     TSABinding = Tuple[TSessionFactory, str, bool]
 
 
-__version__ = '0.9.1'
+__version__ = '0.9.2'
 
-__all__ = ['DuplicateAppKeyError', 'DuplicateRequestKeyError', 'SABaseView',
-           'sa_bind', 'sa_decorator', 'sa_middleware', 'SAView', 'setup',]
+__all__ = ['DuplicateAppKeyError', 'DuplicateRequestKeyError',
+           'SAAbstractView', 'SABaseView', 'sa_bind', 'sa_decorator',
+           'sa_middleware', 'SAView', 'setup',]
 
 
 def sa_bind(factory: 'TSessionFactory', key: str = DEFAULT_KEY, *,

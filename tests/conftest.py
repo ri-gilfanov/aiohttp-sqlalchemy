@@ -1,11 +1,13 @@
-from aiohttp_sqlalchemy.middlewares import sa_middleware
 from aiohttp import web
+from aiohttp.hdrs import METH_GET
+from aiohttp.test_utils import make_mocked_request
 import pytest
 from sqlalchemy import orm
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 
 import aiohttp_sqlalchemy
-from aiohttp_sqlalchemy import sa_bind
+from aiohttp_sqlalchemy import sa_bind, sa_middleware
+from aiohttp_sqlalchemy.constants import DEFAULT_KEY
 
 
 pytest_plugins = 'aiohttp.pytest_plugin'
@@ -24,11 +26,8 @@ def sa_session(sa_session_factory):
 
 @pytest.fixture
 def sa_main_middleware():
-    return sa_middleware('sa_main')
+    return sa_middleware(DEFAULT_KEY)
 
-
-from aiohttp.hdrs import METH_GET
-from aiohttp.test_utils import make_mocked_request
 
 @pytest.fixture
 def middlewared_app(sa_session_factory):
