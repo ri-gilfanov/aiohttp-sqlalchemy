@@ -36,7 +36,7 @@ SQLAlchemy = "^1.4.17"
 [tool.poetry.dev-dependencies]
 asyncpg = ">=0.23.0"
 aiosqlite = ">=0.17.0"
-mypy = ">=0.812"
+mypy = ">=0.901"
 pytest = ">=6.2.4"
 pytest-cov = ">=2.12.1"
 Sphinx = ">=4.0.2"
