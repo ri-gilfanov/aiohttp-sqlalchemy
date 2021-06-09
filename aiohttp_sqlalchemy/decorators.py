@@ -16,7 +16,6 @@ def sa_decorator(key: str = DEFAULT_KEY) \
     def wrapper(handler):
         @wraps(handler)
         async def wrapped(*args, **kwargs) -> 'StreamResponse':
-            print(*args)
             request = args[0].request \
                       if isinstance(args[0], AbstractView) \
                       else args[-1]
