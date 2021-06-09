@@ -7,7 +7,7 @@ from aiohttp_sqlalchemy.exceptions import DuplicateRequestKeyError
 
 if TYPE_CHECKING:
     from aiohttp.web import Request, StreamResponse
-    from typing import Awaitable, Callable, Union, Type
+    from typing import Callable, Union, Type
 
 
 def sa_decorator(key: str = DEFAULT_KEY) \

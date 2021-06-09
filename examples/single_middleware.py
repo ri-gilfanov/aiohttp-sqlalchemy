@@ -1,11 +1,12 @@
 from aiohttp import web
-import aiohttp_sqlalchemy
-from aiohttp_sqlalchemy import sa_bind
 from datetime import datetime
 import sqlalchemy as sa
 from sqlalchemy import orm
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from typing import TYPE_CHECKING
+
+import aiohttp_sqlalchemy
+from aiohttp_sqlalchemy import sa_bind
 
 if TYPE_CHECKING:
     from typing import Any
