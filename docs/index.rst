@@ -38,14 +38,10 @@ SQLAlchemy 1.4 / 2.0 support for aiohttp.
 
 The library provides the next features:
 
-* forwarding SQLAlchemy asynchronous sessions for function handlers, class
-  organized handlers, and class based view methods;
-* a middleware factory ``sa_middleware(key: str = 'sa_main')'`` for forwarding
-  sessions as ``request[key]`` for all your request handlers;
-* a decorator ``sa_decorator(key: str = 'sa_main')`` for forwarding sessions
-  as ``request[key]`` for your chosen handlers;
-* a parent class ``SAView`` for forwarding sessions as
-  ``SAView.sa_session(key: str = 'sa_main')`` method.
+* initializing asynchronous sessions through a middlewares;
+* initializing asynchronous sessions through a decorators;
+* simple access to one asynchronous session by default key;
+* support for different types of request handlers.
 
 
 Installation
