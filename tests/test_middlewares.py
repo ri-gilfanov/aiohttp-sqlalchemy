@@ -5,10 +5,10 @@ from aiohttp_sqlalchemy import DEFAULT_KEY, DuplicateRequestKeyError
 from tests.conftest import function_handler
 
 
-async def test_duplicate_request_key_error(sa_main_middleware, mocked_request, sa_session):
+async def test_duplicate_request_key_error(sa_main_middleware, mocked_request, orm_session):
     assert mocked_request.get(DEFAULT_KEY) is None
-    mocked_request[DEFAULT_KEY] = sa_session
-    assert mocked_request.get(DEFAULT_KEY) is sa_session
+    mocked_request[DEFAULT_KEY] = orm_session
+    assert mocked_request.get(DEFAULT_KEY) is orm_session
 
     with pytest.raises(DuplicateRequestKeyError):
         await sa_main_middleware(mocked_request, function_handler)
