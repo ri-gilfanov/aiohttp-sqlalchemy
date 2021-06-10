@@ -203,6 +203,12 @@ Nested apps
 
 Change log
 ----------
+Version 0.11
+^^^^^^^^^^^^
+Added
+"""""
+* Added ``sa_session(request, key='sa_main')`` utility.
+
 Version 0.10
 ^^^^^^^^^^^^
 Added
