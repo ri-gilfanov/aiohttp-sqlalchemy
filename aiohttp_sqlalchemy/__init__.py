@@ -5,6 +5,7 @@ from aiohttp_sqlalchemy.decorators import sa_decorator
 from aiohttp_sqlalchemy.exceptions import DuplicateAppKeyError, \
                                           DuplicateRequestKeyError
 from aiohttp_sqlalchemy.middlewares import sa_middleware
+from aiohttp_sqlalchemy.utils import sa_session
 from aiohttp_sqlalchemy.views import SAAbstractView, SABaseView, SAView
 
 
@@ -17,11 +18,11 @@ if TYPE_CHECKING:
     TSABinding = Tuple[TSessionFactory, str, bool]
 
 
-__version__ = '0.10.0'
+__version__ = '0.11.0'
 
 __all__ = ['DuplicateAppKeyError', 'DuplicateRequestKeyError',
            'SAAbstractView', 'SABaseView', 'sa_bind', 'sa_decorator',
-           'sa_middleware', 'SAView', 'setup',]
+           'sa_middleware', 'sa_session', 'SAView', 'setup',]
 
 
 def sa_bind(factory: 'TSessionFactory', key: str = DEFAULT_KEY, *,

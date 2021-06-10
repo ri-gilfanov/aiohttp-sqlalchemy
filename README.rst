@@ -22,14 +22,10 @@ SQLAlchemy 1.4 / 2.0 support for aiohttp.
 
 The library provides the next features:
 
-* forwarding SQLAlchemy asynchronous sessions for function handlers, class
-  organized handlers, and class based view methods;
-* a middleware factory ``sa_middleware(key: str = 'sa_main')'`` for forwarding
-  sessions as ``request[key]`` for all your request handlers;
-* a decorator ``sa_decorator(key: str = 'sa_main')`` for forwarding sessions
-  as ``request[key]`` for your chosen handlers;
-* a parent class ``SAView`` for forwarding sessions as
-  ``SAView.sa_session(key: str = 'sa_main')`` method.
+* initializing asynchronous sessions through a middlewares;
+* initializing asynchronous sessions through a decorators;
+* simple access to one asynchronous session by default key;
+* support for different types of request handlers.
 
 
 Documentation
@@ -56,7 +52,7 @@ Copy and paste this code in a file and run:
 
   from aiohttp import web
   import aiohttp_sqlalchemy
-  from aiohttp_sqlalchemy import sa_bind
+  from aiohttp_sqlalchemy import sa_bind, sa_session
   from datetime import datetime
   import sqlalchemy as sa
   from sqlalchemy import orm
@@ -74,12 +70,12 @@ Copy and paste this code in a file and run:
 
 
   async def main(request):
-      async with request['sa_main'].bind.begin() as conn:
+      async with sa_session(request).bind.begin() as conn:
           await conn.run_sync(Base.metadata.create_all)
 
-      async with request['sa_main'].begin():
-          request['sa_main'].add_all([MyModel()])
-          result = await request['sa_main'].execute(sa.select(MyModel))
+      async with sa_session(request).begin():
+          sa_session(request).add_all([MyModel()])
+          result = await sa_session(request).execute(sa.select(MyModel))
           data = {r.id: r.timestamp.isoformat() for r in result.scalars()}
           return web.json_response(data)
 

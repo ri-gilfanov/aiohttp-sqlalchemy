@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from typing import TYPE_CHECKING
 
 import aiohttp_sqlalchemy
-from aiohttp_sqlalchemy import sa_bind
+from aiohttp_sqlalchemy import sa_bind, sa_session
 
 if TYPE_CHECKING:
     from typing import Any
@@ -23,12 +23,12 @@ class Request(Base):
 
 
 async def main(request):
-    async with request['sa_main'].bind.begin() as conn:
+    async with sa_session(request).bind.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
 
-    async with request['sa_main'].begin():
-        request['sa_main'].add_all([Request()])
-        result = await request['sa_main'].execute(sa.select(Request))
+    async with sa_session(request).begin():
+        sa_session(request).add_all([Request()])
+        result = await sa_session(request).execute(sa.select(Request))
         data = {r.id: r.timestamp.isoformat() for r in result.scalars()}
         return web.json_response(data)
 
