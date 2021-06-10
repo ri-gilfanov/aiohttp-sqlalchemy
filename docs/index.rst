@@ -106,11 +106,11 @@ Copy and paste this code in a file and run:
 SQLAlchemy and Asyncio
 ----------------------
 See `Asynchronous I/O (asyncio) <https://docs.sqlalchemy.org/en/14/orm/extensions/asyncio.html>`_
-section in SQLAlchemy 1.4 Documentation.
+section in SQLAlchemy 1.4 documentation.
 
 
-Binding multiple engines
-------------------------
+Binding multiple session factories
+----------------------------------
 .. code-block:: python
 
   main_engine = create_async_engine('postgresql+asyncpg://user:password@host/database')
@@ -127,6 +127,11 @@ Binding multiple engines
       sa_bind(ThirdSession, 'sa_third'),
   ])
 
+Binding multiple engines to one session factory
+-----------------------------------------------
+See `Partitioning Strategies (e.g. multiple database backends per Session)
+<https://docs.sqlalchemy.org/en/14/orm/persistence_techniques.html#partitioning-strategies-e-g-multiple-database-backends-per-session>`_
+section in SQLAlchemy 1.4 documentation.
 
 Class based views
 -----------------
