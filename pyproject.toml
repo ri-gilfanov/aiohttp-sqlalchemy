@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "aiohttp-sqlalchemy"
-version = "0.11.0"
+version = "0.11.2"
 description = "SQLAlchemy 1.4 / 2.0 support for aiohttp."
 authors = [
     "Ruslan Ilyasovich Gilfanov <ri.gilfanov@yandex.ru>",
@@ -32,12 +32,12 @@ exclude_lines = [
 [tool.poetry.dependencies]
 python = "^3.7"
 aiohttp = "^3.7.4.post0"
-SQLAlchemy = "^1.4.17"
+SQLAlchemy = "^1.4.18"
 
 [tool.poetry.dev-dependencies]
 asyncpg = ">=0.23.0"
 aiosqlite = ">=0.17.0"
-mypy = ">=0.901"
+mypy = ">=0.902"
 pytest = ">=6.2.4"
 pytest-cov = ">=2.12.1"
 Sphinx = ">=4.0.2"

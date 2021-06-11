@@ -5,8 +5,8 @@ aiohttp-sqlalchemy
   :target: https://aiohttp-sqlalchemy.readthedocs.io/en/latest/?badge=latest
   :alt: Documentation Status
 
-.. image:: https://badge.fury.io/py/aiohttp-sqlalchemy.svg
-  :target: https://badge.fury.io/py/aiohttp-sqlalchemy
+.. image:: https://img.shields.io/badge/Python-3.7%20%7C%203.8%20%7C%203.9-blue
+  :target: https://pypi.org/project/aiohttp-sqlalchemy/
 
 .. image:: https://img.shields.io/pypi/dm/aiohttp-sqlalchemy
   :target: https://pypistats.org/packages/aiohttp-sqlalchemy
@@ -70,13 +70,16 @@ Copy and paste this code in a file and run:
 
 
   async def main(request):
-      async with sa_session(request).bind.begin() as conn:
-          await conn.run_sync(Base.metadata.create_all)
+      db_session = sa_session(request)
 
-      async with sa_session(request).begin():
-          sa_session(request).add_all([MyModel()])
-          result = await sa_session(request).execute(sa.select(MyModel))
-          data = {r.id: r.timestamp.isoformat() for r in result.scalars()}
+      async with db_session.bind.begin() as connection:
+          await connection.run_sync(Base.metadata.create_all)
+
+      async with db_session.begin():
+          db_session.add_all([MyModel()])
+          result = await db_session.execute(sa.select(MyModel))
+          data = {record.id: record.timestamp.isoformat()
+                  for record in result.scalars()}
           return web.json_response(data)
 
 
