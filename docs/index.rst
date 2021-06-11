@@ -21,8 +21,8 @@ Overview
   :target: https://aiohttp-sqlalchemy.readthedocs.io/en/latest/?badge=latest
   :alt: Documentation Status
 
-.. image:: https://badge.fury.io/py/aiohttp-sqlalchemy.svg
-  :target: https://badge.fury.io/py/aiohttp-sqlalchemy
+.. image:: https://img.shields.io/badge/Python-3.7%20%7C%203.8%20%7C%203.9-blue
+  :target: https://pypi.org/project/aiohttp-sqlalchemy/
 
 .. image:: https://img.shields.io/pypi/dm/aiohttp-sqlalchemy
   :target: https://pypistats.org/packages/aiohttp-sqlalchemy
