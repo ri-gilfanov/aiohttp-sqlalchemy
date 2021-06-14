@@ -13,9 +13,13 @@ pytest_plugins = 'aiohttp.pytest_plugin'
 
 
 @pytest.fixture
-def orm_session_factory():
-    engine = create_async_engine('sqlite+aiosqlite:///')
-    return orm.sessionmaker(engine, AsyncSession)
+def orm_async_engine():
+    return create_async_engine('sqlite+aiosqlite:///')
+
+
+@pytest.fixture
+def orm_session_factory(orm_async_engine):
+    return orm.sessionmaker(orm_async_engine, AsyncSession)
 
 
 @pytest.fixture

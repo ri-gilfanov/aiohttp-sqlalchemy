@@ -7,7 +7,7 @@ from aiohttp_sqlalchemy.constants import DEFAULT_KEY
 
 if TYPE_CHECKING:
     from sqlalchemy.ext.asyncio import AsyncSession
-    from typing import Any
+    from typing import Any, Optional
 
 
 class SAAbstractView(AbstractView, metaclass=ABCMeta):
@@ -18,8 +18,10 @@ class SAAbstractView(AbstractView, metaclass=ABCMeta):
 
     Suitable for a specific usage with multiple models.
     """
-    def sa_session(self, key: str = DEFAULT_KEY) -> 'AsyncSession':
-        return self.request[key]
+    sa_session_key: 'str' = DEFAULT_KEY
+
+    def sa_session(self, key: 'Optional[str]' = None) -> 'AsyncSession':
+        return self.request[key or self.sa_session_key]
 
 
 class SAOneModelMixin(SAAbstractView, metaclass=ABCMeta):
