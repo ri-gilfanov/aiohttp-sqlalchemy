@@ -2,7 +2,6 @@ from aiohttp import web
 from datetime import datetime
 import sqlalchemy as sa
 from sqlalchemy import orm
-from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from typing import TYPE_CHECKING
 
 import aiohttp_sqlalchemy
@@ -38,9 +37,7 @@ async def main(request):
 
 app = web.Application()
 
-engine = create_async_engine('sqlite+aiosqlite:///')
-Session = orm.sessionmaker(engine, AsyncSession)
-aiohttp_sqlalchemy.setup(app, [sa_bind(Session)])
+aiohttp_sqlalchemy.setup(app, [sa_bind('sqlite+aiosqlite:///')])
 
 app.add_routes([web.get('/', main)])
 

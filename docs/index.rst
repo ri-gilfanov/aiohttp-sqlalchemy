@@ -67,7 +67,6 @@ Copy and paste this code in a file and run:
   from datetime import datetime
   import sqlalchemy as sa
   from sqlalchemy import orm
-  from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 
 
   metadata = sa.MetaData()
@@ -96,9 +95,7 @@ Copy and paste this code in a file and run:
 
   app = web.Application()
 
-  engine = create_async_engine('sqlite+aiosqlite:///')
-  Session = orm.sessionmaker(engine, AsyncSession)
-  aiohttp_sqlalchemy.setup(app, [sa_bind(Session)])
+  aiohttp_sqlalchemy.setup(app, [sa_bind('sqlite+aiosqlite:///')])
 
   app.add_routes([web.get('/', main)])
 
@@ -115,6 +112,8 @@ section in SQLAlchemy 1.4 documentation.
 Binding multiple session factories
 ----------------------------------
 .. code-block:: python
+
+  from aiohttp_sqlalchemy import sa_bind
 
   main_engine = create_async_engine('postgresql+asyncpg://user:password@host/database')
   second_engine = create_async_engine('mysql+aiomysql://user:password@host/database')
@@ -211,6 +210,13 @@ Unreleased
 Added
 """""
 * Added ``sa_session_key`` attribute in ``SAAbstractView`` class.
+* Added support url and ``AssyncEngine`` instance as first argument
+  in ``sa_bind()``.
+
+Changed
+"""""""
+* Rename first argument from ``factory`` to ``bind_to`` in ``sa_bind()``.
+  signature.
 
 Version 0.11
 ^^^^^^^^^^^^
