@@ -205,8 +205,8 @@ Nested apps
 
 Change log
 ----------
-Unreleased
-^^^^^^^^^^
+Version 0.12
+^^^^^^^^^^^^
 Added
 """""
 * Added ``sa_session_key`` attribute in ``SAAbstractView`` class.
