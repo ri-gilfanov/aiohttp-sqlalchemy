@@ -11,35 +11,37 @@ Welcome to aiohttp-sqlalchemy's documentation!
   :caption: Contents:
 
 .. contents:: Table of Contents
-  :depth: 2
+  :depth: 1
   :local:
 
 
 Overview
 --------
-.. image:: https://readthedocs.org/projects/aiohttp-sqlalchemy/badge/?version=latest
-  :target: https://aiohttp-sqlalchemy.readthedocs.io/en/latest/?badge=latest
-  :alt: Documentation Status
+|Release| |Python versions| |Downloads count| |Build status| |Test coverage| |Documantation|
 
-.. image:: https://badge.fury.io/py/aiohttp-sqlalchemy.svg
+.. |Release| image:: https://badge.fury.io/py/aiohttp-sqlalchemy.svg
   :target: https://pypi.org/project/aiohttp-sqlalchemy/
-  :alt: Package version
+  :alt: Release
 
-.. image:: https://img.shields.io/badge/Python-3.7%20%7C%203.8%20%7C%203.9-blue
+.. |Python versions| image:: https://img.shields.io/badge/Python-3.7%20%7C%203.8%20%7C%203.9-blue
   :target: https://pypi.org/project/aiohttp-sqlalchemy/
-  :alt: Python versions supported
+  :alt: Python versions
 
-.. image:: https://img.shields.io/pypi/dm/aiohttp-sqlalchemy
+.. |Downloads count| image:: https://img.shields.io/pypi/dm/aiohttp-sqlalchemy
   :target: https://pypistats.org/packages/aiohttp-sqlalchemy
   :alt: Downloads count
 
-.. image:: https://travis-ci.com/ri-gilfanov/aiohttp-sqlalchemy.svg?branch=master
+.. |Build status| image:: https://travis-ci.com/ri-gilfanov/aiohttp-sqlalchemy.svg?branch=master
   :target: https://travis-ci.com/ri-gilfanov/aiohttp-sqlalchemy
   :alt: Build status
 
-.. image:: https://coveralls.io/repos/github/ri-gilfanov/aiohttp-sqlalchemy/badge.svg?branch=master
+.. |Test coverage| image:: https://coveralls.io/repos/github/ri-gilfanov/aiohttp-sqlalchemy/badge.svg?branch=master
   :target: https://coveralls.io/github/ri-gilfanov/aiohttp-sqlalchemy?branch=master
   :alt: Test coverage
+
+.. |Documantation| image:: https://readthedocs.org/projects/aiohttp-sqlalchemy/badge/?version=latest
+  :target: https://aiohttp-sqlalchemy.readthedocs.io/en/latest/?badge=latest
+  :alt: Documentation
 
 SQLAlchemy 1.4 / 2.0 support for aiohttp.
 
@@ -219,7 +221,7 @@ Change log
 Version 0.13
 ^^^^^^^^^^^^
 Changed
-"""""
+"""""""
 * Argument ``expire_on_commit`` of ``sessionmaker`` set to ``False``
   by default.
 
