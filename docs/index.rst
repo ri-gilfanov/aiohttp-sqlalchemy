@@ -205,11 +205,12 @@ Nested apps
 
 Change log
 ----------
-Unreleased
-^^^^^^^^^^
+Version 0.13
+^^^^^^^^^^^^
 Changed
 """""
-* Argument ``expire_on_commit`` of ``sessionmaker`` set to `False` by default.
+* Argument ``expire_on_commit`` of ``sessionmaker`` set to ``False``
+  by default.
 
 Version 0.12
 ^^^^^^^^^^^^
