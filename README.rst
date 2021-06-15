@@ -64,7 +64,7 @@ Copy and paste this code in a file and run:
 
   class MyModel(Base):
       __tablename__ = 'my_table'
-      id = sa.Column(sa.Integer, primary_key=True)
+      pk = sa.Column(sa.Integer, primary_key=True)
       timestamp = sa.Column(sa.DateTime(), default=datetime.now)
 
 
@@ -77,15 +77,18 @@ Copy and paste this code in a file and run:
       async with db_session.begin():
           db_session.add_all([MyModel()])
           result = await db_session.execute(sa.select(MyModel))
-          data = {record.id: record.timestamp.isoformat()
-                  for record in result.scalars()}
-          return web.json_response(data)
+          items = result.scalars().all()
+
+      data = {}
+      for item in items:
+          data[item.pk] = item.timestamp.isoformat()
+
+      return web.json_response(data)
 
 
   app = web.Application()
-
-  aiohttp_sqlalchemy.setup(app, [sa_bind('sqlite+aiosqlite:///')])
-
+  binding = sa_bind('sqlite+aiosqlite:///')
+  aiohttp_sqlalchemy.setup(app, [binding])
   app.add_routes([web.get('/', main)])
 
   if __name__ == '__main__':
