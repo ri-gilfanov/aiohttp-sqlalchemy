@@ -25,6 +25,7 @@ The library provides the next features:
 * initializing asynchronous sessions through a middlewares;
 * initializing asynchronous sessions through a decorators;
 * simple access to one asynchronous session by default key;
+* preventing attributes from being expired after commit by default;
 * support for different types of request handlers.
 
 
