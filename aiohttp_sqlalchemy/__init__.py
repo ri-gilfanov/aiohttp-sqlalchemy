@@ -36,7 +36,11 @@ def sa_bind(bind_to: 'TBindTo', key: str = DEFAULT_KEY, *,
         bind_to = cast(AsyncEngine, create_async_engine(bind_to))
 
     if isinstance(bind_to, AsyncEngine):
-        bind_to = cast('TSessionFactory', sessionmaker(bind_to, AsyncSession))
+        bind_to = cast('TSessionFactory', sessionmaker(
+            bind=bind_to,
+            class_=AsyncSession,
+            expire_on_commit=False,
+        ))
 
     if isinstance(bind_to, Engine):
         msg = 'Synchronous  engine is unsupported argument for `sa_bind()`.'

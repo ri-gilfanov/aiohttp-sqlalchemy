@@ -119,9 +119,9 @@ Binding multiple session factories
   second_engine = create_async_engine('mysql+aiomysql://user:password@host/database')
   third_engine = create_async_engine('sqlite+aiosqlite:///')
 
-  MainSession = orm.sessionmaker(main_engine, AsyncSession)
-  SecondSession = orm.sessionmaker(second_engine, AsyncSession)
-  ThirdSession = orm.sessionmaker(third_engine, AsyncSession)
+  MainSession = orm.sessionmaker(main_engine, AsyncSession, expire_on_commit=False)
+  SecondSession = orm.sessionmaker(second_engine, AsyncSession, expire_on_commit=False)
+  ThirdSession = orm.sessionmaker(third_engine, AsyncSession, expire_on_commit=False)
 
   aiohttp_sqlalchemy.setup(app, [
       sa_bind(MainSession),
@@ -194,7 +194,7 @@ Nested apps
   app = web.Application()
 
   engine = create_async_engine('sqlite+aiosqlite:///')
-  Session = orm.sessionmaker(engine, AsyncSession)
+  Session = orm.sessionmaker(engine, AsyncSession, expire_on_commit=False)
   aiohttp_sqlalchemy.setup(app, [sa_engine(Session)])
 
   subapp = web.Application()
@@ -205,6 +205,12 @@ Nested apps
 
 Change log
 ----------
+Unreleased
+^^^^^^^^^^
+Changed
+"""""
+* Argument ``expire_on_commit`` of ``sessionmaker`` set to `False` by default.
+
 Version 0.12
 ^^^^^^^^^^^^
 Added
