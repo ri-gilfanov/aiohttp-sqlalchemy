@@ -20,12 +20,7 @@ async def init_db(
         await connection.run_sync(metadata.create_all)
 
 
-async def sa_init_db(
-    app: 'Application',
-    metadata: 'MetaData',
-    key: str = SA_DEFAULT_KEY,
-) -> None:
-    await init_db(app, metadata, key)
+sa_init_db = init_db  # sa_init_db is synonym for init_db
 
 
 def sa_session(request: 'Request', key: str = SA_DEFAULT_KEY) -> 'AsyncSession':

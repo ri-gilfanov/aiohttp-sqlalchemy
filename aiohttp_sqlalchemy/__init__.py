@@ -59,9 +59,7 @@ def bind(bind_to: 'TBindTo', key: str = SA_DEFAULT_KEY, *,
     return bind_to, key, middleware
 
 
-def sa_bind(bind_to: 'TBindTo', key: str = SA_DEFAULT_KEY, *,
-            middleware: bool = True) -> 'TSABinding':
-    return bind(bind_to, key, middleware=middleware)
+sa_bind = bind  # sa_bind is synonym for bind
 
 
 def setup(app: 'Application', bindings: 'Iterable[TSABinding]') -> None:
