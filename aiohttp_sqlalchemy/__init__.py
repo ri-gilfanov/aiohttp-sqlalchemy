@@ -18,7 +18,7 @@ if TYPE_CHECKING:
     from typing import Any, Callable, Iterable, Union, Tuple
 
     TSessionFactory = Callable[..., AsyncSession]
-    TBindTo = Union[str, Callable[..., AsyncSession]]
+    TBindTo = Union[str, AsyncEngine, Callable[..., AsyncSession]]
     TSABinding = Tuple[TSessionFactory, str, bool]
 
 
