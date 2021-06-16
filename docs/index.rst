@@ -223,12 +223,19 @@ Nested apps
 
 Change log
 ----------
+Unreleased
+^^^^^^^^^^
+Add
+"""
+* Add synonym ``bind`` for ``sa_bind``.
+* Add synonym ``init_db`` for ``sa_init_db``.
+
 Version 0.14
 ^^^^^^^^^^^^
 Add
 """
 * Add utility ``sa_init_db(app, metadata, key = SA_DEFAULT_KEY)``.
-* Add constant ``SA_DEFAULT_KEY`` instead ``DEFAULT_KEY``
+* Add constant ``SA_DEFAULT_KEY`` instead ``DEFAULT_KEY``.
 
 Deprecated
 """"""""""
