@@ -222,6 +222,17 @@ Nested apps
 
 Change log
 ----------
+Unreleased
+^^^^^^^^^^
+Add
+"""
+* Add utility ``sa_init_db(app, metadata, key = SA_DEFAULT_KEY)``.
+* Add constant ``SA_DEFAULT_KEY`` instead ``DEFAULT_KEY``
+
+Deprecated
+""""""""""
+* ``DEFAULT_KEY`` is deprecated. Use ``SA_DEFAULT_KEY``.
+
 Version 0.13
 ^^^^^^^^^^^^
 Changed
