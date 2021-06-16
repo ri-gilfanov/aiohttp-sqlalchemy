@@ -8,11 +8,13 @@ if TYPE_CHECKING:
     from aiohttp.web import Request, StreamResponse
     from typing import Awaitable, Callable
 
+    THandler = Callable[..., Awaitable[StreamResponse]]
 
-def sa_middleware(key: str = SA_DEFAULT_KEY) -> 'Callable[..., Awaitable[StreamResponse]]':
+
+def sa_middleware(key: str = SA_DEFAULT_KEY) -> 'THandler':
     """ SQLAlchemy asynchronous middleware factory. """
     @middleware
-    async def sa_middleware_(request: 'Request', handler: 'Callable')\
+    async def sa_middleware_(request: 'Request', handler: 'THandler') \
             -> 'StreamResponse':
         if key in request:
             raise DuplicateRequestKeyError(key)

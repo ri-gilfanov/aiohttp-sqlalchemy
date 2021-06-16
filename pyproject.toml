@@ -1,12 +1,13 @@
 [tool.poetry]
 name = "aiohttp-sqlalchemy"
-version = "0.15.1"
+version = "0.15.2"
 description = "SQLAlchemy 1.4 / 2.0 support for aiohttp."
 authors = [
     "Ruslan Ilyasovich Gilfanov <ri.gilfanov@yandex.ru>",
 ]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
+    "Framework :: AsyncIO",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.7",
@@ -15,7 +16,7 @@ classifiers = [
     "Topic :: Internet",
     "Topic :: Internet :: WWW/HTTP",
 ]
-keywords = ["aiohttp", "sqlalchemy"]
+keywords = ["aiohttp", "sqlalchemy", "asyncio"]
 license = "BSD-3-Clause"
 readme = "README.rst"
 
@@ -41,6 +42,11 @@ pytest = ">=6.2.4"
 pytest-cov = ">=2.12.1"
 Sphinx = ">=4.0.2"
 sphinx_rtd_theme = ">=0.5.2"
+
+[tool.poetry.extras]
+mysql = ["aiomysql"]
+postgres = ["asyncpg"]
+sqlite = ["aiosqlite"]
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
