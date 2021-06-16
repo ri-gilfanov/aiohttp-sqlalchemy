@@ -1,1 +1,2 @@
-DEFAULT_KEY = 'sa_main'
+SA_DEFAULT_KEY = 'sa_main'
+DEFAULT_KEY = SA_DEFAULT_KEY

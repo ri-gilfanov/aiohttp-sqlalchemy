@@ -3,12 +3,12 @@ from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, create_async_engin
 from sqlalchemy.orm import sessionmaker
 from typing import cast, TYPE_CHECKING
 
-from aiohttp_sqlalchemy.constants import DEFAULT_KEY
+from aiohttp_sqlalchemy.constants import DEFAULT_KEY, SA_DEFAULT_KEY
 from aiohttp_sqlalchemy.decorators import sa_decorator
 from aiohttp_sqlalchemy.exceptions import DuplicateAppKeyError, \
                                           DuplicateRequestKeyError
 from aiohttp_sqlalchemy.middlewares import sa_middleware
-from aiohttp_sqlalchemy.utils import sa_session
+from aiohttp_sqlalchemy.utils import sa_init_db, sa_session
 from aiohttp_sqlalchemy.views import SAAbstractView, SABaseView, SAView
 
 
@@ -21,14 +21,15 @@ if TYPE_CHECKING:
     TSABinding = Tuple[TSessionFactory, str, bool]
 
 
-__version__ = '0.13.2'
+__version__ = '0.14.0'
 
 __all__ = ['DuplicateAppKeyError', 'DuplicateRequestKeyError',
-           'SAAbstractView', 'SABaseView', 'sa_bind', 'sa_decorator',
-           'sa_middleware', 'sa_session', 'SAView', 'setup',]
+           'SAAbstractView', 'SABaseView', 'SA_DEFAULT_KEY', 'sa_bind',
+           'sa_decorator', 'sa_middleware', 'sa_init_db', 'sa_session',
+           'SAView', 'setup',]
 
 
-def sa_bind(bind_to: 'TBindTo', key: str = DEFAULT_KEY, *,
+def sa_bind(bind_to: 'TBindTo', key: str = SA_DEFAULT_KEY, *,
             middleware: bool = True) -> 'TSABinding':
     """ Session factory wrapper for binding in setup function. """
 
