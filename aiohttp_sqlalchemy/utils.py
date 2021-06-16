@@ -14,7 +14,7 @@ async def init_db(
     metadata: 'MetaData',
     key: str = SA_DEFAULT_KEY,
 ) -> None:
-    session_factory = app.get(key)
+    session_factory = app[key]
     session = session_factory()
     async with session.bind.begin() as connection:
         await connection.run_sync(metadata.create_all)

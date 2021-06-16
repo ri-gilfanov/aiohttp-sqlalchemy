@@ -15,7 +15,7 @@ from aiohttp_sqlalchemy.views import SAAbstractView, SABaseView, SAView
 
 if TYPE_CHECKING:
     from aiohttp.web import Application
-    from typing import Callable, Iterable, Union, Tuple
+    from typing import Any, Callable, Iterable, Union, Tuple
 
     TSessionFactory = Callable[..., AsyncSession]
     TBindTo = Union[str, Callable[..., AsyncSession]]
@@ -74,7 +74,7 @@ def setup(app: 'Application', bindings: 'Iterable[TSABinding]') -> None:
             app.middlewares.append(sa_middleware(key))
 
 
-def __getattr__(name):
+def __getattr__(name: str) -> 'Any':
     if name == 'DEFAULT_KEY':
         msg = "'DEFAULT_KEY' has been deprecated, use 'SA_DEFAULT_KEY'"
         warnings.warn(msg, UserWarning, stacklevel=2)
