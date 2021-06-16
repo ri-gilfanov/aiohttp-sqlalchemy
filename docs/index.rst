@@ -72,7 +72,7 @@ Copy and paste this code in a file and run:
 .. code-block:: python
 
   from aiohttp import web
-  import aiohttp_sqlalchemy as asa
+  import aiohttp_sqlalchemy
   from aiohttp_sqlalchemy import sa_session
   from datetime import datetime
   import sqlalchemy as sa
@@ -109,9 +109,10 @@ Copy and paste this code in a file and run:
   async def app_factory():
       app = web.Application()
 
-      binding = asa.bind('sqlite+aiosqlite:///')
-      asa.setup(app, [binding])
-      await asa.init_db(app, metadata)
+      aiohttp_sqlalchemy.setup(app, [
+          aiohttp_sqlalchemy.bind('sqlite+aiosqlite:///'),
+      ])
+      await aiohttp_sqlalchemy.init_db(app, metadata)
 
       app.add_routes([web.get('/', main)])
 
@@ -127,28 +128,40 @@ See `Asynchronous I/O (asyncio) <https://docs.sqlalchemy.org/en/14/orm/extension
 section in SQLAlchemy 1.4 documentation.
 
 
-Binding multiple session factories
-----------------------------------
+More control in configuration
+-----------------------------
 .. code-block:: python
 
-  from aiohttp_sqlalchemy import sa_bind
+  import aiohttp_sqlalchemy
+  from sqlalchemy import orm
 
-  main_engine = create_async_engine('postgresql+asyncpg://user:password@host/database')
-  second_engine = create_async_engine('mysql+aiomysql://user:password@host/database')
-  third_engine = create_async_engine('sqlite+aiosqlite:///')
-
-  MainSession = orm.sessionmaker(main_engine, AsyncSession, expire_on_commit=False)
-  SecondSession = orm.sessionmaker(second_engine, AsyncSession, expire_on_commit=False)
-  ThirdSession = orm.sessionmaker(third_engine, AsyncSession, expire_on_commit=False)
+  url = 'sqlite+aiosqlite:///'
+  engine = create_async_engine(url, echo=True)
+  Session = orm.sessionmaker(main_engine, AsyncSession, expire_on_commit=False)
 
   aiohttp_sqlalchemy.setup(app, [
-      sa_bind(MainSession),
-      sa_bind(SecondSession, 'sa_second'),
-      sa_bind(ThirdSession, 'sa_third'),
+      aiohttp_sqlalchemy.bind(Session),
   ])
 
-Binding multiple engines to one session factory
------------------------------------------------
+
+Multiple session factories in application
+-----------------------------------------
+.. code-block:: python
+
+  import aiohttp_sqlalchemy
+
+  postgresql_url = 'postgresql+asyncpg://user:password@host/database'
+  mysql_url = 'mysql+aiomysql://user:password@host/database'
+  sqlite_url = 'sqlite+aiosqlite:///path/to/file.sqlite3'
+
+  aiohttp_sqlalchemy.setup(app, [
+      aiohttp_sqlalchemy.bind(postgresql_url),
+      aiohttp_sqlalchemy.bind(mysql_url, 'sa_second'),
+      aiohttp_sqlalchemy.bind(sqlite_url, 'sa_third'),
+  ])
+
+Multiple database backends per session
+--------------------------------------
 See `Partitioning Strategies (e.g. multiple database backends per Session)
 <https://docs.sqlalchemy.org/en/14/orm/persistence_techniques.html#partitioning-strategies-e-g-multiple-database-backends-per-session>`_
 section in SQLAlchemy 1.4 documentation.
@@ -157,9 +170,7 @@ Class based views
 -----------------
 .. code-block:: python
 
-  from aiohttp_sqlalchemy import SAView
-
-  class Handler(SAView):
+  class Handler(aiohttp_sqlalchemy.SAView):
       async def get(self):
           async with self.sa_session().begin():
               # some your code
@@ -168,8 +179,8 @@ Class based views
               # some your code
 
   aiohttp_sqlalchemy.setup(app, [
-    sa_bind(MainSession),
-    sa_bind(SecondSession, 'sa_second'),
+      aiohttp_sqlalchemy.bind(MainSession),
+      aiohttp_sqlalchemy.bind(SecondSession, 'sa_second'),
   ])
 
 
@@ -193,7 +204,7 @@ Decorating handlers
           # some your code
 
   aiohttp_sqlalchemy.setup(app, [
-      sa_bind(Session, 'sa_optional', middleware=False),
+      aiohttp_sqlalchemy.bind(Session, 'sa_optional', middleware=False),
   ])
 
 
@@ -211,9 +222,9 @@ Nested apps
 
   app = web.Application()
 
-  engine = create_async_engine('sqlite+aiosqlite:///')
-  Session = orm.sessionmaker(engine, AsyncSession, expire_on_commit=False)
-  aiohttp_sqlalchemy.setup(app, [sa_engine(Session)])
+  aiohttp_sqlalchemy.setup(app, [
+      aiohttp_sqlalchemy.bind('sqlite+aiosqlite:///'),
+  ])
 
   subapp = web.Application()
   subapp.add_routes([web.get('', main)])

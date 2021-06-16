@@ -1,5 +1,5 @@
 from aiohttp import web
-import aiohttp_sqlalchemy as asa
+import aiohttp_sqlalchemy
 from aiohttp_sqlalchemy import sa_session
 from datetime import datetime
 import sqlalchemy as sa
@@ -36,9 +36,10 @@ async def main(request):
 async def app_factory():
     app = web.Application()
 
-    binding = asa.bind('sqlite+aiosqlite:///')
-    asa.setup(app, [binding])
-    await asa.init_db(app, metadata)
+    aiohttp_sqlalchemy.setup(app, [
+        aiohttp_sqlalchemy.bind('sqlite+aiosqlite:///'),
+    ])
+    await aiohttp_sqlalchemy.init_db(app, metadata)
 
     app.add_routes([web.get('/', main)])
 
