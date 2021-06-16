@@ -222,8 +222,8 @@ Nested apps
 
 Change log
 ----------
-Unreleased
-^^^^^^^^^^
+Version 0.14
+^^^^^^^^^^^^
 Add
 """
 * Add utility ``sa_init_db(app, metadata, key = SA_DEFAULT_KEY)``.
