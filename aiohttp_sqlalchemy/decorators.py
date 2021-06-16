@@ -2,7 +2,7 @@ from aiohttp.abc import AbstractView
 from functools import wraps
 from typing import TYPE_CHECKING
 
-from aiohttp_sqlalchemy.constants import DEFAULT_KEY
+from aiohttp_sqlalchemy.constants import SA_DEFAULT_KEY
 from aiohttp_sqlalchemy.exceptions import DuplicateRequestKeyError
 
 if TYPE_CHECKING:
@@ -18,7 +18,7 @@ if TYPE_CHECKING:
     ]
 
 
-def sa_decorator(key: str = DEFAULT_KEY) -> 'TRequestHandler':
+def sa_decorator(key: str = SA_DEFAULT_KEY) -> 'TRequestHandler':
     """ SQLAlchemy asynchronous handler decorator. """
     def wrapper(handler):
         @wraps(handler)

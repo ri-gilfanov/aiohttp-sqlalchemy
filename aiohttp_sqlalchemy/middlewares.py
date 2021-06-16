@@ -1,7 +1,7 @@
 from aiohttp.web import middleware
 from typing import TYPE_CHECKING
 
-from aiohttp_sqlalchemy.constants import DEFAULT_KEY
+from aiohttp_sqlalchemy.constants import SA_DEFAULT_KEY
 from aiohttp_sqlalchemy.exceptions import DuplicateRequestKeyError
 
 if TYPE_CHECKING:
@@ -9,7 +9,7 @@ if TYPE_CHECKING:
     from typing import Awaitable, Callable
 
 
-def sa_middleware(key: str = DEFAULT_KEY) -> 'Callable[..., Awaitable[StreamResponse]]':
+def sa_middleware(key: str = SA_DEFAULT_KEY) -> 'Callable[..., Awaitable[StreamResponse]]':
     """ SQLAlchemy asynchronous middleware factory. """
     @middleware
     async def sa_middleware_(request: 'Request', handler: 'Callable')\
