@@ -223,8 +223,8 @@ Nested apps
 
 Change log
 ----------
-Unreleased
-^^^^^^^^^^
+Version 0.15
+^^^^^^^^^^^^
 Add
 """
 * Add synonym ``bind`` for ``sa_bind``.
