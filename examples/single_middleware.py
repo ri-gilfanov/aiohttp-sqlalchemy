@@ -24,7 +24,7 @@ async def main(request):
         db_session.add_all([MyModel()])
         stmt = sa.select(MyModel)
         result = await db_session.execute(stmt)
-        items = result.scalars().all()
+        items = result.scalars()
 
     data = {}
     for item in items:
