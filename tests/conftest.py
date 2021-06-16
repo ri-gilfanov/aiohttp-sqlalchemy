@@ -6,7 +6,7 @@ from sqlalchemy import orm
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 
 import aiohttp_sqlalchemy
-from aiohttp_sqlalchemy import DEFAULT_KEY, sa_bind, sa_middleware
+from aiohttp_sqlalchemy import SA_DEFAULT_KEY, sa_bind, sa_middleware
 
 
 pytest_plugins = 'aiohttp.pytest_plugin'
@@ -29,7 +29,7 @@ def orm_session(orm_session_factory):
 
 @pytest.fixture
 def sa_main_middleware():
-    return sa_middleware(DEFAULT_KEY)
+    return sa_middleware(SA_DEFAULT_KEY)
 
 
 @pytest.fixture

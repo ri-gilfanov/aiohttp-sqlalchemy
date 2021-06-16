@@ -2,8 +2,9 @@ from sqlalchemy.engine import Engine
 from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
 from typing import cast, TYPE_CHECKING
+import warnings
 
-from aiohttp_sqlalchemy.constants import DEFAULT_KEY, SA_DEFAULT_KEY
+from aiohttp_sqlalchemy.constants import SA_DEFAULT_KEY
 from aiohttp_sqlalchemy.decorators import sa_decorator
 from aiohttp_sqlalchemy.exceptions import DuplicateAppKeyError, \
                                           DuplicateRequestKeyError
@@ -21,7 +22,7 @@ if TYPE_CHECKING:
     TSABinding = Tuple[TSessionFactory, str, bool]
 
 
-__version__ = '0.14.0'
+__version__ = '0.14.1'
 
 __all__ = ['DuplicateAppKeyError', 'DuplicateRequestKeyError',
            'SAAbstractView', 'SABaseView', 'SA_DEFAULT_KEY', 'sa_bind',
@@ -68,3 +69,11 @@ def setup(app: 'Application', bindings: 'Iterable[TSABinding]') -> None:
 
         if middleware:
             app.middlewares.append(sa_middleware(key))
+
+
+def __getattr__(name):
+    if name == 'DEFAULT_KEY':
+        msg = "'DEFAULT_KEY' has been deprecated, use 'SA_DEFAULT_KEY'"
+        warnings.warn(msg, UserWarning, stacklevel=2)
+        return SA_DEFAULT_KEY
+    raise AttributeError(f"module {__name__} has no attribute {name}")

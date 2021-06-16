@@ -1,5 +1,5 @@
 from sqlalchemy.sql.schema import MetaData
-from aiohttp_sqlalchemy import DEFAULT_KEY, sa_init_db, sa_session
+from aiohttp_sqlalchemy import SA_DEFAULT_KEY, sa_init_db, sa_session
 import sqlalchemy as sa
 
 
@@ -9,5 +9,5 @@ async def test_sa_db_init(middlewared_app):
 
 
 def test_sa_session(mocked_request, orm_session):
-    mocked_request[DEFAULT_KEY] = orm_session
+    mocked_request[SA_DEFAULT_KEY] = orm_session
     assert sa_session(mocked_request) is orm_session
