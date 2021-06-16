@@ -42,6 +42,11 @@ pytest-cov = ">=2.12.1"
 Sphinx = ">=4.0.2"
 sphinx_rtd_theme = ">=0.5.2"
 
+[tool.poetry.extras]
+mysql = ["aiomysql"]
+postgres = ["asyncpg"]
+sqlite = ["aiosqlite"]
+
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
