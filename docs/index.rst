@@ -51,7 +51,8 @@ The library provides the next features:
 * initializing asynchronous sessions through a decorators;
 * simple access to one asynchronous session by default key;
 * preventing attributes from being expired after commit by default;
-* support for different types of request handlers.
+* support for different types of request handlers;
+* support nested applications.
 
 
 Installation
@@ -206,30 +207,6 @@ Decorating handlers
   aiohttp_sqlalchemy.setup(app, [
       aiohttp_sqlalchemy.bind(Session, 'sa_optional', middleware=False),
   ])
-
-
-Nested apps
------------
-.. code-block:: python
-
-  async def main(request):
-      async with request['sa_main'].bind.begin() as conn:
-          # some operations with AsyncConnection object with
-          # an AsyncTransaction established.
-
-      async with request['sa_main'].begin():
-          # some operations with AsyncSession object
-
-  app = web.Application()
-
-  aiohttp_sqlalchemy.setup(app, [
-      aiohttp_sqlalchemy.bind('sqlite+aiosqlite:///'),
-  ])
-
-  subapp = web.Application()
-  subapp.add_routes([web.get('', main)])
-
-  app.add_subapp(prefix='/subapp', subapp=subapp)
 
 
 Change log
