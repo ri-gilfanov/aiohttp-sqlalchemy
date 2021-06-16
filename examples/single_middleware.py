@@ -1,6 +1,6 @@
 from aiohttp import web
-import aiohttp_sqlalchemy
-from aiohttp_sqlalchemy import sa_bind, sa_init_db, sa_session
+import aiohttp_sqlalchemy as asa
+from aiohttp_sqlalchemy import sa_session
 from datetime import datetime
 import sqlalchemy as sa
 from sqlalchemy import orm
@@ -24,7 +24,7 @@ async def main(request):
         db_session.add_all([MyModel()])
         stmt = sa.select(MyModel)
         result = await db_session.execute(stmt)
-        items = result.scalars().all()
+        items = result.scalars()
 
     data = {}
     for item in items:
@@ -36,9 +36,9 @@ async def main(request):
 async def app_factory():
     app = web.Application()
 
-    sa_binding = sa_bind('sqlite+aiosqlite:///')
-    aiohttp_sqlalchemy.setup(app, [sa_binding])
-    await sa_init_db(app, metadata)
+    binding = asa.bind('sqlite+aiosqlite:///')
+    asa.setup(app, [binding])
+    await asa.init_db(app, metadata)
 
     app.add_routes([web.get('/', main)])
 

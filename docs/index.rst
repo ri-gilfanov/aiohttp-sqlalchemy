@@ -72,8 +72,8 @@ Copy and paste this code in a file and run:
 .. code-block:: python
 
   from aiohttp import web
-  import aiohttp_sqlalchemy
-  from aiohttp_sqlalchemy import sa_bind, sa_init_db, sa_session
+  import aiohttp_sqlalchemy as asa
+  from aiohttp_sqlalchemy import sa_session
   from datetime import datetime
   import sqlalchemy as sa
   from sqlalchemy import orm
@@ -97,7 +97,7 @@ Copy and paste this code in a file and run:
           db_session.add_all([MyModel()])
           stmt = sa.select(MyModel)
           result = await db_session.execute(stmt)
-          items = result.scalars().all()
+          items = result.scalars()
 
       data = {}
       for item in items:
@@ -109,9 +109,9 @@ Copy and paste this code in a file and run:
   async def app_factory():
       app = web.Application()
 
-      sa_binding = sa_bind('sqlite+aiosqlite:///')
-      aiohttp_sqlalchemy.setup(app, [sa_binding])
-      await sa_init_db(app, metadata)
+      binding = asa.bind('sqlite+aiosqlite:///')
+      asa.setup(app, [binding])
+      await asa.init_db(app, metadata)
 
       app.add_routes([web.get('/', main)])
 
@@ -223,12 +223,19 @@ Nested apps
 
 Change log
 ----------
+Version 0.15
+^^^^^^^^^^^^
+Add
+"""
+* Add synonym ``bind`` for ``sa_bind``.
+* Add synonym ``init_db`` for ``sa_init_db``.
+
 Version 0.14
 ^^^^^^^^^^^^
 Add
 """
 * Add utility ``sa_init_db(app, metadata, key = SA_DEFAULT_KEY)``.
-* Add constant ``SA_DEFAULT_KEY`` instead ``DEFAULT_KEY``
+* Add constant ``SA_DEFAULT_KEY`` instead ``DEFAULT_KEY``.
 
 Deprecated
 """"""""""

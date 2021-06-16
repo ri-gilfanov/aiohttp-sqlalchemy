@@ -9,7 +9,7 @@ from aiohttp_sqlalchemy.decorators import sa_decorator
 from aiohttp_sqlalchemy.exceptions import DuplicateAppKeyError, \
                                           DuplicateRequestKeyError
 from aiohttp_sqlalchemy.middlewares import sa_middleware
-from aiohttp_sqlalchemy.utils import sa_init_db, sa_session
+from aiohttp_sqlalchemy.utils import init_db, sa_init_db, sa_session
 from aiohttp_sqlalchemy.views import SAAbstractView, SABaseView, SAView
 
 
@@ -22,15 +22,15 @@ if TYPE_CHECKING:
     TSABinding = Tuple[TSessionFactory, str, bool]
 
 
-__version__ = '0.14.1'
+__version__ = '0.15.0'
 
-__all__ = ['DuplicateAppKeyError', 'DuplicateRequestKeyError',
-           'SAAbstractView', 'SABaseView', 'SA_DEFAULT_KEY', 'sa_bind',
-           'sa_decorator', 'sa_middleware', 'sa_init_db', 'sa_session',
-           'SAView', 'setup',]
+__all__ = ['bind', 'DuplicateAppKeyError', 'DuplicateRequestKeyError',
+           'init_db', 'SAAbstractView', 'SABaseView', 'SA_DEFAULT_KEY',
+           'sa_bind', 'sa_decorator', 'sa_middleware', 'sa_init_db',
+           'sa_session', 'SAView', 'setup',]
 
 
-def sa_bind(bind_to: 'TBindTo', key: str = SA_DEFAULT_KEY, *,
+def bind(bind_to: 'TBindTo', key: str = SA_DEFAULT_KEY, *,
             middleware: bool = True) -> 'TSABinding':
     """ Session factory wrapper for binding in setup function. """
 
@@ -57,6 +57,11 @@ def sa_bind(bind_to: 'TBindTo', key: str = SA_DEFAULT_KEY, *,
         raise ValueError(msg)
 
     return bind_to, key, middleware
+
+
+def sa_bind(bind_to: 'TBindTo', key: str = SA_DEFAULT_KEY, *,
+            middleware: bool = True) -> 'TSABinding':
+    return bind(bind_to, key, middleware=middleware)
 
 
 def setup(app: 'Application', bindings: 'Iterable[TSABinding]') -> None:
