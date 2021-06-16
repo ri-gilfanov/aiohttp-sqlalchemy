@@ -95,7 +95,8 @@ Copy and paste this code in a file and run:
 
       async with db_session.begin():
           db_session.add_all([MyModel()])
-          result = await db_session.execute(sa.select(MyModel))
+          stmt = sa.select(MyModel)
+          result = await db_session.execute(stmt)
           items = result.scalars().all()
 
       data = {}
