@@ -7,6 +7,7 @@ authors = [
 ]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
+    "Framework :: AsyncIO",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.7",
@@ -15,7 +16,7 @@ classifiers = [
     "Topic :: Internet",
     "Topic :: Internet :: WWW/HTTP",
 ]
-keywords = ["aiohttp", "sqlalchemy"]
+keywords = ["aiohttp", "sqlalchemy", "asyncio"]
 license = "BSD-3-Clause"
 readme = "README.rst"
 
