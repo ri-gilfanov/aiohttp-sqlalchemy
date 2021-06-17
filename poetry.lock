@@ -36,7 +36,7 @@ name = "aiosqlite"
 version = "0.17.0"
 description = "asyncio bridge to the standard sqlite3 module"
 category = "main"
-optional = true
+optional = false
 python-versions = ">=3.6"
 
 [package.dependencies]
@@ -602,13 +602,13 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=1.2.3)", "pytest-flake8", "pyt
 
 [extras]
 mysql = ["aiomysql"]
-postgres = ["asyncpg"]
+postgresql = ["asyncpg"]
 sqlite = ["aiosqlite"]
 
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "a6576a462823ffc21df509ca052b8b73e0a4dcf10dc4f871899000e898750621"
+content-hash = "de38b654fe081e6d64114da6a0360c7f01a24c8883d5770bbab0445ccfe5bd53"
 
 [metadata.files]
 aiohttp = [
