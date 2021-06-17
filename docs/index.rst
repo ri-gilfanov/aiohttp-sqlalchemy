@@ -43,7 +43,8 @@ Overview
   :target: https://aiohttp-sqlalchemy.readthedocs.io/en/latest/?badge=latest
   :alt: Documentation
 
-SQLAlchemy 1.4 / 2.0 support for aiohttp.
+`SQLAlchemy 1.4 / 2.0 <https://www.sqlalchemy.org/>`_ support for `AIOHTTP
+<https://docs.aiohttp.org/>`_.
 
 The library provides the next features:
 
@@ -51,7 +52,7 @@ The library provides the next features:
 * initializing asynchronous sessions through a decorators;
 * simple access to one asynchronous session by default key;
 * preventing attributes from being expired after commit by default;
-* support for different types of request handlers;
+* support different types of request handlers;
 * support nested applications.
 
 

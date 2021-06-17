@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "aiohttp-sqlalchemy"
-version = "0.15.2"
+version = "0.15.3"
 description = "SQLAlchemy 1.4 / 2.0 support for aiohttp."
 authors = [
     "Ruslan Ilyasovich Gilfanov <ri.gilfanov@yandex.ru>",
@@ -24,19 +24,15 @@ documentation = "https://aiohttp-sqlalchemy.readthedocs.io/"
 homepage = "https://github.com/ri-gilfanov/aiohttp-sqlalchemy"
 repository = "https://github.com/ri-gilfanov/aiohttp-sqlalchemy"
 
-[tool.coverage.report]
-exclude_lines = [
-    "if TYPE_CHECKING",
-]
-
 [tool.poetry.dependencies]
 python = "^3.7"
 aiohttp = "^3.7.4.post0"
 SQLAlchemy = "^1.4.18"
+aiomysql = { version = ">=0.0.21", optional = true }
+asyncpg = { version = "^0.23.0", optional = true }
+aiosqlite = { version = "^0.17.0", optional = true }
 
 [tool.poetry.dev-dependencies]
-asyncpg = ">=0.23.0"
-aiosqlite = ">=0.17.0"
 mypy = ">=0.902"
 pytest = ">=6.2.4"
 pytest-cov = ">=2.12.1"
@@ -51,3 +47,8 @@ sqlite = ["aiosqlite"]
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.coverage.report]
+exclude_lines = [
+    "if TYPE_CHECKING",
+]

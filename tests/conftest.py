@@ -4,6 +4,7 @@ from aiohttp.test_utils import make_mocked_request
 import pytest
 from sqlalchemy import orm
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
+import typing
 
 import aiohttp_sqlalchemy
 from aiohttp_sqlalchemy import SA_DEFAULT_KEY, sa_bind, sa_middleware

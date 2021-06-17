@@ -7,7 +7,7 @@ before_install:
 - pip install poetry
 install:
 - pip install coveralls
-- poetry install
+- poetry install -E sqlite
 script:
 - pytest --cov=aiohttp_sqlalchemy
 after_success:

@@ -18,11 +18,11 @@ if TYPE_CHECKING:
     from typing import Any, Callable, Iterable, Union, Tuple
 
     TSessionFactory = Callable[..., AsyncSession]
-    TBindTo = Union[str, Callable[..., AsyncSession]]
+    TBindTo = Union[str, AsyncEngine, Callable[..., AsyncSession]]
     TSABinding = Tuple[TSessionFactory, str, bool]
 
 
-__version__ = '0.15.2'
+__version__ = '0.15.3'
 
 __all__ = ['bind', 'DuplicateAppKeyError', 'DuplicateRequestKeyError',
            'init_db', 'SAAbstractView', 'SABaseView', 'SA_DEFAULT_KEY',
