@@ -22,7 +22,7 @@ if TYPE_CHECKING:
     TSABinding = Tuple[TSessionFactory, str, bool]
 
 
-__version__ = '0.15.2'
+__version__ = '0.15.3'
 
 __all__ = ['bind', 'DuplicateAppKeyError', 'DuplicateRequestKeyError',
            'init_db', 'SAAbstractView', 'SABaseView', 'SA_DEFAULT_KEY',
