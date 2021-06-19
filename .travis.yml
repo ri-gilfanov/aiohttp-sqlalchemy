@@ -9,6 +9,7 @@ install:
 - pip install coveralls
 - poetry install -E sqlite
 script:
+- mypy
 - pytest --cov=aiohttp_sqlalchemy
 after_success:
 - coveralls
