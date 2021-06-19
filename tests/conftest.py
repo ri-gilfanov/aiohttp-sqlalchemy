@@ -4,27 +4,32 @@ from aiohttp.test_utils import make_mocked_request
 import pytest
 from sqlalchemy import orm
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
-import typing
+from typing import TYPE_CHECKING
 
 import aiohttp_sqlalchemy
 from aiohttp_sqlalchemy import SA_DEFAULT_KEY, sa_bind, sa_middleware
+
+if TYPE_CHECKING:
+    from aiohttp.web import Request, Response
+    from aiohttp_sqlalchemy.typedefs import TSessionFactory
+    from sqlalchemy.ext.asyncio import AsyncEngine
 
 
 pytest_plugins = 'aiohttp.pytest_plugin'
 
 
 @pytest.fixture
-def orm_async_engine():
+def orm_async_engine() -> 'AsyncEngine':
     return create_async_engine('sqlite+aiosqlite:///')
 
 
 @pytest.fixture
-def orm_session_factory(orm_async_engine):
+def orm_session_factory(orm_async_engine: 'AsyncEngine') -> 'TSessionFactory':
     return orm.sessionmaker(orm_async_engine, AsyncSession)
 
 
 @pytest.fixture
-def orm_session(orm_session_factory):
+def orm_session(orm_session_factory) -> AsyncSession:
     return orm_session_factory()
 
 
@@ -34,25 +39,26 @@ def sa_main_middleware():
 
 
 @pytest.fixture
-def middlewared_app(orm_session_factory):
+def middlewared_app(orm_session_factory: 'TSessionFactory'):
     app = web.Application()
     aiohttp_sqlalchemy.setup(app, [sa_bind(orm_session_factory)])
     return app
+
 
 @pytest.fixture
 def mocked_request(middlewared_app):
     return make_mocked_request(METH_GET, '/', app=middlewared_app)
 
 
-async def function_handler(request):
+async def function_handler(request: 'Request') ->  'Response':
     return web.json_response({})
 
 
 class ClassHandler:
-    async def get(request):
+    async def get(self, request: 'Request') -> 'Response':
         return web.json_response({})
 
 
 class ClassBasedView(web.View):
-    async def get(self):
+    async def get(self) -> 'Response':
         return web.json_response({})

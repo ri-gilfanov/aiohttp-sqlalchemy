@@ -6,9 +6,7 @@ from aiohttp_sqlalchemy.exceptions import DuplicateRequestKeyError
 
 if TYPE_CHECKING:
     from aiohttp.web import Request, StreamResponse
-    from typing import Awaitable, Callable
-
-    THandler = Callable[..., Awaitable[StreamResponse]]
+    from aiohttp_sqlalchemy.typedefs import THandler
 
 
 def sa_middleware(key: str = SA_DEFAULT_KEY) -> 'THandler':

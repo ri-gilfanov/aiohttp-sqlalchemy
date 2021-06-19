@@ -2,7 +2,6 @@ from sqlalchemy.engine import Engine
 from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
 from typing import cast, TYPE_CHECKING
-import warnings
 
 from aiohttp_sqlalchemy.constants import DEFAULT_KEY, SA_DEFAULT_KEY
 from aiohttp_sqlalchemy.decorators import sa_decorator
@@ -15,11 +14,9 @@ from aiohttp_sqlalchemy.views import SAAbstractView, SABaseView, SAView
 
 if TYPE_CHECKING:
     from aiohttp.web import Application
-    from typing import Any, Callable, Iterable, Union, Tuple
+    from aiohttp_sqlalchemy.typedefs import TBinding, TBindings, TBindTo, \
+        TSessionFactory
 
-    TSessionFactory = Callable[..., AsyncSession]
-    TBindTo = Union[str, AsyncEngine, Callable[..., AsyncSession]]
-    TSABinding = Tuple[TSessionFactory, str, bool]
 
 
 __version__ = '0.15.3'
@@ -34,7 +31,7 @@ __all__ = [
 
 
 def bind(bind_to: 'TBindTo', key: str = SA_DEFAULT_KEY, *,
-            middleware: bool = True) -> 'TSABinding':
+            middleware: bool = True) -> 'TBinding':
     """ Session factory wrapper for binding in setup function. """
 
     if isinstance(bind_to, str):
@@ -65,7 +62,7 @@ def bind(bind_to: 'TBindTo', key: str = SA_DEFAULT_KEY, *,
 sa_bind = bind  # sa_bind is synonym for bind
 
 
-def setup(app: 'Application', bindings: 'Iterable[TSABinding]') -> None:
+def setup(app: 'Application', bindings: 'TBindings') -> None:
     """ Setup function for binding SQLAlchemy engines. """
     for factory, key, middleware in bindings:
         if key in app:
