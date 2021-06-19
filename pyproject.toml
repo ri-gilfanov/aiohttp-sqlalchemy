@@ -53,5 +53,8 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.coverage.report]
 exclude_lines = [
-    "if TYPE_CHECKING",
+    "if TYPE_CHECKING:",
+]
+omit = [
+    "aiohttp_sqlalchemy/typedefs.py",
 ]
