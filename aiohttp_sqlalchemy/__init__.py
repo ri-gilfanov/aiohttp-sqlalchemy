@@ -4,7 +4,7 @@ from sqlalchemy.orm import sessionmaker
 from typing import cast, TYPE_CHECKING
 import warnings
 
-from aiohttp_sqlalchemy.constants import SA_DEFAULT_KEY
+from aiohttp_sqlalchemy.constants import DEFAULT_KEY, SA_DEFAULT_KEY
 from aiohttp_sqlalchemy.decorators import sa_decorator
 from aiohttp_sqlalchemy.exceptions import DuplicateAppKeyError, \
                                           DuplicateRequestKeyError
@@ -24,10 +24,13 @@ if TYPE_CHECKING:
 
 __version__ = '0.15.3'
 
-__all__ = ['bind', 'DuplicateAppKeyError', 'DuplicateRequestKeyError',
-           'init_db', 'SAAbstractView', 'SABaseView', 'SA_DEFAULT_KEY',
-           'sa_bind', 'sa_decorator', 'sa_middleware', 'sa_init_db',
-           'sa_session', 'SAView', 'setup',]
+__all__ = [
+    'bind', 'DuplicateAppKeyError', 'DuplicateRequestKeyError', 'init_db',
+    'SAAbstractView', 'SABaseView', 'SA_DEFAULT_KEY', 'sa_decorator',
+    'sa_middleware', 'sa_session', 'SAView', 'setup',
+    # synonyms
+    'DEFAULT_KEY', 'sa_bind', 'sa_init_db',
+]
 
 
 def bind(bind_to: 'TBindTo', key: str = SA_DEFAULT_KEY, *,
@@ -72,11 +75,3 @@ def setup(app: 'Application', bindings: 'Iterable[TSABinding]') -> None:
 
         if middleware:
             app.middlewares.append(sa_middleware(key))
-
-
-def __getattr__(name: str) -> 'Any':
-    if name == 'DEFAULT_KEY':
-        msg = "'DEFAULT_KEY' has been deprecated, use 'SA_DEFAULT_KEY'"
-        warnings.warn(msg, UserWarning, stacklevel=2)
-        return SA_DEFAULT_KEY
-    raise AttributeError(f"module {__name__} has no attribute {name}")
