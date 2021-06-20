@@ -1,18 +1,19 @@
 from aiohttp import web
 from aiohttp.hdrs import METH_GET
 from aiohttp.test_utils import make_mocked_request
+from aiohttp.web_app import Application
 import pytest
 from sqlalchemy import orm
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
-from typing import TYPE_CHECKING
+from typing import cast, TYPE_CHECKING
 
 import aiohttp_sqlalchemy
 from aiohttp_sqlalchemy import SA_DEFAULT_KEY, sa_bind, sa_middleware
 
 if TYPE_CHECKING:
     from aiohttp.web import Request, Response
-    from aiohttp_sqlalchemy.typedefs import TSessionFactory
     from sqlalchemy.ext.asyncio import AsyncEngine
+    from aiohttp_sqlalchemy.typedefs import THandler, TSessionFactory
 
 
 pytest_plugins = 'aiohttp.pytest_plugin'
@@ -25,32 +26,35 @@ def orm_async_engine() -> 'AsyncEngine':
 
 @pytest.fixture
 def orm_session_factory(orm_async_engine: 'AsyncEngine') -> 'TSessionFactory':
-    return orm.sessionmaker(orm_async_engine, AsyncSession)
+    return cast(
+        'TSessionFactory',
+        orm.sessionmaker(orm_async_engine, AsyncSession),
+    )
 
 
 @pytest.fixture
-def orm_session(orm_session_factory) -> AsyncSession:
+def orm_session(orm_session_factory: 'TSessionFactory') -> AsyncSession:
     return orm_session_factory()
 
 
 @pytest.fixture
-def sa_main_middleware():
+def sa_main_middleware() -> 'THandler':
     return sa_middleware(SA_DEFAULT_KEY)
 
 
 @pytest.fixture
-def middlewared_app(orm_session_factory: 'TSessionFactory'):
+def middlewared_app(orm_session_factory: 'TSessionFactory') -> 'Application':
     app = web.Application()
     aiohttp_sqlalchemy.setup(app, [sa_bind(orm_session_factory)])
     return app
 
 
 @pytest.fixture
-def mocked_request(middlewared_app):
+def mocked_request(middlewared_app: 'Application') -> 'Request':
     return make_mocked_request(METH_GET, '/', app=middlewared_app)
 
 
-async def function_handler(request: 'Request') ->  'Response':
+async def function_handler(request: 'Request') -> 'Response':
     return web.json_response({})
 
 

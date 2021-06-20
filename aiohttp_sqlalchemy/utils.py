@@ -22,5 +22,8 @@ async def init_db(
 sa_init_db = init_db  # sa_init_db is synonym for init_db
 
 
-def sa_session(request: 'Request', key: str = SA_DEFAULT_KEY) -> 'AsyncSession':
+def sa_session(
+    request: 'Request',
+    key: str = SA_DEFAULT_KEY,
+) -> 'AsyncSession':
     return request[key]

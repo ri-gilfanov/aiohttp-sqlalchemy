@@ -1,11 +1,19 @@
 import pytest
 from sqlalchemy.ext.asyncio import AsyncSession
+from typing import TYPE_CHECKING
 
-from aiohttp_sqlalchemy import SA_DEFAULT_KEY, DuplicateRequestKeyError, sa_decorator
+from aiohttp_sqlalchemy import DuplicateRequestKeyError, sa_decorator, \
+    SA_DEFAULT_KEY
 from tests.conftest import ClassBasedView, ClassHandler, function_handler
 
+if TYPE_CHECKING:
+    from aiohttp.web import Request
 
-async def test_duplicate_request_key_error(mocked_request, orm_session):
+
+async def test_duplicate_request_key_error(
+    mocked_request: 'Request',
+    orm_session: AsyncSession,
+) -> None:
     assert mocked_request.get(SA_DEFAULT_KEY) is None
     mocked_request[SA_DEFAULT_KEY] = orm_session
     assert mocked_request.get(SA_DEFAULT_KEY) is orm_session
@@ -13,20 +21,20 @@ async def test_duplicate_request_key_error(mocked_request, orm_session):
         await sa_decorator()(function_handler)(mocked_request)
 
 
-async def test_decorated_class_based_view(mocked_request):
+async def test_decorated_class_based_view(mocked_request: 'Request') -> None:
     assert mocked_request.get(SA_DEFAULT_KEY) is None
     await sa_decorator()(ClassBasedView.get)(mocked_request)
     assert isinstance(mocked_request.get(SA_DEFAULT_KEY), AsyncSession)
 
 
-async def test_decorated_class_handler(mocked_request):
+async def test_decorated_class_handler(mocked_request: 'Request') -> None:
     assert mocked_request.get(SA_DEFAULT_KEY) is None
     class_handler = ClassHandler()
     await sa_decorator()(class_handler.get)(mocked_request)
     assert isinstance(mocked_request.get(SA_DEFAULT_KEY), AsyncSession)
 
 
-async def test_decorated_function_handler(mocked_request):
+async def test_decorated_function_handler(mocked_request: 'Request') -> None:
     assert mocked_request.get(SA_DEFAULT_KEY) is None
     await sa_decorator()(function_handler)(mocked_request)
     assert isinstance(mocked_request.get(SA_DEFAULT_KEY), AsyncSession)

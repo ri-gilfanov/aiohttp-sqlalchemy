@@ -9,7 +9,8 @@ install:
 - pip install coveralls
 - poetry install -E sqlite
 script:
-- mypy
+- mypy --strict
+- flake8 aiohttp_sqlalchemy examples tests
 - pytest --cov=aiohttp_sqlalchemy
 after_success:
 - coveralls

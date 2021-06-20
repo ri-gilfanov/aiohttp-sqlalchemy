@@ -5,6 +5,7 @@ from typing import Awaitable, Callable, Iterable, Tuple, Union
 
 TSessionFactory = Callable[..., AsyncSession]
 THandler = Callable[..., Awaitable[StreamResponse]]
+THandlerWrapper = Callable[..., THandler]
 
 TBindTo = Union[str, AsyncEngine, TSessionFactory]
 TBinding = Tuple[TSessionFactory, str, bool]

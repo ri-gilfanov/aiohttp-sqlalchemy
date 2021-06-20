@@ -7,10 +7,8 @@ from aiohttp_sqlalchemy.exceptions import DuplicateRequestKeyError
 
 if TYPE_CHECKING:
     from aiohttp.web import StreamResponse
-    from typing import Any, Callable, Union, Type
-    from aiohttp_sqlalchemy.typedefs import THandler
-
-    THandlerWrapper = Callable[..., Union[Type[AbstractView], THandler]]
+    from typing import Any
+    from aiohttp_sqlalchemy.typedefs import THandler, THandlerWrapper
 
 
 def sa_decorator(key: str = SA_DEFAULT_KEY) -> 'THandlerWrapper':

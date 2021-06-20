@@ -31,7 +31,10 @@ class Main(SAView):
         async with self.sa_session().begin():
             self.sa_session().add_all([Request()])
             result = await self.sa_session().execute(sa.select(Request))
-            data = {r.id: r.timestamp.isoformat() for r in result.scalars()}
+            data = {
+                r.id: r.timestamp.isoformat()
+                for r in result.scalars()
+            }
             return web.json_response(data)
 
 
