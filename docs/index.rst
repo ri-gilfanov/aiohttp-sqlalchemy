@@ -228,19 +228,25 @@ Decorating handlers
 
 Change log
 ----------
+Version 0.15.4
+^^^^^^^^^^^^^^
+Changed
+"""""""
+* Changed ``DEFAULT_KEY`` from deprecated to synonym.
+
 Version 0.15
 ^^^^^^^^^^^^
-Add
-"""
-* Add synonym ``bind`` for ``sa_bind``.
-* Add synonym ``init_db`` for ``sa_init_db``.
+Added
+"""""
+* Added synonym ``bind`` for ``sa_bind``.
+* Added synonym ``init_db`` for ``sa_init_db``.
 
 Version 0.14
 ^^^^^^^^^^^^
-Add
-"""
-* Add utility ``sa_init_db(app, metadata, key = SA_DEFAULT_KEY)``.
-* Add constant ``SA_DEFAULT_KEY`` instead ``DEFAULT_KEY``.
+Added
+"""""
+* Added utility ``sa_init_db(app, metadata, key = SA_DEFAULT_KEY)``.
+* Added constant ``SA_DEFAULT_KEY`` instead ``DEFAULT_KEY``.
 
 Deprecated
 """"""""""

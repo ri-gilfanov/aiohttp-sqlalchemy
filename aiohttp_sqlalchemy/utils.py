@@ -6,7 +6,6 @@ if TYPE_CHECKING:
     from aiohttp.web import Application, Request
     from sqlalchemy import MetaData
     from sqlalchemy.ext.asyncio import AsyncSession
-    from typing import Any
 
 
 async def init_db(

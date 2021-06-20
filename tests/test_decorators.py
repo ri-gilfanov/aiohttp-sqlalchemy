@@ -21,7 +21,8 @@ async def test_decorated_class_based_view(mocked_request):
 
 async def test_decorated_class_handler(mocked_request):
     assert mocked_request.get(SA_DEFAULT_KEY) is None
-    await sa_decorator()(ClassHandler.get)(mocked_request)
+    class_handler = ClassHandler()
+    await sa_decorator()(class_handler.get)(mocked_request)
     assert isinstance(mocked_request.get(SA_DEFAULT_KEY), AsyncSession)
 
 

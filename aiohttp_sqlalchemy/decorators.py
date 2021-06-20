@@ -6,16 +6,16 @@ from aiohttp_sqlalchemy.constants import SA_DEFAULT_KEY
 from aiohttp_sqlalchemy.exceptions import DuplicateRequestKeyError
 
 if TYPE_CHECKING:
-    from aiohttp.web import Request, StreamResponse
-    from typing import Any, Awaitable, Callable, Union, Type
+    from aiohttp.web import StreamResponse
+    from typing import Any, Callable, Union, Type
+    from aiohttp_sqlalchemy.typedefs import THandler
 
-    TDecorated = Callable[[Request], Awaitable[StreamResponse]]
-    TResult = Callable[..., Union[Type[AbstractView], TDecorated]]
+    THandlerWrapper = Callable[..., Union[Type[AbstractView], THandler]]
 
 
-def sa_decorator(key: str = SA_DEFAULT_KEY) -> 'TResult':
+def sa_decorator(key: str = SA_DEFAULT_KEY) -> 'THandlerWrapper':
     """ SQLAlchemy asynchronous handler decorator. """
-    def wrapper(handler: 'TDecorated') -> 'TDecorated':
+    def wrapper(handler: 'THandler') -> 'THandler':
         @wraps(handler)
         async def wrapped(*args: 'Any', **kwargs: 'Any') -> 'StreamResponse':
             request = args[0].request \

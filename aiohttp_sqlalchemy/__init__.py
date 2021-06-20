@@ -2,9 +2,8 @@ from sqlalchemy.engine import Engine
 from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
 from typing import cast, TYPE_CHECKING
-import warnings
 
-from aiohttp_sqlalchemy.constants import SA_DEFAULT_KEY
+from aiohttp_sqlalchemy.constants import DEFAULT_KEY, SA_DEFAULT_KEY
 from aiohttp_sqlalchemy.decorators import sa_decorator
 from aiohttp_sqlalchemy.exceptions import DuplicateAppKeyError, \
                                           DuplicateRequestKeyError
@@ -15,23 +14,24 @@ from aiohttp_sqlalchemy.views import SAAbstractView, SABaseView, SAView
 
 if TYPE_CHECKING:
     from aiohttp.web import Application
-    from typing import Any, Callable, Iterable, Union, Tuple
-
-    TSessionFactory = Callable[..., AsyncSession]
-    TBindTo = Union[str, AsyncEngine, Callable[..., AsyncSession]]
-    TSABinding = Tuple[TSessionFactory, str, bool]
+    from aiohttp_sqlalchemy.typedefs import TBinding, TBindings, TBindTo, \
+        TSessionFactory
 
 
-__version__ = '0.15.3'
 
-__all__ = ['bind', 'DuplicateAppKeyError', 'DuplicateRequestKeyError',
-           'init_db', 'SAAbstractView', 'SABaseView', 'SA_DEFAULT_KEY',
-           'sa_bind', 'sa_decorator', 'sa_middleware', 'sa_init_db',
-           'sa_session', 'SAView', 'setup',]
+__version__ = '0.15.4'
+
+__all__ = [
+    'bind', 'DuplicateAppKeyError', 'DuplicateRequestKeyError', 'init_db',
+    'SAAbstractView', 'SABaseView', 'SA_DEFAULT_KEY', 'sa_decorator',
+    'sa_middleware', 'sa_session', 'SAView', 'setup',
+    # synonyms
+    'DEFAULT_KEY', 'sa_bind', 'sa_init_db',
+]
 
 
 def bind(bind_to: 'TBindTo', key: str = SA_DEFAULT_KEY, *,
-            middleware: bool = True) -> 'TSABinding':
+            middleware: bool = True) -> 'TBinding':
     """ Session factory wrapper for binding in setup function. """
 
     if isinstance(bind_to, str):
@@ -62,7 +62,7 @@ def bind(bind_to: 'TBindTo', key: str = SA_DEFAULT_KEY, *,
 sa_bind = bind  # sa_bind is synonym for bind
 
 
-def setup(app: 'Application', bindings: 'Iterable[TSABinding]') -> None:
+def setup(app: 'Application', bindings: 'TBindings') -> None:
     """ Setup function for binding SQLAlchemy engines. """
     for factory, key, middleware in bindings:
         if key in app:
@@ -72,11 +72,3 @@ def setup(app: 'Application', bindings: 'Iterable[TSABinding]') -> None:
 
         if middleware:
             app.middlewares.append(sa_middleware(key))
-
-
-def __getattr__(name: str) -> 'Any':
-    if name == 'DEFAULT_KEY':
-        msg = "'DEFAULT_KEY' has been deprecated, use 'SA_DEFAULT_KEY'"
-        warnings.warn(msg, UserWarning, stacklevel=2)
-        return SA_DEFAULT_KEY
-    raise AttributeError(f"module {__name__} has no attribute {name}")
