@@ -190,15 +190,12 @@ Class based views
 
   class Handler(aiohttp_sqlalchemy.SAView):
       async def get(self):
-          async with self.sa_session().begin():
-              # some your code
+          db_session = self.sa_session()
 
-          async with self.sa_session('sa_second').begin():
-              # some your code
+          # some your code
 
   aiohttp_sqlalchemy.setup(app, [
       aiohttp_sqlalchemy.bind(MainSession),
-      aiohttp_sqlalchemy.bind(SecondSession, 'sa_second'),
   ])
 
 
