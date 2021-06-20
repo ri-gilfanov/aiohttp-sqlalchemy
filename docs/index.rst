@@ -228,8 +228,8 @@ Decorating handlers
 
 Change log
 ----------
-Unreleased
-^^^^^^^^^^
+Version 0.15.4
+^^^^^^^^^^^^^^
 Changed
 """""""
 * Changed ``DEFAULT_KEY`` from deprecated to synonym.
