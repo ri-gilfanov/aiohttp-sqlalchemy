@@ -11,7 +11,7 @@ import aiohttp_sqlalchemy
 from aiohttp_sqlalchemy import SA_DEFAULT_KEY, sa_bind, sa_middleware
 
 if TYPE_CHECKING:
-    from aiohttp.web import Application, Request, Response
+    from aiohttp.web import Request, Response
     from sqlalchemy.ext.asyncio import AsyncEngine
     from aiohttp_sqlalchemy.typedefs import THandler, TSessionFactory
 
@@ -43,7 +43,7 @@ def sa_main_middleware() -> 'THandler':
 
 
 @pytest.fixture
-def middlewared_app(orm_session_factory: 'TSessionFactory')-> 'Application':
+def middlewared_app(orm_session_factory: 'TSessionFactory') -> 'Application':
     app = web.Application()
     aiohttp_sqlalchemy.setup(app, [sa_bind(orm_session_factory)])
     return app
@@ -54,7 +54,7 @@ def mocked_request(middlewared_app: 'Application') -> 'Request':
     return make_mocked_request(METH_GET, '/', app=middlewared_app)
 
 
-async def function_handler(request: 'Request') ->  'Response':
+async def function_handler(request: 'Request') -> 'Response':
     return web.json_response({})
 
 

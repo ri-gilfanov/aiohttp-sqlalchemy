@@ -31,7 +31,10 @@ class Main:
         async with request['sa_main'].begin():
             request['sa_main'].add_all([Request()])
             result = await request['sa_main'].execute(sa.select(Request))
-            data = {r.id: r.timestamp.isoformat() for r in result.scalars()}
+            data = {
+                r.id: r.timestamp.isoformat()
+                for r in result.scalars()
+            }
             return web.json_response(data)
 
 

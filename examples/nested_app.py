@@ -38,11 +38,17 @@ async def main(request):
 
     async with request['sa_main'].begin():
         result = await request['sa_main'].execute(sa.select(Request))
-        main_result = {r.id: r.timestamp.isoformat() for r in result.scalars()}
+        main_result = {
+            r.id: r.timestamp.isoformat()
+            for r in result.scalars()
+        }
 
     async with request['sa_second'].begin():
         result = await request['sa_second'].execute(sa.select(Request))
-        secondary_result = {r.id: r.timestamp.isoformat() for r in result.scalars()}
+        secondary_result = {
+            r.id: r.timestamp.isoformat()
+            for r in result.scalars()
+        }
 
     data = {
         'main': main_result,

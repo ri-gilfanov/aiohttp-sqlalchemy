@@ -2,7 +2,8 @@ import pytest
 from sqlalchemy.ext.asyncio import AsyncSession
 from typing import TYPE_CHECKING
 
-from aiohttp_sqlalchemy import SA_DEFAULT_KEY, DuplicateRequestKeyError, sa_decorator
+from aiohttp_sqlalchemy import DuplicateRequestKeyError, sa_decorator, \
+    SA_DEFAULT_KEY
 from tests.conftest import ClassBasedView, ClassHandler, function_handler
 
 if TYPE_CHECKING:

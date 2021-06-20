@@ -1,5 +1,6 @@
 from sqlalchemy.engine import Engine
-from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, create_async_engine
+from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, \
+    create_async_engine
 from sqlalchemy.orm import sessionmaker
 from typing import cast, TYPE_CHECKING
 
@@ -18,7 +19,6 @@ if TYPE_CHECKING:
         TSessionFactory
 
 
-
 __version__ = '0.15.4'
 
 __all__ = [
@@ -31,7 +31,7 @@ __all__ = [
 
 
 def bind(bind_to: 'TBindTo', key: str = SA_DEFAULT_KEY, *,
-            middleware: bool = True) -> 'TBinding':
+         middleware: bool = True) -> 'TBinding':
     """ Session factory wrapper for binding in setup function. """
 
     if isinstance(bind_to, str):
