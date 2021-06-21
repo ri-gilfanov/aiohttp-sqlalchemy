@@ -1,74 +1,60 @@
-from datetime import datetime
 from random import choice
-from typing import TYPE_CHECKING
 
 import sqlalchemy as sa
 from aiohttp import web
-from sqlalchemy import orm
-from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 
 import aiohttp_sqlalchemy
-from aiohttp_sqlalchemy import sa_bind, sa_decorator
-
-if TYPE_CHECKING:
-    from typing import Any
-
-
-metadata = sa.MetaData()
-Base: "Any" = orm.declarative_base(metadata=metadata)
-
-
-class Request(Base):
-    __tablename__ = "requests"
-    id = sa.Column(sa.Integer, primary_key=True)
-    timestamp = sa.Column(sa.DateTime(), default=datetime.now)
+from aiohttp_sqlalchemy import sa_decorator, sa_session
+from examples.base import DB_URL, MyModel, metadata
 
 
 @sa_decorator("sa_second")
 async def main(request):
-    async with request["sa_main"].bind.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
+    data = {}
+    main_session = sa_session(request)
+    second_session = sa_session(request, "sa_second")
+    random_session = choice([main_session, second_session])
 
-    async with request["sa_second"].bind.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
+    async with random_session.begin():
+        random_session.add_all([MyModel()])
 
-    session = choice(["sa_main", "sa_second"])
+    main_session = sa_session(request)
+    async with main_session.begin():
+        stmt = sa.select(MyModel)
+        result = await main_session.execute(stmt)
+        instances = result.scalars()
 
-    async with request[session].begin():
-        request[session].add_all([Request()])
-
-    async with request["sa_main"].begin():
-        result = await request["sa_main"].execute(sa.select(Request))
-        main_result = {r.id: r.timestamp.isoformat() for r in result.scalars()}
-
-    async with request["sa_second"].begin():
-        result = await request["sa_second"].execute(sa.select(Request))
-        secondary_result = {r.id: r.timestamp.isoformat() for r in result.scalars()}
-
-    data = {
-        "main": main_result,
-        "secondary": secondary_result,
+    data["main"] = {
+        instance.pk: instance.timestamp.isoformat() for instance in instances
     }
+
+    second_session = sa_session(request, "sa_second")
+    async with second_session.begin():
+        stmt = sa.select(MyModel)
+        result = await second_session.execute(stmt)
+        instances = result.scalars()
+
+    data["second"] = {
+        instance.pk: instance.timestamp.isoformat() for instance in instances
+    }
+
     return web.json_response(data)
 
 
-app = web.Application()
+async def app_factory():
+    app = web.Application()
+    aiohttp_sqlalchemy.setup(
+        app,
+        [
+            aiohttp_sqlalchemy.bind(DB_URL),
+            aiohttp_sqlalchemy.bind(DB_URL, "sa_second", middleware=False),
+        ],
+    )
+    await aiohttp_sqlalchemy.init_db(app, metadata)
+    await aiohttp_sqlalchemy.init_db(app, metadata, "sa_second")
+    app.add_routes([web.get("/", main)])
+    return app
 
-main_engine = create_async_engine("sqlite+aiosqlite:///")
-second_engine = create_async_engine("sqlite+aiosqlite:///")
-
-MainSession = orm.sessionmaker(main_engine, AsyncSession)
-SecondSession = orm.sessionmaker(second_engine, AsyncSession)
-
-aiohttp_sqlalchemy.setup(
-    app,
-    [
-        sa_bind(MainSession),
-        sa_bind(SecondSession, "sa_second", middleware=False),
-    ],
-)
-
-app.add_routes([web.get("/", main)])
 
 if __name__ == "__main__":
-    web.run_app(app)
+    web.run_app(app_factory())
