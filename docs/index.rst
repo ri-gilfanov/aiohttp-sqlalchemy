@@ -225,6 +225,12 @@ Decorating handlers
 
 Change log
 ----------
+Unreleased
+^^^^^^^^^^
+Added
+"""""
+* Added utility ``sa_session_factory(source, key = SA_DEFAULT_KEY)``.
+
 Version 0.15.4
 ^^^^^^^^^^^^^^
 Changed
