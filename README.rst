@@ -1,7 +1,7 @@
 ==================
 aiohttp-sqlalchemy
 ==================
-|Release| |Python versions| |Downloads count| |Build status| |Test coverage| |Documantation|
+|Release| |Python versions| |Downloads count| |Build status| |Test coverage| |Codacy Badge| |Documantation|
 
 .. |Release| image:: https://badge.fury.io/py/aiohttp-sqlalchemy.svg
   :target: https://pypi.org/project/aiohttp-sqlalchemy/
@@ -22,6 +22,10 @@ aiohttp-sqlalchemy
 .. |Test coverage| image:: https://coveralls.io/repos/github/ri-gilfanov/aiohttp-sqlalchemy/badge.svg?branch=master
   :target: https://coveralls.io/github/ri-gilfanov/aiohttp-sqlalchemy?branch=master
   :alt: Test coverage
+
+.. |Codacy Badge| image:: https://app.codacy.com/project/badge/Grade/19d5c531ed75435988ba8dc91031514c
+  :target: https://www.codacy.com/gh/ri-gilfanov/aiohttp-sqlalchemy/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ri-gilfanov/aiohttp-sqlalchemy&amp;utm_campaign=Badge_Grade
+   :alt: Codacy Badge
 
 .. |Documantation| image:: https://readthedocs.org/projects/aiohttp-sqlalchemy/badge/?version=latest
   :target: https://aiohttp-sqlalchemy.readthedocs.io/en/latest/?badge=latest
@@ -112,8 +116,3 @@ Copy and paste this code in a file and run:
   if __name__ == '__main__':
       web.run_app(app_factory())
 
-
-
-.. image:: https://api.codacy.com/project/badge/Grade/3b8d47b5156a4def85f5ff5de219d284
-   :alt: Codacy Badge
-   :target: https://app.codacy.com/gh/ri-gilfanov/aiohttp-sqlalchemy?utm_source=github.com&utm_medium=referral&utm_content=ri-gilfanov/aiohttp-sqlalchemy&utm_campaign=Badge_Grade_Settings

@@ -17,7 +17,7 @@ Welcome to aiohttp-sqlalchemy's documentation!
 
 Overview
 --------
-|Release| |Python versions| |Downloads count| |Build status| |Test coverage| |Documantation|
+|Release| |Python versions| |Downloads count| |Build status| |Test coverage| |Codacy Badge| |Documantation|
 
 .. |Release| image:: https://badge.fury.io/py/aiohttp-sqlalchemy.svg
   :target: https://pypi.org/project/aiohttp-sqlalchemy/
@@ -38,6 +38,10 @@ Overview
 .. |Test coverage| image:: https://coveralls.io/repos/github/ri-gilfanov/aiohttp-sqlalchemy/badge.svg?branch=master
   :target: https://coveralls.io/github/ri-gilfanov/aiohttp-sqlalchemy?branch=master
   :alt: Test coverage
+
+.. |Codacy Badge| image:: https://app.codacy.com/project/badge/Grade/19d5c531ed75435988ba8dc91031514c
+  :target: https://www.codacy.com/gh/ri-gilfanov/aiohttp-sqlalchemy/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ri-gilfanov/aiohttp-sqlalchemy&amp;utm_campaign=Badge_Grade
+   :alt: Codacy Badge
 
 .. |Documantation| image:: https://readthedocs.org/projects/aiohttp-sqlalchemy/badge/?version=latest
   :target: https://aiohttp-sqlalchemy.readthedocs.io/en/latest/?badge=latest
