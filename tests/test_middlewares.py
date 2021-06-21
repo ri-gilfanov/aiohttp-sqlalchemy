@@ -13,8 +13,8 @@ if TYPE_CHECKING:
 
 
 async def test_duplicate_request_key_error(
-    sa_main_middleware: 'THandler',
-    mocked_request: 'Request',
+    sa_main_middleware: "THandler",
+    mocked_request: "Request",
     orm_session: AsyncSession,
 ) -> None:
     assert mocked_request.get(SA_DEFAULT_KEY) is None
@@ -26,8 +26,8 @@ async def test_duplicate_request_key_error(
 
 
 async def test_sa_middleware(
-    sa_main_middleware: 'THandler',
-    mocked_request: 'Request',
+    sa_main_middleware: "THandler",
+    mocked_request: "Request",
 ) -> None:
     assert mocked_request.get(SA_DEFAULT_KEY) is None
     await sa_main_middleware(mocked_request, function_handler)

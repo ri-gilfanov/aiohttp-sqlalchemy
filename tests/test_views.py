@@ -8,8 +8,8 @@ if TYPE_CHECKING:
 
 
 def test_sa_session(
-    mocked_request: 'Request',
-    orm_session: 'AsyncSession',
+    mocked_request: "Request",
+    orm_session: "AsyncSession",
 ) -> None:
     mocked_request[SA_DEFAULT_KEY] = orm_session
     view = SABaseView(mocked_request)

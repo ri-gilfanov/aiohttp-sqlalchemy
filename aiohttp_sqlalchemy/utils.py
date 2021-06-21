@@ -14,8 +14,8 @@ if TYPE_CHECKING:
 
 
 async def init_db(
-    app: 'Application',
-    metadata: 'MetaData',
+    app: "Application",
+    metadata: "MetaData",
     key: str = SA_DEFAULT_KEY,
 ) -> None:
     session_factory = sa_session_factory(app, key)
@@ -28,14 +28,14 @@ sa_init_db = init_db  # synonym for init_db
 
 
 def sa_session(
-    request: 'Request',
+    request: "Request",
     key: str = SA_DEFAULT_KEY,
-) -> 'AsyncSession':
+) -> "AsyncSession":
     return request.get(key)
 
 
 def sa_session_factory(
-    source: 'Union[Request, Application]',
+    source: "Union[Request, Application]",
     key: str = SA_DEFAULT_KEY,
-) -> 'TSessionFactory':
-    return cast('TSessionFactory', getattr(source, 'app', source).get(key))
+) -> "TSessionFactory":
+    return cast("TSessionFactory", getattr(source, "app", source).get(key))

@@ -15,63 +15,60 @@ if TYPE_CHECKING:
 
 
 metadata = sa.MetaData()
-Base: 'Any' = orm.declarative_base(metadata=metadata)
+Base: "Any" = orm.declarative_base(metadata=metadata)
 
 
 class Request(Base):
-    __tablename__ = 'requests'
+    __tablename__ = "requests"
     id = sa.Column(sa.Integer, primary_key=True)
     timestamp = sa.Column(sa.DateTime(), default=datetime.now)
 
 
-@sa_decorator('sa_second')
+@sa_decorator("sa_second")
 async def main(request):
-    async with request['sa_main'].bind.begin() as conn:
+    async with request["sa_main"].bind.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
 
-    async with request['sa_second'].bind.begin() as conn:
+    async with request["sa_second"].bind.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
 
-    session = choice(['sa_main', 'sa_second'])
+    session = choice(["sa_main", "sa_second"])
 
     async with request[session].begin():
         request[session].add_all([Request()])
 
-    async with request['sa_main'].begin():
-        result = await request['sa_main'].execute(sa.select(Request))
-        main_result = {
-            r.id: r.timestamp.isoformat()
-            for r in result.scalars()
-        }
+    async with request["sa_main"].begin():
+        result = await request["sa_main"].execute(sa.select(Request))
+        main_result = {r.id: r.timestamp.isoformat() for r in result.scalars()}
 
-    async with request['sa_second'].begin():
-        result = await request['sa_second'].execute(sa.select(Request))
-        secondary_result = {
-            r.id: r.timestamp.isoformat()
-            for r in result.scalars()
-        }
+    async with request["sa_second"].begin():
+        result = await request["sa_second"].execute(sa.select(Request))
+        secondary_result = {r.id: r.timestamp.isoformat() for r in result.scalars()}
 
     data = {
-        'main': main_result,
-        'secondary': secondary_result,
+        "main": main_result,
+        "secondary": secondary_result,
     }
     return web.json_response(data)
 
 
 app = web.Application()
 
-main_engine = create_async_engine('sqlite+aiosqlite:///')
-second_engine = create_async_engine('sqlite+aiosqlite:///')
+main_engine = create_async_engine("sqlite+aiosqlite:///")
+second_engine = create_async_engine("sqlite+aiosqlite:///")
 
 MainSession = orm.sessionmaker(main_engine, AsyncSession)
 SecondSession = orm.sessionmaker(second_engine, AsyncSession)
 
-aiohttp_sqlalchemy.setup(app, [
-    sa_bind(MainSession),
-    sa_bind(SecondSession, 'sa_second', middleware=False),
-])
+aiohttp_sqlalchemy.setup(
+    app,
+    [
+        sa_bind(MainSession),
+        sa_bind(SecondSession, "sa_second", middleware=False),
+    ],
+)
 
-app.add_routes([web.get('/', main)])
+app.add_routes([web.get("/", main)])
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     web.run_app(app)

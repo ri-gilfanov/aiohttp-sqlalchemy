@@ -20,9 +20,10 @@ class SAAbstractView(AbstractView, metaclass=ABCMeta):
 
     Suitable for a specific usage with multiple models.
     """
-    sa_session_key: 'str' = SA_DEFAULT_KEY
 
-    def sa_session(self, key: 'Optional[str]' = None) -> 'AsyncSession':
+    sa_session_key: "str" = SA_DEFAULT_KEY
+
+    def sa_session(self, key: "Optional[str]" = None) -> "AsyncSession":
         return self.request.get(key or self.sa_session_key)
 
 
@@ -34,7 +35,8 @@ class SAOneModelMixin(SAAbstractView, metaclass=ABCMeta):
 
     Suitable for a usually usage with one model.
     """
-    sa_model: 'Any'  # Not all developers use declarative mapping
+
+    sa_model: "Any"  # Not all developers use declarative mapping
 
 
 class SABaseView(View, SAAbstractView):
