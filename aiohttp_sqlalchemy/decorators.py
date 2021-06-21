@@ -11,6 +11,7 @@ from aiohttp_sqlalchemy.typedefs import THandler, THandlerWrapper
 
 def sa_decorator(key: str = SA_DEFAULT_KEY) -> THandlerWrapper:
     """SQLAlchemy asynchronous handler decorator."""
+
     def wrapper(handler: THandler) -> THandler:
         @wraps(handler)
         async def wrapped(*args: Any, **kwargs: Any) -> StreamResponse:
