@@ -1,4 +1,5 @@
 from typing import TYPE_CHECKING
+
 from aiohttp_sqlalchemy import SA_DEFAULT_KEY, SABaseView
 
 if TYPE_CHECKING:

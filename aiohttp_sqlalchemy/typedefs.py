@@ -1,7 +1,7 @@
-from aiohttp.web import StreamResponse
-from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession
 from typing import Awaitable, Callable, Iterable, Tuple, Union
 
+from aiohttp.web import StreamResponse
+from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession
 
 TSessionFactory = Callable[..., AsyncSession]
 THandler = Callable[..., Awaitable[StreamResponse]]

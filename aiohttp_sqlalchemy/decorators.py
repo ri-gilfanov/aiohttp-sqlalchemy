@@ -1,13 +1,16 @@
-from aiohttp.abc import AbstractView
 from functools import wraps
 from typing import TYPE_CHECKING
+
+from aiohttp.abc import AbstractView
 
 from aiohttp_sqlalchemy.constants import SA_DEFAULT_KEY
 from aiohttp_sqlalchemy.exceptions import DuplicateRequestKeyError
 
 if TYPE_CHECKING:
-    from aiohttp.web import StreamResponse
     from typing import Any
+
+    from aiohttp.web import StreamResponse
+
     from aiohttp_sqlalchemy.typedefs import THandler, THandlerWrapper
 
 
