@@ -1,4 +1,4 @@
-""" AIOHTTP-SQLAlchemy. SQLAlchemy 1.4 / 2.0 support for aiohttp """
+"""AIOHTTP-SQLAlchemy. SQLAlchemy 1.4 / 2.0 support for aiohttp"""
 from typing import cast
 
 from aiohttp.web import Application

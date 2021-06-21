@@ -9,8 +9,7 @@ from aiohttp_sqlalchemy.constants import SA_DEFAULT_KEY
 
 
 class SAAbstractView(AbstractView, metaclass=ABCMeta):
-    """
-    Simple SQLAlchemy view based on aiohttp.abc.AbstractView.
+    """Simple SQLAlchemy view based on aiohttp.abc.AbstractView.
 
     The `__await__` method must be implemented in child classes.
 
