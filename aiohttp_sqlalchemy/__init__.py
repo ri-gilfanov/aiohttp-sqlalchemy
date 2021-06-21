@@ -21,7 +21,7 @@ if TYPE_CHECKING:
                                              TSessionFactory)
 
 
-__version__ = '0.15.5'
+__version__ = '0.16.0'
 
 __all__ = [
     'bind', 'DuplicateAppKeyError', 'DuplicateRequestKeyError', 'init_db',

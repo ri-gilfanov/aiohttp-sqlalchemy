@@ -225,11 +225,13 @@ Decorating handlers
 
 Change log
 ----------
-Unreleased
-^^^^^^^^^^
+Version 0.16.0
+^^^^^^^^^^^^^^
 Added
 """""
-* Added utility ``sa_session_factory(source, key = SA_DEFAULT_KEY)``.
+* Added utility ``sa_session_factory(source, key = SA_DEFAULT_KEY)``, when
+  ``source`` can be instance of ``aiohttp.web.Request`` or
+  ``aiohttp.web.Application``.
 
 Version 0.15.4
 ^^^^^^^^^^^^^^
