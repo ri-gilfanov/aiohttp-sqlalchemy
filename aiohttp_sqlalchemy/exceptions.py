@@ -4,13 +4,13 @@ class AbstractDuplicateKeyError(ValueError):
 
 class DuplicateAppKeyError(AbstractDuplicateKeyError):
     def __init__(self, key: str):
-        self.message = f'Duplicated app key `{key}`. Check `bindings` ' \
-                       f' argument in `aiohttp_sqlalchemy.setup()` call.'
-        super().__init__(self.message)
+        msg = f'Duplicated app key `{key}`. Check `bindings` argument ' \
+              f'in `aiohttp_sqlalchemy.setup()` call.'
+        super().__init__(msg)
 
 
 class DuplicateRequestKeyError(AbstractDuplicateKeyError):
     def __init__(self, key: str):
-        self.message = f'Duplicated request key `{key}`. Check middlewares ' \
-                       f'and decorators from `aiohttp_sqlalchemy`.'
-        super().__init__(self.message)
+        msg = f'Duplicated request key `{key}`. Check middlewares and ' \
+              f'decorators from `aiohttp_sqlalchemy`.'
+        super().__init__(msg)

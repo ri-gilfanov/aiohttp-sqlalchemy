@@ -15,10 +15,6 @@ if TYPE_CHECKING:
 async def test_db_init(middlewared_app: 'Application') -> None:
     metadata = sa.MetaData()
     await aiohttp_sqlalchemy.init_db(middlewared_app, metadata)
-    with pytest.raises(KeyError):
-        app = Application()
-        assert app.get(SA_DEFAULT_KEY) is None
-        await aiohttp_sqlalchemy.init_db(Application(), metadata)
 
 
 def test_sa_session(
@@ -27,11 +23,6 @@ def test_sa_session(
 ) -> None:
     mocked_request[SA_DEFAULT_KEY] = orm_session
     assert sa_session(mocked_request) is orm_session
-    with pytest.raises(KeyError):
-        sa_session(mocked_request, '')
-    with pytest.raises(TypeError):
-        mocked_request['wrong_object'] = 1
-        sa_session(mocked_request, 'wrong_object')
 
 
 def test_sa_session_factory(
@@ -41,5 +32,3 @@ def test_sa_session_factory(
 ) -> None:
     assert sa_session_factory(mocked_request) is orm_session_factory
     assert sa_session_factory(middlewared_app) is orm_session_factory
-    with pytest.raises(TypeError):
-        sa_session_factory(None)  # type: ignore
