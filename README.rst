@@ -112,3 +112,8 @@ Copy and paste this code in a file and run:
   if __name__ == '__main__':
       web.run_app(app_factory())
 
+
+
+.. image:: https://api.codacy.com/project/badge/Grade/3b8d47b5156a4def85f5ff5de219d284
+   :alt: Codacy Badge
+   :target: https://app.codacy.com/gh/ri-gilfanov/aiohttp-sqlalchemy?utm_source=github.com&utm_medium=referral&utm_content=ri-gilfanov/aiohttp-sqlalchemy&utm_campaign=Badge_Grade_Settings
