@@ -27,6 +27,11 @@ def test_sa_session(
 ) -> None:
     mocked_request[SA_DEFAULT_KEY] = orm_session
     assert sa_session(mocked_request) is orm_session
+    with pytest.raises(KeyError):
+        sa_session(mocked_request, '')
+    with pytest.raises(TypeError):
+        mocked_request['wrong_object'] = 1
+        sa_session(mocked_request, 'wrong_object')
 
 
 def test_sa_session_factory(
