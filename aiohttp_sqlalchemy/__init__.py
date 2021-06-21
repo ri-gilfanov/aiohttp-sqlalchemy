@@ -1,5 +1,7 @@
-from typing import TYPE_CHECKING, cast
+""" AIOHTTP-SQLAlchemy. SQLAlchemy 1.4 / 2.0 support for aiohttp """
+from typing import cast
 
+from aiohttp.web import Application
 from sqlalchemy.engine import Engine
 from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
@@ -8,19 +10,9 @@ from aiohttp_sqlalchemy.constants import DEFAULT_KEY, SA_DEFAULT_KEY
 from aiohttp_sqlalchemy.decorators import sa_decorator
 from aiohttp_sqlalchemy.exceptions import DuplicateAppKeyError, DuplicateRequestKeyError
 from aiohttp_sqlalchemy.middlewares import sa_middleware
+from aiohttp_sqlalchemy.typedefs import TBinding, TBindings, TBindTo, TSessionFactory
 from aiohttp_sqlalchemy.utils import init_db, sa_init_db, sa_session, sa_session_factory
 from aiohttp_sqlalchemy.views import SAAbstractView, SABaseView, SAView
-
-if TYPE_CHECKING:
-    from aiohttp.web import Application
-
-    from aiohttp_sqlalchemy.typedefs import (
-        TBinding,
-        TBindings,
-        TBindTo,
-        TSessionFactory,
-    )
-
 
 __version__ = "0.16.0"
 
@@ -46,16 +38,15 @@ __all__ = [
 
 
 def bind(
-    bind_to: "TBindTo", key: str = SA_DEFAULT_KEY, *, middleware: bool = True
+    bind_to: TBindTo, key: str = SA_DEFAULT_KEY, *, middleware: bool = True
 ) -> "TBinding":
     """Session factory wrapper for binding in setup function."""
-
     if isinstance(bind_to, str):
         bind_to = cast(AsyncEngine, create_async_engine(bind_to))
 
     if isinstance(bind_to, AsyncEngine):
         bind_to = cast(
-            "TSessionFactory",
+            TSessionFactory,
             sessionmaker(
                 bind=bind_to,
                 class_=AsyncSession,
@@ -81,7 +72,7 @@ def bind(
 sa_bind = bind  # sa_bind is synonym for bind
 
 
-def setup(app: "Application", bindings: "TBindings") -> None:
+def setup(app: Application, bindings: "TBindings") -> None:
     """Setup function for binding SQLAlchemy engines."""
     for factory, key, middleware in bindings:
         if key in app:

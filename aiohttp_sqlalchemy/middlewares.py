@@ -1,23 +1,16 @@
-from typing import TYPE_CHECKING
-
-from aiohttp.web import middleware
+from aiohttp.web import Request, StreamResponse, middleware
 
 from aiohttp_sqlalchemy.constants import SA_DEFAULT_KEY
 from aiohttp_sqlalchemy.exceptions import DuplicateRequestKeyError
-
-if TYPE_CHECKING:
-    from aiohttp.web import Request, StreamResponse
-
-    from aiohttp_sqlalchemy.typedefs import THandler
+from aiohttp_sqlalchemy.typedefs import THandler
 
 
-def sa_middleware(key: str = SA_DEFAULT_KEY) -> "THandler":
-    """SQLAlchemy asynchronous middleware factory."""
-
+def sa_middleware(key: str = SA_DEFAULT_KEY) -> THandler:
+    """
+    SQLAlchemy asynchronous middleware factory.
+    """
     @middleware
-    async def sa_middleware_(
-        request: "Request", handler: "THandler"
-    ) -> "StreamResponse":
+    async def sa_middleware_(request: Request, handler: THandler) -> StreamResponse:
         if key in request:
             raise DuplicateRequestKeyError(key)
 

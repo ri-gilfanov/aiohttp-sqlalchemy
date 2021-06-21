@@ -1,17 +1,13 @@
-from typing import TYPE_CHECKING
-
 import pytest
 from aiohttp import web
 
 import aiohttp_sqlalchemy
 from aiohttp_sqlalchemy import DuplicateAppKeyError
-
-if TYPE_CHECKING:
-    from aiohttp_sqlalchemy.typedefs import TSessionFactory
+from aiohttp_sqlalchemy.typedefs import TSessionFactory
 
 
 async def test_duplicate_app_key_error(
-    orm_session_factory: "TSessionFactory",
+    orm_session_factory: TSessionFactory,
 ) -> None:
 
     with pytest.raises(DuplicateAppKeyError):

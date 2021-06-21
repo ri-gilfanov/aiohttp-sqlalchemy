@@ -1,16 +1,11 @@
 from datetime import datetime
-from typing import TYPE_CHECKING
+from typing import Any
 
 import sqlalchemy as sa
-from aiohttp import web
 from sqlalchemy import orm
 
-if TYPE_CHECKING:
-    from typing import Any
-
-
 metadata = sa.MetaData()
-Base: "Any" = orm.declarative_base(metadata=metadata)
+Base: Any = orm.declarative_base(metadata=metadata)
 DB_URL = "sqlite+aiosqlite:///"
 
 
