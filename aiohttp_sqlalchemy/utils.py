@@ -20,6 +20,8 @@ async def init_db(
         async with session_factory() as session:
             async with session.bind.begin() as connection:
                 await connection.run_sync(metadata.create_all)
+    else:
+        raise KeyError('Session factory not found by key')
 
 
 sa_init_db = init_db  # sa_init_db is synonym for init_db
@@ -41,4 +43,4 @@ def sa_session_factory(
     elif isinstance(source, Application):
         return source.get(key)
     else:
-        raise TypeError
+        raise TypeError('Source has unsupported type')

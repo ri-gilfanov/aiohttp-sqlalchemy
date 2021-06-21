@@ -1,3 +1,4 @@
+from aiohttp.web import Application
 import pytest
 import sqlalchemy as sa
 from typing import TYPE_CHECKING
@@ -6,7 +7,7 @@ import aiohttp_sqlalchemy
 from aiohttp_sqlalchemy import SA_DEFAULT_KEY, sa_session, sa_session_factory
 
 if TYPE_CHECKING:
-    from aiohttp.web import Application, Request
+    from aiohttp.web import Request
     from sqlalchemy.ext.asyncio import AsyncSession
     from aiohttp_sqlalchemy.typedefs import TSessionFactory
 
@@ -14,6 +15,10 @@ if TYPE_CHECKING:
 async def test_db_init(middlewared_app: 'Application') -> None:
     metadata = sa.MetaData()
     await aiohttp_sqlalchemy.init_db(middlewared_app, metadata)
+    with pytest.raises(KeyError):
+        app = Application()
+        assert app.get(SA_DEFAULT_KEY) is None
+        await aiohttp_sqlalchemy.init_db(Application(), metadata)
 
 
 def test_sa_session(
