@@ -42,6 +42,7 @@ sqlite = ["aiosqlite"]
 [tool.poetry.dev-dependencies]
 aiosqlite = ">=0.17.0"
 flake8 = ">=3.9.2"
+isort = ">=5.9.1"
 mypy = ">=0.902"
 pytest = ">=6.2.4"
 pytest-cov = ">=2.12.1"
@@ -51,6 +52,12 @@ sphinx_rtd_theme = ">=0.5.2"
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.isort]
+known_first_party = ["aiohttp_sqlalchemy"]
+known_third_party = ["aiohttp", "sqlalchemy"]
+line_length=88
+src_paths = ["aiohttp_sqlalchemy", "examples", "tests"]
 
 [tool.mypy]
 files = [
