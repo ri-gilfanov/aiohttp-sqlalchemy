@@ -1,7 +1,7 @@
-from aiohttp.web import Application
-import pytest
-import sqlalchemy as sa
 from typing import TYPE_CHECKING
+
+import sqlalchemy as sa
+from aiohttp.web import Application
 
 import aiohttp_sqlalchemy
 from aiohttp_sqlalchemy import SA_DEFAULT_KEY, sa_session, sa_session_factory
@@ -9,6 +9,7 @@ from aiohttp_sqlalchemy import SA_DEFAULT_KEY, sa_session, sa_session_factory
 if TYPE_CHECKING:
     from aiohttp.web import Request
     from sqlalchemy.ext.asyncio import AsyncSession
+
     from aiohttp_sqlalchemy.typedefs import TSessionFactory
 
 

@@ -1,11 +1,13 @@
-from aiohttp.web import middleware
 from typing import TYPE_CHECKING
+
+from aiohttp.web import middleware
 
 from aiohttp_sqlalchemy.constants import SA_DEFAULT_KEY
 from aiohttp_sqlalchemy.exceptions import DuplicateRequestKeyError
 
 if TYPE_CHECKING:
     from aiohttp.web import Request, StreamResponse
+
     from aiohttp_sqlalchemy.typedefs import THandler
 
 

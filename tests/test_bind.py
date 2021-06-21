@@ -1,8 +1,9 @@
+from typing import TYPE_CHECKING
+
+import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import sessionmaker
-import pytest
-from typing import TYPE_CHECKING
 
 import aiohttp_sqlalchemy
 

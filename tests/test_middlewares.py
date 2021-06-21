@@ -1,12 +1,14 @@
+from typing import TYPE_CHECKING
+
 import pytest
 from sqlalchemy.ext.asyncio import AsyncSession
-from typing import TYPE_CHECKING
 
 from aiohttp_sqlalchemy import SA_DEFAULT_KEY, DuplicateRequestKeyError
 from tests.conftest import function_handler
 
 if TYPE_CHECKING:
     from aiohttp.web import Request
+
     from aiohttp_sqlalchemy.typedefs import THandler
 
 

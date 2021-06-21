@@ -1,6 +1,7 @@
-from aiohttp import web
-import pytest
 from typing import TYPE_CHECKING
+
+import pytest
+from aiohttp import web
 
 import aiohttp_sqlalchemy
 from aiohttp_sqlalchemy import DuplicateAppKeyError

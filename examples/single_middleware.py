@@ -1,10 +1,11 @@
-from aiohttp import web
-import aiohttp_sqlalchemy
-from aiohttp_sqlalchemy import sa_session
 from datetime import datetime
+
 import sqlalchemy as sa
+from aiohttp import web
 from sqlalchemy import orm
 
+import aiohttp_sqlalchemy
+from aiohttp_sqlalchemy import sa_session
 
 metadata = sa.MetaData()
 Base = orm.declarative_base(metadata=metadata)

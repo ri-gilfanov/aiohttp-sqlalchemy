@@ -1,12 +1,15 @@
+from typing import TYPE_CHECKING, cast
+
 from aiohttp.web import Application, Request
 from sqlalchemy.ext.asyncio import AsyncSession
-from typing import cast, TYPE_CHECKING
 
 from aiohttp_sqlalchemy.constants import SA_DEFAULT_KEY
 
 if TYPE_CHECKING:
-    from sqlalchemy import MetaData
     from typing import Union
+
+    from sqlalchemy import MetaData
+
     from aiohttp_sqlalchemy.typedefs import TSessionFactory
 
 
