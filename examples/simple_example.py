@@ -12,7 +12,7 @@ Base = orm.declarative_base(metadata=metadata)
 
 
 class MyModel(Base):
-    __tablename__ = 'my_table'
+    __tablename__ = "my_table"
 
     pk = sa.Column(sa.Integer, primary_key=True)
     timestamp = sa.Column(sa.DateTime(), default=datetime.now)
@@ -25,11 +25,11 @@ async def main(request):
         db_session.add_all([MyModel()])
         stmt = sa.select(MyModel)
         result = await db_session.execute(stmt)
-        items = result.scalars()
+        instances = result.scalars()
 
     data = {}
-    for item in items:
-        data[item.pk] = item.timestamp.isoformat()
+    for instance in instances:
+        data[instance.pk] = instance.timestamp.isoformat()
 
     return web.json_response(data)
 
@@ -37,14 +37,14 @@ async def main(request):
 async def app_factory():
     app = web.Application()
 
-    aiohttp_sqlalchemy.setup(app, [
-        aiohttp_sqlalchemy.bind('sqlite+aiosqlite:///'),
-    ])
+    bind = aiohttp_sqlalchemy.bind("sqlite+aiosqlite:///")
+    aiohttp_sqlalchemy.setup(app, [bind])
     await aiohttp_sqlalchemy.init_db(app, metadata)
 
-    app.add_routes([web.get('/', main)])
+    app.add_routes([web.get("/", main)])
 
     return app
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     web.run_app(app_factory())

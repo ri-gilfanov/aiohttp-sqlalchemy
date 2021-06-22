@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "aiohttp-sqlalchemy"
-version = "0.16.0"
+version = "0.16.1"
 description = "SQLAlchemy 1.4 / 2.0 support for aiohttp."
 authors = [
     "Ruslan Ilyasovich Gilfanov <ri.gilfanov@yandex.ru>",
@@ -41,7 +41,9 @@ sqlite = ["aiosqlite"]
 
 [tool.poetry.dev-dependencies]
 aiosqlite = ">=0.17.0"
+black = ">=21.6b0"
 flake8 = ">=3.9.2"
+isort = ">=5.9.1"
 mypy = ">=0.902"
 pytest = ">=6.2.4"
 pytest-cov = ">=2.12.1"
@@ -52,10 +54,24 @@ sphinx_rtd_theme = ">=0.5.2"
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
-[tool.coverage.report]
-exclude_lines = [
-    "if TYPE_CHECKING:",
+[tool.black]
+line-length = 88
+target-version = ['py37', 'py38', 'py39']
+include = '\.pyi?$'
+
+[tool.isort]
+known_first_party = ["aiohttp_sqlalchemy"]
+known_third_party = ["aiohttp", "sqlalchemy"]
+line_length=88
+src_paths = ["aiohttp_sqlalchemy", "examples", "tests"]
+
+[tool.mypy]
+files = [
+    "aiohttp_sqlalchemy",
+    "tests",
 ]
-omit = [
-    "aiohttp_sqlalchemy/typedefs.py",
-]
+plugins = "sqlalchemy.ext.mypy.plugin"
+
+[[tool.mypy.overrides]]
+module = ['sqlalchemy.*']
+ignore_missing_imports = true
