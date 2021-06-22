@@ -12,26 +12,34 @@ from aiohttp_sqlalchemy.exceptions import DuplicateAppKeyError, DuplicateRequest
 from aiohttp_sqlalchemy.middlewares import sa_middleware
 from aiohttp_sqlalchemy.typedefs import TBinding, TBindings, TBindTo, TSessionFactory
 from aiohttp_sqlalchemy.utils import init_db, sa_init_db, sa_session, sa_session_factory
-from aiohttp_sqlalchemy.views import SAAbstractView, SABaseView, SAView
+from aiohttp_sqlalchemy.views import (
+    SAAbstractView,
+    SABaseView,
+    SAMixin,
+    SAModelMixin,
+    SAView,
+)
 
-__version__ = "0.17.0"
+__version__ = "0.17.1"
 
 __all__ = [
-    "bind",
+    "SA_DEFAULT_KEY",
     "DuplicateAppKeyError",
     "DuplicateRequestKeyError",
-    "init_db",
-    "SAAbstractView",
     "SABaseView",
-    "SA_DEFAULT_KEY",
+    "SAMixin",
+    "SAModelMixin",
+    "SAView",
+    "bind",
+    "init_db",
     "sa_decorator",
     "sa_middleware",
     "sa_session",
     "sa_session_factory",
-    "SAView",
     "setup",
     # Synonyms
     "DEFAULT_KEY",
+    "SAAbstractView",
     "sa_bind",
     "sa_init_db",
 ]
@@ -40,13 +48,12 @@ __all__ = [
 def bind(
     bind_to: TBindTo, key: str = SA_DEFAULT_KEY, *, middleware: bool = True
 ) -> "TBinding":
-    """Session factory wrapper for binding in setup function.
+    """Function wrapper for binding.
 
-    :param bind_to: argument can be string with database connection url, instance of
-                    ``sqlalchemy.ext.asyncio.AsyncEngine`` or callable object which
-                    returns ``sqlalchemy.ext.asyncio.AsyncSession`` instance.
-    :param key: key of SQLAlchemy binding. Has default.
-    :param middleware: ``bool`` for enable middleware. True by default.
+    :param bind_to: target for SQLAlchemy binding. Argument can be database connection
+                    url, asynchronous engine or asynchronous session factory.
+    :param key: key of SQLAlchemy binding.
+    :param middleware: `bool` for enable middleware. True by default.
     """
     if isinstance(bind_to, str):
         bind_to = cast(AsyncEngine, create_async_engine(bind_to))
@@ -74,10 +81,10 @@ def bind(
 
 
 def setup(app: Application, bindings: "TBindings") -> None:
-    """Setup function for binding SQLAlchemy engines.
+    """Setup function for SQLAlchemy binding to AIOHTTP application.
 
-    :param app: instance of ``aiohttp.web_app.Application``.
-    :param bindings: iterable of ``aiohttp_sqlalchemy.bind()`` calls.
+    :param app: your AIOHTTP application.
+    :param bindings: iterable of `aiohttp_sqlalchemy.bind()` calls.
     """
     for factory, key, middleware in bindings:
         if key in app:

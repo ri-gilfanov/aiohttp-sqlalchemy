@@ -10,17 +10,20 @@ from aiohttp_sqlalchemy.utils import sa_session
 
 
 class SAMixin(AbstractView, metaclass=ABCMeta):
-    """SQLAlchemy view mixin based ``aiohttp.abc.AbstractView``."""
+    """SQLAlchemy view mixin based `aiohttp.abc.AbstractView`."""
 
     sa_session_key: str = SA_DEFAULT_KEY
 
     def sa_session(self, key: Optional[str] = None) -> AsyncSession:
-        """Return ``AsyncSession`` instance."""
+        """Return `AsyncSession` instance.
+
+        :param key: key of SQLAlchemy binding.
+        """
         return sa_session(self.request, key or self.sa_session_key)
 
 
 class SAModelMixin(SAMixin, metaclass=ABCMeta):
-    """SQLAlchemy single model view mixin based ``aiohttp.abc.AbstractView``."""
+    """SQLAlchemy single model view mixin based `aiohttp.abc.AbstractView`."""
 
     sa_model: Any  # Not all developers use declarative mapping
 

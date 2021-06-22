@@ -13,8 +13,9 @@
 import os
 import sys
 
-sys.path.insert(0, os.path.abspath(".."))
+import toml
 
+sys.path.insert(0, os.path.abspath(".."))
 
 # -- Project information -----------------------------------------------------
 
@@ -23,7 +24,7 @@ copyright = "2021, Ruslan Ilyasovich Gilfanov"
 author = "Ruslan Ilyasovich Gilfanov"
 
 # The full version, including alpha/beta/rc tags
-release = "0.17.0"
+release = toml.load("../pyproject.toml")["tool"]["poetry"]["version"]
 
 
 # -- General configuration ---------------------------------------------------
@@ -43,6 +44,10 @@ templates_path = ["_templates"]
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
+
+# -- Autodoc -----------------------------------------------------------------
+autodoc_type_aliases = {}
+autodoc_typehints = "description"
 
 # -- Read the Docs -----------------------------------------------------------
 master_doc = "index"
