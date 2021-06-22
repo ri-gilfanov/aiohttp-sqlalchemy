@@ -14,7 +14,7 @@ from aiohttp_sqlalchemy.typedefs import TBinding, TBindings, TBindTo, TSessionFa
 from aiohttp_sqlalchemy.utils import init_db, sa_init_db, sa_session, sa_session_factory
 from aiohttp_sqlalchemy.views import SAAbstractView, SABaseView, SAView
 
-__version__ = "0.16.1"
+__version__ = "0.17.0"
 
 __all__ = [
     "bind",

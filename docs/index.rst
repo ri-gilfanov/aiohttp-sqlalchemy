@@ -229,13 +229,30 @@ Decorating handlers
 
 Change log
 ----------
-Version 0.16.1
-^^^^^^^^^^^^^^
+Version 0.17
+^^^^^^^^^^^^
+Add
+"""
+* ``views.SAAbstractView`` synonym for ``views.SAMixin``;
+* ``views.SAOneModelMixin`` synonym for ``views.SAModelMixin``;
+
+Changed
+"""""""
+* type checks in ``aiohttp_sqlalchemy.bind()``including replacing from ``ValueError``
+  to ``TypeError``;
+* ``views.SAAbstractView`` renamed ``views.SAMixin``;
+* ``views.SAOneModelMixin`` renamed ``views.SAModelMixin``.
+
+Removed
+"""""""
+* Removed type check of result of call session factory.
+
+Version 0.16
+^^^^^^^^^^^^
 Added
 """""
-* Added utility ``sa_session_factory(source, key = SA_DEFAULT_KEY)``, when
-  ``source`` can be instance of ``aiohttp.web.Request`` or
-  ``aiohttp.web.Application``.
+* Added utility ``sa_session_factory(source, key = SA_DEFAULT_KEY)``, when ``source``
+  can be instance of ``aiohttp.web.Request`` or ``aiohttp.web.Application``.
 
 Version 0.15.4
 ^^^^^^^^^^^^^^
@@ -247,14 +264,14 @@ Version 0.15
 ^^^^^^^^^^^^
 Added
 """""
-* Added synonym ``bind`` for ``sa_bind``.
+* Added synonym ``bind`` for ``sa_bind``;
 * Added synonym ``init_db`` for ``sa_init_db``.
 
 Version 0.14
 ^^^^^^^^^^^^
 Added
 """""
-* Added utility ``sa_init_db(app, metadata, key = SA_DEFAULT_KEY)``.
+* Added utility ``sa_init_db(app, metadata, key = SA_DEFAULT_KEY)``;
 * Added constant ``SA_DEFAULT_KEY`` instead ``DEFAULT_KEY``.
 
 Deprecated
@@ -272,14 +289,12 @@ Version 0.12
 ^^^^^^^^^^^^
 Added
 """""
-* Added ``sa_session_key`` attribute in ``SAAbstractView`` class.
-* Added support url and ``AssyncEngine`` instance as first argument
-  in ``sa_bind()``.
+* Added ``sa_session_key`` attribute in ``SAAbstractView`` class;
+* Added support url and ``AssyncEngine`` instance as first argument in ``sa_bind()``.
 
 Changed
 """""""
-* Rename first argument from ``factory`` to ``bind_to`` in ``sa_bind()``.
-  signature.
+* Rename first argument from ``factory`` to ``bind_to`` in ``sa_bind()`` signature.
 
 Version 0.11
 ^^^^^^^^^^^^
@@ -311,8 +326,7 @@ Version 0.8
 ^^^^^^^^^^^
 Changed
 """""""
-* Rename first argument from ``arg`` to ``factory`` in ``sa_bind()``
-  signature.
+* Rename first argument from ``arg`` to ``factory`` in ``sa_bind()`` signature.
 
 Deprecated
 """"""""""
@@ -324,15 +338,13 @@ Version 0.7
 ^^^^^^^^^^^
 Changed
 """""""
-* Usage ``sqlalchemy.orm.sessionmaker`` instance is recomended as a first
-  argument for ``aiohttp_sqlalchemy.sa_bind()`` signature. See examples
-  in documetation.
+* Usage ``sqlalchemy.orm.sessionmaker`` instance is recomended as a first argument
+  for ``aiohttp_sqlalchemy.sa_bind()`` signature. See examples in documetation.
 
 Removed
 """""""
 * Removed support of ``request.config_dict.get('sa_main')`` and
-  ``request.app['sa_main']`` expressions. Use a ``request['sa_main'].bind``
-  expression.
+  ``request.app['sa_main']`` expressions. Use a ``request['sa_main'].bind`` expression.
 
 Version 0.6
 ^^^^^^^^^^^
@@ -343,19 +355,17 @@ Added
 
 Changed
 """""""
-* Argument ``engine: AsyncEngine`` changed to ``arg: Union[AsyncEngine,
-  sessionmaker]`` in ``sa_bind()`` signature.
+* Argument ``engine: AsyncEngine`` changed to ``arg: Union[AsyncEngine, sessionmaker]``
+  in ``sa_bind()`` signature.
 
 Deprecated
 """"""""""
 * Deprecated support of ``request.config_dict.get('sa_main')`` and
-  ``request.app['sa_main']`` expressions. Use a ``request['sa_main'].bind``
-  expression.
+  ``request.app['sa_main']`` expressions. Use a ``request['sa_main'].bind`` expression.
 
 Removed
 """""""
-* Deprecated class ``views.SAViewMixin`` is removed. Use
-  ``views.SAAbstractView``.
+* Deprecated class ``views.SAViewMixin`` is removed. Use ``views.SAAbstractView``;
 * Deprecated attribute ``SAView.sa_main_session`` is removed. Use method
   ``SAView.sa_session(key: str = 'sa_main')``.
 
@@ -368,8 +378,7 @@ Removed
 
 Deprecated
 """"""""""
-* Undocumented class ``views.SAViewMixin`` is deprecated. Use
-  ``views.SAAbstractView``.
+* Undocumented class ``views.SAViewMixin`` is deprecated. Use ``views.SAAbstractView``.
 
 Version 0.4
 ^^^^^^^^^^^
