@@ -13,8 +13,9 @@
 import os
 import sys
 
-sys.path.insert(0, os.path.abspath(".."))
+import toml
 
+sys.path.insert(0, os.path.abspath(".."))
 
 # -- Project information -----------------------------------------------------
 
@@ -23,7 +24,7 @@ copyright = "2021, Ruslan Ilyasovich Gilfanov"
 author = "Ruslan Ilyasovich Gilfanov"
 
 # The full version, including alpha/beta/rc tags
-release = "0.17.0"
+release = toml.load("../pyproject.toml")["tool"]["poetry"]["version"]
 
 
 # -- General configuration ---------------------------------------------------
