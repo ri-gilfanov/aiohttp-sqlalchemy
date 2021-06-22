@@ -12,26 +12,34 @@ from aiohttp_sqlalchemy.exceptions import DuplicateAppKeyError, DuplicateRequest
 from aiohttp_sqlalchemy.middlewares import sa_middleware
 from aiohttp_sqlalchemy.typedefs import TBinding, TBindings, TBindTo, TSessionFactory
 from aiohttp_sqlalchemy.utils import init_db, sa_init_db, sa_session, sa_session_factory
-from aiohttp_sqlalchemy.views import SAAbstractView, SABaseView, SAView
+from aiohttp_sqlalchemy.views import (
+    SAAbstractView,
+    SABaseView,
+    SAMixin,
+    SAModelMixin,
+    SAView,
+)
 
 __version__ = "0.17.0"
 
 __all__ = [
-    "bind",
+    "SA_DEFAULT_KEY",
     "DuplicateAppKeyError",
     "DuplicateRequestKeyError",
-    "init_db",
-    "SAAbstractView",
     "SABaseView",
-    "SA_DEFAULT_KEY",
+    "SAMixin",
+    "SAModelMixin",
+    "SAView",
+    "bind",
+    "init_db",
     "sa_decorator",
     "sa_middleware",
     "sa_session",
     "sa_session_factory",
-    "SAView",
     "setup",
     # Synonyms
     "DEFAULT_KEY",
+    "SAAbstractView",
     "sa_bind",
     "sa_init_db",
 ]
