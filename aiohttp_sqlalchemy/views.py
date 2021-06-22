@@ -9,7 +9,8 @@ from aiohttp_sqlalchemy.constants import SA_DEFAULT_KEY
 
 
 class SAAbstractView(AbstractView, metaclass=ABCMeta):
-    """Simple SQLAlchemy view based on aiohttp.abc.AbstractView.
+    """
+    Simple SQLAlchemy view based on aiohttp.abc.AbstractView.
 
     The `__await__` method must be implemented in child classes.
 
@@ -19,7 +20,10 @@ class SAAbstractView(AbstractView, metaclass=ABCMeta):
     sa_session_key: str = SA_DEFAULT_KEY
 
     def sa_session(self, key: Optional[str] = None) -> AsyncSession:
-        return self.request.get(key or self.sa_session_key)
+        session = self.request.get(key or self.sa_session_key)
+        if isinstance(session, AsyncSession):
+            return session
+        raise TypeError(f"{session} is not {AsyncSession}")
 
 
 class SAOneModelMixin(SAAbstractView, metaclass=ABCMeta):

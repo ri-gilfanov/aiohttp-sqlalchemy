@@ -26,7 +26,10 @@ def sa_session(
     request: Request,
     key: str = SA_DEFAULT_KEY,
 ) -> AsyncSession:
-    return request.get(key)
+    session = request.get(key)
+    if isinstance(session, AsyncSession):
+        return session
+    raise TypeError(f"{session} is not {AsyncSession}")
 
 
 def sa_session_factory(
