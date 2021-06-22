@@ -62,10 +62,6 @@ def bind(
         msg = "Session factory must be callable."
         raise ValueError(msg)
 
-    if not isinstance(bind_to(), AsyncSession):
-        msg = "Session factory must returning `AsyncSession` instance."
-        raise ValueError(msg)
-
     return bind_to, key, middleware
 
 
