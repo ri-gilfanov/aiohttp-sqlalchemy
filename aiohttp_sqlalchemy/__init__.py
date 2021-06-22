@@ -4,7 +4,7 @@ from typing import cast
 from aiohttp.web import Application
 from sqlalchemy.engine import Engine
 from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, create_async_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import Session, sessionmaker
 
 from aiohttp_sqlalchemy.constants import DEFAULT_KEY, SA_DEFAULT_KEY
 from aiohttp_sqlalchemy.decorators import sa_decorator
@@ -14,7 +14,7 @@ from aiohttp_sqlalchemy.typedefs import TBinding, TBindings, TBindTo, TSessionFa
 from aiohttp_sqlalchemy.utils import init_db, sa_init_db, sa_session, sa_session_factory
 from aiohttp_sqlalchemy.views import SAAbstractView, SABaseView, SAView
 
-__version__ = "0.16.1"
+__version__ = "0.17.0"
 
 __all__ = [
     "bind",
@@ -30,7 +30,7 @@ __all__ = [
     "sa_session_factory",
     "SAView",
     "setup",
-    # synonyms
+    # Synonyms
     "DEFAULT_KEY",
     "sa_bind",
     "sa_init_db",
@@ -40,7 +40,14 @@ __all__ = [
 def bind(
     bind_to: TBindTo, key: str = SA_DEFAULT_KEY, *, middleware: bool = True
 ) -> "TBinding":
-    """Session factory wrapper for binding in setup function."""
+    """Session factory wrapper for binding in setup function.
+
+    :param bind_to: argument can be string with database connection url, instance of
+                    ``sqlalchemy.ext.asyncio.AsyncEngine`` or callable object which
+                    returns ``sqlalchemy.ext.asyncio.AsyncSession`` instance.
+    :param key: key of SQLAlchemy binding. Has default.
+    :param middleware: ``bool`` for enable middleware. True by default.
+    """
     if isinstance(bind_to, str):
         bind_to = cast(AsyncEngine, create_async_engine(bind_to))
 
@@ -54,26 +61,24 @@ def bind(
             ),
         )
 
-    if isinstance(bind_to, Engine):
-        msg = "Synchronous  engine is unsupported argument for `sa_bind()`."
-        raise ValueError(msg)
+    for type_ in (AsyncSession, Engine, Session):
+        if isinstance(bind_to, type_):
+            msg = f"{type_} is unsupported type of argument `bind_to`."
+            raise TypeError(msg)
 
     if not callable(bind_to):
-        msg = "Session factory must be callable."
-        raise ValueError(msg)
-
-    if not isinstance(bind_to(), AsyncSession):
-        msg = "Session factory must returning `AsyncSession` instance."
-        raise ValueError(msg)
+        msg = f"{bind_to} is unsupported type of argument `bind_to`."
+        raise TypeError(msg)
 
     return bind_to, key, middleware
 
 
-sa_bind = bind  # sa_bind is synonym for bind
-
-
 def setup(app: Application, bindings: "TBindings") -> None:
-    """Setup function for binding SQLAlchemy engines."""
+    """Setup function for binding SQLAlchemy engines.
+
+    :param app: instance of ``aiohttp.web_app.Application``.
+    :param bindings: iterable of ``aiohttp_sqlalchemy.bind()`` calls.
+    """
     for factory, key, middleware in bindings:
         if key in app:
             raise DuplicateAppKeyError(key)
@@ -82,3 +87,7 @@ def setup(app: Application, bindings: "TBindings") -> None:
 
         if middleware:
             app.middlewares.append(sa_middleware(key))
+
+
+# Synonyms
+sa_bind = bind

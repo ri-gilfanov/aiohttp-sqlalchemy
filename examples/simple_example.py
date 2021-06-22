@@ -22,15 +22,11 @@ async def main(request):
     db_session = sa_session(request)
 
     async with db_session.begin():
-        db_session.add_all([MyModel()])
-        stmt = sa.select(MyModel)
-        result = await db_session.execute(stmt)
-        instances = result.scalars()
+        db_session.add(MyModel())
+        result = await db_session.execute(sa.select(MyModel))
+        result = result.scalars()
 
-    data = {}
-    for instance in instances:
-        data[instance.pk] = instance.timestamp.isoformat()
-
+    data = {instance.pk: instance.timestamp.isoformat() for instance in result}
     return web.json_response(data)
 
 
