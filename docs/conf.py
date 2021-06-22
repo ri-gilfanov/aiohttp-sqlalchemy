@@ -13,7 +13,7 @@
 import os
 import sys
 
-import toml
+from aiohttp_sqlalchemy import __version__
 
 sys.path.insert(0, os.path.abspath("."))
 
@@ -24,7 +24,7 @@ copyright = "2021, Ruslan Ilyasovich Gilfanov"
 author = "Ruslan Ilyasovich Gilfanov"
 
 # The full version, including alpha/beta/rc tags
-release = toml.load("../pyproject.toml")["tool"]["poetry"]["version"]
+release = __version__
 
 
 # -- General configuration ---------------------------------------------------
