@@ -81,7 +81,7 @@ async def app_factory():
             aiohttp_sqlalchemy.bind(DB_URL, FOURTH_KEY, middleware=False),
         ],
     )
-    for key in KEY_TUPLE:
+    for key in KEY_LIST:
         await aiohttp_sqlalchemy.init_db(app, metadata, key)
 
     app.add_routes([web.get("/handler_a", function_handler)])

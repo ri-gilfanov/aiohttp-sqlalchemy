@@ -1,1 +1,1 @@
-"""AIOHTTP-SQLAlchemy tests with PyTest"""
+"""AIOHTTP-SQLAlchemy tests with PyTest."""

@@ -9,14 +9,7 @@ from aiohttp_sqlalchemy.constants import SA_DEFAULT_KEY
 
 
 class SAAbstractView(AbstractView, metaclass=ABCMeta):
-    """
-    Simple SQLAlchemy view based on aiohttp.abc.AbstractView.
-
-    The `__await__` method must be implemented in child classes.
-
-    Suitable for a specific usage with multiple models.
-    """
-
+    """Simple SQLAlchemy view based on aiohttp.abc.AbstractView."""
     sa_session_key: str = SA_DEFAULT_KEY
 
     def sa_session(self, key: Optional[str] = None) -> AsyncSession:
@@ -27,28 +20,13 @@ class SAAbstractView(AbstractView, metaclass=ABCMeta):
 
 
 class SAOneModelMixin(SAAbstractView, metaclass=ABCMeta):
-    """
-    One model SQLAlchemy view based on aiohttp.abc.AbstractView.
-
-    The `__await__` method must be implemented in child classes.
-
-    Suitable for a usually usage with one model.
-    """
-
+    """One model SQLAlchemy view based on aiohttp.abc.AbstractView."""
     sa_model: Any  # Not all developers use declarative mapping
 
 
 class SABaseView(View, SAAbstractView):
-    """
-    Simple SQLAlchemy view based on aiohttp.web.View.
-
-    Recomended for a specific usage with multiple models.
-    """
+    """Simple SQLAlchemy view based on aiohttp.web.View."""
 
 
 class SAView(View, SAOneModelMixin):
-    """
-    One model SQLAlchemy view based on aiohttp.web.View.
-
-    Recomended for a usually usage with one model.
-    """
+    """One model SQLAlchemy view based on aiohttp.web.View."""
