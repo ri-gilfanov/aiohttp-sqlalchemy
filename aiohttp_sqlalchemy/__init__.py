@@ -30,7 +30,7 @@ __all__ = [
     "sa_session_factory",
     "SAView",
     "setup",
-    # synonyms
+    # Synonyms
     "DEFAULT_KEY",
     "sa_bind",
     "sa_init_db",
@@ -66,9 +66,6 @@ def bind(
     return bind_to, key, middleware
 
 
-sa_bind = bind  # synonym
-
-
 def setup(app: Application, bindings: "TBindings") -> None:
     """Setup function for binding SQLAlchemy engines."""
     for factory, key, middleware in bindings:
@@ -79,3 +76,7 @@ def setup(app: Application, bindings: "TBindings") -> None:
 
         if middleware:
             app.middlewares.append(sa_middleware(key))
+
+
+# Synonyms
+sa_bind = bind

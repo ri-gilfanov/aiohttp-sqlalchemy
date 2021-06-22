@@ -19,9 +19,6 @@ async def init_db(
             await connection.run_sync(metadata.create_all)
 
 
-sa_init_db = init_db  # synonym
-
-
 def sa_session(
     request: Request,
     key: str = SA_DEFAULT_KEY,
@@ -43,3 +40,7 @@ def sa_session_factory(
 ) -> TSessionFactory:
     """Return callable object which returns an ``AsyncSession`` instance."""
     return cast(TSessionFactory, getattr(source, "app", source).get(key))
+
+
+# Synonyms
+sa_init_db = init_db
