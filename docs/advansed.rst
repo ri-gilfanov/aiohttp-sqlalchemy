@@ -42,8 +42,8 @@ Decorating handlers
 -------------------
 .. warning::
 
-  For use a some ``AsyncEngine`` in decorators, you must set a ``middleware``
-  argument to ``False`` in ``sa_bind`` call. Else will raise an exception
+  For use a some session factory in decorators, you must set a ``middleware``
+  argument to ``False`` in ``bind()`` call. Else will raise an exception
   ``DuplicateRequestKeyError``.
 
 .. code-block:: python
