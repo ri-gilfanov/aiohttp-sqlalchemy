@@ -4,7 +4,7 @@ from typing import cast
 from aiohttp.web import Application
 from sqlalchemy.engine import Engine
 from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, create_async_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import Session, sessionmaker
 
 from aiohttp_sqlalchemy.constants import DEFAULT_KEY, SA_DEFAULT_KEY
 from aiohttp_sqlalchemy.decorators import sa_decorator
@@ -54,13 +54,14 @@ def bind(
             ),
         )
 
-    if isinstance(bind_to, Engine):
-        msg = "Synchronous  engine is unsupported argument for `sa_bind()`."
-        raise ValueError(msg)
+    for type_ in (AsyncSession, Engine, Session):
+        if isinstance(bind_to, type_):
+            msg = f"{type_} is unsupported type of argument `bind_to`."
+            raise TypeError(msg)
 
     if not callable(bind_to):
-        msg = "Session factory must be callable."
-        raise ValueError(msg)
+        msg = f"{bind_to} is unsupported type of argument `bind_to`."
+        raise TypeError(msg)
 
     return bind_to, key, middleware
 

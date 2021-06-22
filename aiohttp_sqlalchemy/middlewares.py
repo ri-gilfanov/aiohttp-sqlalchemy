@@ -7,6 +7,7 @@ from aiohttp_sqlalchemy.typedefs import THandler
 
 def sa_middleware(key: str = SA_DEFAULT_KEY) -> THandler:
     """SQLAlchemy asynchronous middleware factory."""
+
     @middleware
     async def sa_middleware_(request: Request, handler: THandler) -> StreamResponse:
         if key in request:
