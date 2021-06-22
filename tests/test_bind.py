@@ -48,6 +48,6 @@ def test_bind_to_async_session_maker(orm_async_engine: AsyncEngine) -> None:
     assert isinstance(session, AsyncSession)
 
 
-def test_bind_to_none(orm_async_engine: AsyncEngine) -> None:
+def test_bind_to_none() -> None:
     with pytest.raises(TypeError):
         aiohttp_sqlalchemy.bind(None)

@@ -6,7 +6,10 @@ from aiohttp_sqlalchemy.typedefs import THandler
 
 
 def sa_middleware(key: str = SA_DEFAULT_KEY) -> THandler:
-    """SQLAlchemy asynchronous middleware factory."""
+    """SQLAlchemy asynchronous middleware factory.
+
+    :param key: key of SQLAlchemy binding. Has default.
+    """
 
     @middleware
     async def sa_middleware_(request: Request, handler: THandler) -> StreamResponse:

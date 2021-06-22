@@ -10,7 +10,10 @@ from aiohttp_sqlalchemy.typedefs import THandler, THandlerWrapper
 
 
 def sa_decorator(key: str = SA_DEFAULT_KEY) -> THandlerWrapper:
-    """SQLAlchemy asynchronous handler decorator."""
+    """SQLAlchemy asynchronous handler decorator.
+
+    :param key: key of SQLAlchemy binding. Has default.
+    """
 
     def wrapper(handler: THandler) -> THandler:
         @wraps(handler)
