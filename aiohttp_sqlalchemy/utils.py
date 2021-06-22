@@ -19,21 +19,27 @@ async def init_db(
             await connection.run_sync(metadata.create_all)
 
 
-sa_init_db = init_db  # synonym for init_db
+sa_init_db = init_db  # synonym
 
 
 def sa_session(
     request: Request,
     key: str = SA_DEFAULT_KEY,
 ) -> AsyncSession:
+    """Return ``AsyncSession`` instance."""
+    if not isinstance(request, Request):
+        raise TypeError(f"{request} is not {Request}.")
+
     session = request.get(key)
-    if isinstance(session, AsyncSession):
-        return session
-    raise TypeError(f"{session} is not {AsyncSession}")
+    if not isinstance(session, AsyncSession):
+        raise TypeError(f"{session} returned by {key} is not {AsyncSession} instance.")
+
+    return session
 
 
 def sa_session_factory(
     source: Union[Request, Application],
     key: str = SA_DEFAULT_KEY,
 ) -> TSessionFactory:
+    """Return callable object which returns an ``AsyncSession`` instance."""
     return cast(TSessionFactory, getattr(source, "app", source).get(key))

@@ -69,7 +69,7 @@ def bind(
     return bind_to, key, middleware
 
 
-sa_bind = bind  # sa_bind is synonym for bind
+sa_bind = bind  # synonym
 
 
 def setup(app: Application, bindings: "TBindings") -> None:
