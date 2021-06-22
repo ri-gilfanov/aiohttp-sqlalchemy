@@ -17,7 +17,7 @@ def test_sa_session(mocked_request: Request, orm_session: AsyncSession) -> None:
     mocked_request[SA_DEFAULT_KEY] = orm_session
     assert sa_session(mocked_request) is orm_session
     with pytest.raises(TypeError):
-        sa_session(None)
+        sa_session(None)  # type: ignore
     with pytest.raises(TypeError):
         sa_session(mocked_request, "wrong key")
 
