@@ -48,13 +48,12 @@ __all__ = [
 def bind(
     bind_to: TBindTo, key: str = SA_DEFAULT_KEY, *, middleware: bool = True
 ) -> "TBinding":
-    """Session factory wrapper for binding in setup function.
+    """Function wrapper for binding.
 
-    :param bind_to: argument can be string with database connection url, instance of
-                    ``sqlalchemy.ext.asyncio.AsyncEngine`` or callable object which
-                    returns ``sqlalchemy.ext.asyncio.AsyncSession`` instance.
-    :param key: key of SQLAlchemy binding. Has default.
-    :param middleware: ``bool`` for enable middleware. True by default.
+    :param bind_to: target for SQLAlchemy binding. Argument can be database connection
+                    url, asynchronous engine or asynchronous session factory.
+    :param key: key of SQLAlchemy binding.
+    :param middleware: `bool` for enable middleware. True by default.
     """
     if isinstance(bind_to, str):
         bind_to = cast(AsyncEngine, create_async_engine(bind_to))
@@ -82,10 +81,10 @@ def bind(
 
 
 def setup(app: Application, bindings: "TBindings") -> None:
-    """Setup function for binding SQLAlchemy engines.
+    """Setup function for SQLAlchemy binding to AIOHTTP application.
 
-    :param app: instance of ``aiohttp.web_app.Application``.
-    :param bindings: iterable of ``aiohttp_sqlalchemy.bind()`` calls.
+    :param app: your AIOHTTP application.
+    :param bindings: iterable of `aiohttp_sqlalchemy.bind()` calls.
     """
     for factory, key, middleware in bindings:
         if key in app:

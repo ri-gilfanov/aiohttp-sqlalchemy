@@ -44,6 +44,10 @@ templates_path = ["_templates"]
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
 
+# -- Autodoc -----------------------------------------------------------------
+autodoc_type_aliases = {}
+autodoc_typehints = "description"
+
 # -- Read the Docs -----------------------------------------------------------
 master_doc = "index"
 
