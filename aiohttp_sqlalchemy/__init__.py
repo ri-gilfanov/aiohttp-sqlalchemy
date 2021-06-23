@@ -37,7 +37,7 @@ from aiohttp_sqlalchemy.views import (
     SAView,
 )
 
-__version__ = '0.17.3'
+__version__ = '0.17.4'
 
 __all__ = [
     'SA_DEFAULT_KEY',
