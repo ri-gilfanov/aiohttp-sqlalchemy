@@ -25,9 +25,18 @@ def sa_decorator(key: str = SA_DEFAULT_KEY) -> THandlerWrapper:
             if key in request:
                 raise DuplicateRequestKeyError(key)
 
+            # TODO: after dropped Python 3.7
+            # if session_factory := request.config_dict.get(key):
             session_factory = request.config_dict.get(key)
-            async with session_factory() as request[key]:
-                return await handler(*args, **kwargs)
+            if session_factory:
+                async with session_factory() as request[key]:
+                    return await handler(*args, **kwargs)
+            else:
+                raise KeyError(
+                    f'Session factory not found by {key}.'
+                    'Check `key` argument of `sa_decorator()`'
+                    'or arguments of `aiohttp_sqlalchemy.setup()`.'
+                )
 
         return wrapped
 

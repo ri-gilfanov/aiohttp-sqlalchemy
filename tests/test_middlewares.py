@@ -2,14 +2,18 @@ import pytest
 from aiohttp.web import Request
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from aiohttp_sqlalchemy import SA_DEFAULT_KEY, DuplicateRequestKeyError
+from aiohttp_sqlalchemy import (
+    SA_DEFAULT_KEY,
+    DuplicateRequestKeyError,
+    sa_middleware,
+)
 from aiohttp_sqlalchemy.typedefs import THandler
-from tests.conftest import function_handler
 
 
 async def test_duplicate_request_key_error(
-    sa_main_middleware: THandler,
     mocked_request: Request,
+    function_handler: THandler,
+    main_middleware: THandler,
     session: AsyncSession,
 ) -> None:
     assert mocked_request.get(SA_DEFAULT_KEY) is None
@@ -17,13 +21,24 @@ async def test_duplicate_request_key_error(
     assert mocked_request.get(SA_DEFAULT_KEY) is session
 
     with pytest.raises(DuplicateRequestKeyError):
-        await sa_main_middleware(mocked_request, function_handler)
+        await main_middleware(mocked_request, function_handler)
+
+
+async def test_session_factory_not_found(
+    mocked_request: Request,
+    function_handler: THandler,
+    wrong_key: str,
+) -> None:
+    assert wrong_key not in mocked_request
+    with pytest.raises(KeyError):
+        await sa_middleware(wrong_key)(mocked_request, function_handler)
 
 
 async def test_sa_middleware(
-    sa_main_middleware: THandler,
     mocked_request: Request,
+    function_handler: THandler,
+    main_middleware: THandler,
 ) -> None:
     assert mocked_request.get(SA_DEFAULT_KEY) is None
-    await sa_main_middleware(mocked_request, function_handler)
+    await main_middleware(mocked_request, function_handler)
     assert isinstance(mocked_request.get(SA_DEFAULT_KEY), AsyncSession)
