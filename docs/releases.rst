@@ -1,6 +1,16 @@
 ========
 Releases
 ========
+Version 0.18
+------------
+**Changed**
+
+* First argument of function ``aiohttp_sqlalchemy.bind()`` renamed from
+  ``bind_to`` to ``target``;
+* Type hint alias ``TBinding`` renamed to ``TBind``;
+* Type hint alias ``TBindings`` renamed to ``TBinds``;
+* Type hint alias ``TBindTo`` renamed to ``TTarget``.
+
 Version 0.17
 ------------
 **Added**

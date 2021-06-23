@@ -21,6 +21,11 @@ pytest_plugins = 'aiohttp.pytest_plugin'
 
 
 @pytest.fixture
+def wrong_key() -> str:
+    return 'wrong_key'
+
+
+@pytest.fixture
 def orm_async_engine() -> AsyncEngine:
     return create_async_engine('sqlite+aiosqlite:///')
 
@@ -39,7 +44,7 @@ def session(session_factory: TSessionFactory) -> AsyncSession:
 
 
 @pytest.fixture
-def sa_main_middleware() -> THandler:
+def main_middleware() -> THandler:
     return sa_middleware(SA_DEFAULT_KEY)
 
 
@@ -55,8 +60,11 @@ def mocked_request(middlewared_app: Application) -> 'Request':
     return make_mocked_request(METH_GET, '/', app=middlewared_app)
 
 
-async def function_handler(request: Request) -> Response:
-    return web.json_response({})
+@pytest.fixture
+def function_handler() -> THandler:
+    async def handler(request: Request) -> Response:
+        return web.json_response({})
+    return handler
 
 
 class ClassHandler:

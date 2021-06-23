@@ -19,7 +19,8 @@ def sa_middleware(key: str = SA_DEFAULT_KEY) -> THandler:
         if key in request:
             raise DuplicateRequestKeyError(key)
 
-        # if session_factory := request.config_dict.get(key):  # Python 3.8
+        # TODO: after dropped Python 3.7
+        # if session_factory := request.config_dict.get(key):
         session_factory = request.config_dict.get(key)
         if session_factory:
             async with session_factory() as request[key]:

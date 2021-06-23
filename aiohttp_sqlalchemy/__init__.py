@@ -17,12 +17,7 @@ from aiohttp_sqlalchemy.exceptions import (
     DuplicateRequestKeyError,
 )
 from aiohttp_sqlalchemy.middlewares import sa_middleware
-from aiohttp_sqlalchemy.typedefs import (
-    TBinding,
-    TBindings,
-    TBindTo,
-    TSessionFactory,
-)
+from aiohttp_sqlalchemy.typedefs import TBind, TBinds, TSessionFactory, TTarget
 from aiohttp_sqlalchemy.utils import (
     init_db,
     sa_init_db,
@@ -37,7 +32,7 @@ from aiohttp_sqlalchemy.views import (
     SAView,
 )
 
-__version__ = '0.17.4'
+__version__ = '0.18.0'
 
 __all__ = [
     'SA_DEFAULT_KEY',
@@ -63,51 +58,50 @@ __all__ = [
 
 
 def bind(
-    bind_to: TBindTo,
+    target: TTarget,
     key: str = SA_DEFAULT_KEY,
     *,
     middleware: bool = True,
-) -> 'TBinding':
+) -> 'TBind':
     """Function wrapper for binding.
 
-    :param bind_to: target for SQLAlchemy binding. Argument can be database
-                    connection url, asynchronous engine or asynchronous session
-                    factory.
+    :param target: argument can be database connection url, asynchronous engine
+                   or asynchronous session factory.
     :param key: key of SQLAlchemy binding.
     :param middleware: `bool` for enable middleware. True by default.
     """
-    if isinstance(bind_to, str):
-        bind_to = cast(AsyncEngine, create_async_engine(bind_to))
+    if isinstance(target, str):
+        target = cast(AsyncEngine, create_async_engine(target))
 
-    if isinstance(bind_to, AsyncEngine):
-        bind_to = cast(
+    if isinstance(target, AsyncEngine):
+        target = cast(
             TSessionFactory,
             sessionmaker(
-                bind=bind_to,
+                bind=target,
                 class_=AsyncSession,
                 expire_on_commit=False,
             ),
         )
 
     for type_ in (AsyncSession, Engine, Session):
-        if isinstance(bind_to, type_):
-            msg = f'{type_} is unsupported type of argument `bind_to`.'
+        if isinstance(target, type_):
+            msg = f'{type_} is unsupported type of argument `target`.'
             raise TypeError(msg)
 
-    if not callable(bind_to):
-        msg = f'{bind_to} is unsupported type of argument `bind_to`.'
+    if not callable(target):
+        msg = f'{target} is unsupported type of argument `target`.'
         raise TypeError(msg)
 
-    return bind_to, key, middleware
+    return target, key, middleware
 
 
-def setup(app: Application, bindings: "TBindings") -> None:
+def setup(app: Application, binds: "TBinds") -> None:
     """Setup function for SQLAlchemy binding to AIOHTTP application.
 
     :param app: your AIOHTTP application.
-    :param bindings: iterable of `aiohttp_sqlalchemy.bind()` calls.
+    :param binds: iterable of `aiohttp_sqlalchemy.bind()` calls.
     """
-    for factory, key, middleware in bindings:
+    for factory, key, middleware in binds:
         if key in app:
             raise DuplicateAppKeyError(key)
 
