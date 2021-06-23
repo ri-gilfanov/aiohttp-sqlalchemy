@@ -10,11 +10,11 @@ from tests.conftest import function_handler
 async def test_duplicate_request_key_error(
     sa_main_middleware: THandler,
     mocked_request: Request,
-    orm_session: AsyncSession,
+    session: AsyncSession,
 ) -> None:
     assert mocked_request.get(SA_DEFAULT_KEY) is None
-    mocked_request[SA_DEFAULT_KEY] = orm_session
-    assert mocked_request.get(SA_DEFAULT_KEY) is orm_session
+    mocked_request[SA_DEFAULT_KEY] = session
+    assert mocked_request.get(SA_DEFAULT_KEY) is session
 
     with pytest.raises(DuplicateRequestKeyError):
         await sa_main_middleware(mocked_request, function_handler)

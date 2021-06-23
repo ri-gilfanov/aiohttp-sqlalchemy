@@ -26,7 +26,7 @@ def orm_async_engine() -> AsyncEngine:
 
 
 @pytest.fixture
-def orm_session_factory(orm_async_engine: AsyncEngine) -> TSessionFactory:
+def session_factory(orm_async_engine: AsyncEngine) -> TSessionFactory:
     return cast(
         TSessionFactory,
         orm.sessionmaker(orm_async_engine, AsyncSession),
@@ -34,8 +34,8 @@ def orm_session_factory(orm_async_engine: AsyncEngine) -> TSessionFactory:
 
 
 @pytest.fixture
-def orm_session(orm_session_factory: TSessionFactory) -> AsyncSession:
-    return orm_session_factory()
+def session(session_factory: TSessionFactory) -> AsyncSession:
+    return session_factory()
 
 
 @pytest.fixture
@@ -44,9 +44,9 @@ def sa_main_middleware() -> THandler:
 
 
 @pytest.fixture
-def middlewared_app(orm_session_factory: TSessionFactory) -> Application:
+def middlewared_app(session_factory: TSessionFactory) -> Application:
     app = web.Application()
-    aiohttp_sqlalchemy.setup(app, [sa_bind(orm_session_factory)])
+    aiohttp_sqlalchemy.setup(app, [sa_bind(session_factory)])
     return app
 
 
