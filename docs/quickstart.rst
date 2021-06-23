@@ -40,7 +40,10 @@ Copy and paste this code in a file and run:
           result = await db_session.execute(sa.select(MyModel))
           result = result.scalars()
 
-      data = {instance.pk: instance.timestamp.isoformat() for instance in result}
+      data = {
+          instance.pk: instance.timestamp.isoformat()
+          for instance in result
+      }
       return web.json_response(data)
 
 
