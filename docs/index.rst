@@ -51,6 +51,7 @@ The library provides the next features:
   :maxdepth: 1
   :caption: Contents
 
+  installation
   quickstart
   advansed
   reference

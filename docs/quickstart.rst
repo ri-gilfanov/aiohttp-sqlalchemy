@@ -1,28 +1,6 @@
 ==========
 Quickstart
 ==========
-Installation
-------------
-Installing ``aiohttp-sqlalchemy`` with pip: ::
-
-  pip install aiohttp-sqlalchemy
-
-
-Optional requirements
----------------------
-
-For PostgreSQL support, you also need install ``asyncpg``: ::
-
-  pip install asyncpg
-
-For MySQL support, you also need install ``aiomysql``: ::
-
-  pip install aiomysql
-
-For SQLite3 support, you also need install ``aiosqlite``: ::
-
-  pip install aiosqlite
-
 
 Simple example
 --------------
@@ -105,3 +83,25 @@ More control in configuration
   aiohttp_sqlalchemy.setup(app, [
       aiohttp_sqlalchemy.bind(Session),
   ])
+
+
+Class based views
+-----------------
+.. code-block:: python
+
+  from aiohttp import web
+  from aiohttp_sqlalchemy import SAView
+
+
+  class MyClassBasedView(SAView):
+      async def get(self):
+          db_session = self.sa_session()
+
+          async with db_session.begin():
+              # some your code
+
+
+  aiohttp_sqlalchemy.setup(app, [
+      aiohttp_sqlalchemy.bind(MainSession),
+  ])
+  app.add_routes([web.view("/", MyClassBasedView)])
