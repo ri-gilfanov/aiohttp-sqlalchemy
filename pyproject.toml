@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "aiohttp-sqlalchemy"
-version = "0.17.2"
+version = "0.17.3"
 description = "SQLAlchemy 1.4 / 2.0 support for aiohttp."
 authors = [
     "Ruslan Ilyasovich Gilfanov <ri.gilfanov@yandex.ru>",
@@ -20,7 +20,7 @@ classifiers = [
     "Topic :: Internet :: WWW/HTTP",
 ]
 keywords = ["aiohttp", "sqlalchemy", "asyncio"]
-license = "BSD-3-Clause"
+license = "MIT License"
 readme = "README.rst"
 
 documentation = "https://aiohttp-sqlalchemy.readthedocs.io/"

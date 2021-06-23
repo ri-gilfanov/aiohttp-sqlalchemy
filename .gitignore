@@ -27,6 +27,7 @@ dist
 # Checkers
 .coverage
 .mypy_cache
+coverage.xml
 
 
 # Database (DB)

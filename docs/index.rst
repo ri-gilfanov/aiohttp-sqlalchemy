@@ -1,35 +1,39 @@
 ==================================
 aiohttp-sqlalchemy's documentation
 ==================================
-|Release| |Python versions| |Downloads count| |Build status| |Test coverage| |Codacy Badge| |Documantation|
-
-.. |Release| image:: https://badge.fury.io/py/aiohttp-sqlalchemy.svg
-  :target: https://pypi.org/project/aiohttp-sqlalchemy/
-  :alt: Release
+|Python versions| |PyPI release| |PyPI downloads| |License| |ReadTheDocs| |GitHub CI| |Codecov| |Codacy|
 
 .. |Python versions| image:: https://img.shields.io/badge/Python-3.7%20%7C%203.8%20%7C%203.9-blue
   :target: https://pypi.org/project/aiohttp-sqlalchemy/
-  :alt: Python versions
+  :alt: Python version support
 
-.. |Downloads count| image:: https://img.shields.io/pypi/dm/aiohttp-sqlalchemy
+.. |PyPI release| image:: https://badge.fury.io/py/aiohttp-sqlalchemy.svg
+  :target: https://pypi.org/project/aiohttp-sqlalchemy/
+  :alt: Release
+
+.. |PyPI downloads| image:: https://img.shields.io/pypi/dm/aiohttp-sqlalchemy
   :target: https://pypistats.org/packages/aiohttp-sqlalchemy
-  :alt: Downloads count
+  :alt: PyPI downloads count
 
-.. |Build status| image:: https://travis-ci.com/ri-gilfanov/aiohttp-sqlalchemy.svg?branch=master
-  :target: https://travis-ci.com/ri-gilfanov/aiohttp-sqlalchemy
-  :alt: Build status
+.. |License| image:: https://img.shields.io/badge/License-MIT-green
+  :target: https://github.com/ri-gilfanov/aiohttp-sqlalchemy/blob/master/LICENSE
+  :alt: MIT License
 
-.. |Test coverage| image:: https://coveralls.io/repos/github/ri-gilfanov/aiohttp-sqlalchemy/badge.svg?branch=master
-  :target: https://coveralls.io/github/ri-gilfanov/aiohttp-sqlalchemy?branch=master
-  :alt: Test coverage
-
-.. |Codacy Badge| image:: https://app.codacy.com/project/badge/Grade/19d5c531ed75435988ba8dc91031514c
-  :target: https://www.codacy.com/gh/ri-gilfanov/aiohttp-sqlalchemy/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ri-gilfanov/aiohttp-sqlalchemy&amp;utm_campaign=Badge_Grade
-   :alt: Codacy Badge
-
-.. |Documantation| image:: https://readthedocs.org/projects/aiohttp-sqlalchemy/badge/?version=latest
+.. |ReadTheDocs| image:: https://readthedocs.org/projects/aiohttp-sqlalchemy/badge/?version=latest
   :target: https://aiohttp-sqlalchemy.readthedocs.io/en/latest/?badge=latest
-  :alt: Documentation
+  :alt: Read The Docs build
+
+.. |GitHub CI| image:: https://github.com/ri-gilfanov/aiohttp-sqlalchemy/actions/workflows/ci.yml/badge.svg?branch=master
+  :target: https://github.com/ri-gilfanov/aiohttp-sqlalchemy/actions/workflows/ci.yml
+  :alt: GitHub continuous integration
+
+.. |Codecov| image:: https://codecov.io/gh/ri-gilfanov/aiohttp-sqlalchemy/branch/master/graph/badge.svg
+  :target: https://codecov.io/gh/ri-gilfanov/aiohttp-sqlalchemy
+  :alt: codecov.io status for master branch
+
+.. |Codacy| image:: https://app.codacy.com/project/badge/Grade/19d5c531ed75435988ba8dc91031514c
+  :target: https://www.codacy.com/gh/ri-gilfanov/aiohttp-sqlalchemy/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ri-gilfanov/aiohttp-sqlalchemy&amp;utm_campaign=Badge_Grade
+   :alt: Codacy code quality
 
 `SQLAlchemy 1.4 / 2.0 <https://www.sqlalchemy.org/>`_ support for `AIOHTTP
 <https://docs.aiohttp.org/>`_.
