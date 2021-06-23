@@ -1,0 +1,7 @@
+[flake8]
+count = True
+exclude = .venv
+max-complexity = 8
+max-line-length = 88
+show_source = True
+statistics = True
