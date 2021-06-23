@@ -19,8 +19,15 @@ def sa_middleware(key: str = SA_DEFAULT_KEY) -> THandler:
         if key in request:
             raise DuplicateRequestKeyError(key)
 
+        # if session_factory := request.config_dict.get(key):  # Python 3.8
         session_factory = request.config_dict.get(key)
-        async with session_factory() as request[key]:
-            return await handler(request)
+        if session_factory:
+            async with session_factory() as request[key]:
+                return await handler(request)
+        else:
+            raise KeyError(
+                f'Session factory not found by {key}.'
+                'Check `aiohttp_sqlalchemy.setup()`.'
+            )
 
     return sa_middleware_

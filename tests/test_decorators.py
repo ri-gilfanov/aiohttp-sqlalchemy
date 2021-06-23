@@ -21,6 +21,11 @@ async def test_duplicate_request_key_error(
         await sa_decorator()(function_handler)(mocked_request)
 
 
+async def test_session_factory_not_found(mocked_request: Request) -> None:
+    with pytest.raises(KeyError):
+        await sa_decorator('void')(ClassBasedView.get)(mocked_request)
+
+
 async def test_decorated_class_based_view(mocked_request: Request) -> None:
     assert mocked_request.get(SA_DEFAULT_KEY) is None
     await sa_decorator()(ClassBasedView.get)(mocked_request)
