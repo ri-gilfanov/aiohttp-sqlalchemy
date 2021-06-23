@@ -1,11 +1,11 @@
 ==================================
 aiohttp-sqlalchemy's documentation
 ==================================
-|Python versions| |PyPI release| |PyPI downloads| |License| |ReadTheDocs| |GitHub CI| |Codecov| |Codacy|
+|ReadTheDocs| |PyPI release| |PyPI downloads| |License| |Python versions| |GitHub CI| |Codecov| |Codacy|
 
-.. |Python versions| image:: https://img.shields.io/badge/Python-3.7%20%7C%203.8%20%7C%203.9-blue
-  :target: https://pypi.org/project/aiohttp-sqlalchemy/
-  :alt: Python version support
+.. |ReadTheDocs| image:: https://readthedocs.org/projects/aiohttp-sqlalchemy/badge/?version=latest
+  :target: https://aiohttp-sqlalchemy.readthedocs.io/en/latest/?badge=latest
+  :alt: Read The Docs build
 
 .. |PyPI release| image:: https://badge.fury.io/py/aiohttp-sqlalchemy.svg
   :target: https://pypi.org/project/aiohttp-sqlalchemy/
@@ -19,9 +19,9 @@ aiohttp-sqlalchemy's documentation
   :target: https://github.com/ri-gilfanov/aiohttp-sqlalchemy/blob/master/LICENSE
   :alt: MIT License
 
-.. |ReadTheDocs| image:: https://readthedocs.org/projects/aiohttp-sqlalchemy/badge/?version=latest
-  :target: https://aiohttp-sqlalchemy.readthedocs.io/en/latest/?badge=latest
-  :alt: Read The Docs build
+.. |Python versions| image:: https://img.shields.io/badge/Python-3.7%20%7C%203.8%20%7C%203.9-blue
+  :target: https://pypi.org/project/aiohttp-sqlalchemy/
+  :alt: Python version support
 
 .. |GitHub CI| image:: https://github.com/ri-gilfanov/aiohttp-sqlalchemy/actions/workflows/ci.yml/badge.svg?branch=master
   :target: https://github.com/ri-gilfanov/aiohttp-sqlalchemy/actions/workflows/ci.yml
