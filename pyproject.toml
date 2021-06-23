@@ -20,7 +20,7 @@ classifiers = [
     "Topic :: Internet :: WWW/HTTP",
 ]
 keywords = ["aiohttp", "sqlalchemy", "asyncio"]
-license = "BSD-3-Clause"
+license = "MIT License"
 readme = "README.rst"
 
 documentation = "https://aiohttp-sqlalchemy.readthedocs.io/"

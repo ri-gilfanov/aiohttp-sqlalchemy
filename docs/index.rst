@@ -15,9 +15,9 @@ aiohttp-sqlalchemy's documentation
   :target: https://pypistats.org/packages/aiohttp-sqlalchemy
   :alt: PyPI downloads count
 
-.. |License| image:: https://img.shields.io/badge/License-BSD-green
+.. |License| image:: https://img.shields.io/badge/License-MIT-green
   :target: https://github.com/ri-gilfanov/aiohttp-sqlalchemy/blob/master/LICENSE
-  :alt: BSD 3-Clause "New" or "Revised" License
+  :alt: MIT License
 
 .. |ReadTheDocs| image:: https://readthedocs.org/projects/aiohttp-sqlalchemy/badge/?version=latest
   :target: https://aiohttp-sqlalchemy.readthedocs.io/en/latest/?badge=latest
