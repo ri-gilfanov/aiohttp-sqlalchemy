@@ -81,8 +81,8 @@ You can combine the use of decorators with the use of middlewares. For example:
       aiohttp_sqlalchemy.bind(specific_db_url, 'sa_specific', middleware=False),
   ])
   app.add_routes([
-      web.get("/simple", simple_handler),
-      web.get("/specific", specific_handler),
+      web.get('/simple', simple_handler),
+      web.get('/specific', specific_handler),
   ])
 
 You can apply ``sa_decorator(key)`` with class based views. For example:
@@ -93,8 +93,8 @@ You can apply ``sa_decorator(key)`` with class based views. For example:
   from aiohttp_sqlalchemy import SAView, sa_decorator
 
 
-  SPECIFIC_DB_KEY = "sa_specific"
-  SPECIFIC_DB_URL = "sqlite+aiosqlite:///"
+  SPECIFIC_DB_KEY = 'sa_specific'
+  SPECIFIC_DB_URL = 'sqlite+aiosqlite:///'
 
 
   class SpecificHandler(SAView):
@@ -116,4 +116,4 @@ You can apply ``sa_decorator(key)`` with class based views. For example:
   aiohttp_sqlalchemy.setup(app, [
       aiohttp_sqlalchemy.bind(SPECIFIC_DB_URL, SPECIFIC_DB_KEY, middleware=False),
   ])
-  app.add_routes([web.view("/", SpecificHandler)])
+  app.add_routes([web.view('/', SpecificHandler)])

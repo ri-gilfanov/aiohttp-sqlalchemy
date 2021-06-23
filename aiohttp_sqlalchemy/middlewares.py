@@ -12,7 +12,10 @@ def sa_middleware(key: str = SA_DEFAULT_KEY) -> THandler:
     """
 
     @middleware
-    async def sa_middleware_(request: Request, handler: THandler) -> StreamResponse:
+    async def sa_middleware_(
+        request: Request,
+        handler: THandler,
+    ) -> StreamResponse:
         if key in request:
             raise DuplicateRequestKeyError(key)
 

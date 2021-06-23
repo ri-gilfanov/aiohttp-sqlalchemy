@@ -19,7 +19,7 @@ def test_sa_session(mocked_request: Request, orm_session: AsyncSession) -> None:
     with pytest.raises(TypeError):
         sa_session(None)  # type: ignore
     with pytest.raises(TypeError):
-        sa_session(mocked_request, "wrong key")
+        sa_session(mocked_request, 'wrong key')
 
 
 def test_sa_session_factory(

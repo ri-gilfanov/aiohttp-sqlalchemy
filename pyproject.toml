@@ -57,7 +57,7 @@ build-backend = "poetry.core.masonry.api"
 [tool.isort]
 known_first_party = ["aiohttp_sqlalchemy"]
 known_third_party = ["aiohttp", "sqlalchemy"]
-line_length=88
+profile = "wemake"
 src_paths = ["aiohttp_sqlalchemy", "examples", "tests"]
 
 [tool.mypy]

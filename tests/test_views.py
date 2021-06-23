@@ -13,4 +13,4 @@ def test_sa_session(
     view = SABaseView(mocked_request)
     assert view.sa_session() is orm_session
     with pytest.raises(TypeError):
-        view.sa_session("wrong key")
+        view.sa_session('wrong key')

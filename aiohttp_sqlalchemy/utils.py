@@ -35,12 +35,13 @@ def sa_session(
     :param key: key of SQLAlchemy binding.
     """
     if not isinstance(request, Request):
-        raise TypeError(f"{request} is not {Request}.")
+        raise TypeError(f'{request} is not {Request}.')
 
     session = request.get(key)
     if not isinstance(session, AsyncSession):
-        raise TypeError(f"{session} returned by {key} is not {AsyncSession} instance.")
-
+        raise TypeError(
+            f'{session} returned by {key} is not {AsyncSession} instance.'
+        )
     return session
 
 
