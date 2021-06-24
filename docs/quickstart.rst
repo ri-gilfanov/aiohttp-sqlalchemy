@@ -90,10 +90,10 @@ Class based views
 .. code-block:: python
 
   from aiohttp import web
-  from aiohttp_sqlalchemy import SAView
+  from aiohttp_sqlalchemy import SABaseView
 
 
-  class MyClassBasedView(SAView):
+  class MyClassBasedView(SABaseView):
       async def get(self):
           db_session = self.sa_session()
 
