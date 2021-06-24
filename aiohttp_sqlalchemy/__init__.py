@@ -29,6 +29,7 @@ from aiohttp_sqlalchemy.views import (
     SABaseView,
     SAMixin,
     SAModelMixin,
+    SAModelView,
     SAView,
 )
 
@@ -41,7 +42,7 @@ __all__ = [
     'SABaseView',
     'SAMixin',
     'SAModelMixin',
-    'SAView',
+    'SAModelView',
     'bind',
     'init_db',
     'sa_decorator',
@@ -52,6 +53,7 @@ __all__ = [
     # Synonyms
     'DEFAULT_KEY',
     'SAAbstractView',
+    'SAView',
     'sa_bind',
     'sa_init_db',
 ]

@@ -16,6 +16,15 @@ Class based views
 .. autoclass:: aiohttp_sqlalchemy.SAMixin
   :members:
 
+.. autoclass:: aiohttp_sqlalchemy.SAModelMixin
+  :members:
+
+.. autoclass:: aiohttp_sqlalchemy.SABaseView
+  :members:
+
+.. autoclass:: aiohttp_sqlalchemy.SAModelView
+  :members:
+
 Additional functionality
 ------------------------
 .. autofunction:: aiohttp_sqlalchemy.sa_decorator

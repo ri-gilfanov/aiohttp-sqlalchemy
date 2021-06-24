@@ -32,10 +32,11 @@ class SABaseView(View, SAMixin):
     """SQLAlchemy class based view."""
 
 
-class SAView(View, SAModelMixin):
+class SAModelView(View, SAModelMixin):
     """SQLAlchemy single model class based view."""
 
 
 # Synonyms
 SAAbstractView = SAMixin
 SAOneModelMixin = SAModelMixin
+SAView = SAModelView
