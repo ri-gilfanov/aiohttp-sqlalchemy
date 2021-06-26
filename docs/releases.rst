@@ -1,6 +1,16 @@
 ========
 Releases
 ========
+Version 0.18.1
+--------------
+**Added**
+
+* Synonym ``SAView`` for ``SAModelView``.
+
+**Changed**
+
+* Rename ``SAView`` to ``SAModelView``.
+
 Version 0.18
 ------------
 **Changed**

@@ -90,14 +90,14 @@ You can apply ``sa_decorator(key)`` with class based views. For example:
 .. code-block:: python
 
   from aiohttp import web
-  from aiohttp_sqlalchemy import SAView, sa_decorator
+  from aiohttp_sqlalchemy import SABaseView, sa_decorator
 
 
   SPECIFIC_DB_KEY = 'sa_specific'
   SPECIFIC_DB_URL = 'sqlite+aiosqlite:///'
 
 
-  class SpecificHandler(SAView):
+  class SpecificHandler(SABaseView):
       @property
       def specific_session(self):
           return self.sa_session(SPECIFIC_DB_KEY)
