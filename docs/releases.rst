@@ -1,8 +1,8 @@
 ========
 Releases
 ========
-Unreleased
-----------
+Version 0.18.1
+--------------
 **Added**
 
 * Synonym ``SAView`` for ``SAModelView``.
