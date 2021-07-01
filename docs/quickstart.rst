@@ -18,8 +18,7 @@ Copy and paste this code in a file and run:
   from aiohttp import web
   from sqlalchemy import orm
 
-  import aiohttp_sqlalchemy
-  from aiohttp_sqlalchemy import sa_session
+  import aiohttp_sqlalchemy as ahsa
 
   metadata = sa.MetaData()
   Base = orm.declarative_base(metadata=metadata)
@@ -33,11 +32,11 @@ Copy and paste this code in a file and run:
 
 
   async def main(request):
-      db_session = sa_session(request)
+      sa_session = ahsa.get_session(request)
 
-      async with db_session.begin():
-          db_session.add(MyModel())
-          result = await db_session.execute(sa.select(MyModel))
+      async with sa_session.begin():
+          sa_session.add(MyModel())
+          result = await sa_session.execute(sa.select(MyModel))
           result = result.scalars()
 
       data = {
@@ -50,10 +49,10 @@ Copy and paste this code in a file and run:
   async def app_factory():
       app = web.Application()
 
-      aiohttp_sqlalchemy.setup(app, [
-          aiohttp_sqlalchemy.bind('sqlite+aiosqlite:///'),
+      ahsa.setup(app, [
+          ahsa.bind('sqlite+aiosqlite:///'),
       ])
-      await aiohttp_sqlalchemy.init_db(app, metadata)
+      await ahsa.init_db(app, metadata)
 
       app.add_routes([web.get('/', main)])
       return app
@@ -73,15 +72,15 @@ More control in configuration
 -----------------------------
 .. code-block:: python
 
-  import aiohttp_sqlalchemy
+  import aiohttp_sqlalchemy as ahsa
   from sqlalchemy import orm
 
   url = 'sqlite+aiosqlite:///'
   engine = create_async_engine(url, echo=True)
   Session = orm.sessionmaker(main_engine, AsyncSession, expire_on_commit=False)
 
-  aiohttp_sqlalchemy.setup(app, [
-      aiohttp_sqlalchemy.bind(Session),
+  ahsa.setup(app, [
+      ahsa.bind(Session),
   ])
 
 
@@ -90,10 +89,10 @@ Class based views
 .. code-block:: python
 
   from aiohttp import web
-  from aiohttp_sqlalchemy import SABaseView
+  import aiohttp_sqlalchemy as ahsa
 
 
-  class MyClassBasedView(SABaseView):
+  class MyClassBasedView(ahsa.SABaseView):
       async def get(self):
           db_session = self.sa_session()
 
@@ -101,7 +100,7 @@ Class based views
               # some your code
 
 
-  aiohttp_sqlalchemy.setup(app, [
-      aiohttp_sqlalchemy.bind(MainSession),
+  ahsa.setup(app, [
+      ahsa.bind(MainSession),
   ])
   app.add_routes([web.view('/', MyClassBasedView)])

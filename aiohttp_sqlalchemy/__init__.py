@@ -19,6 +19,8 @@ from aiohttp_sqlalchemy.exceptions import (
 from aiohttp_sqlalchemy.middlewares import sa_middleware
 from aiohttp_sqlalchemy.typedefs import TBind, TBinds, TSessionFactory, TTarget
 from aiohttp_sqlalchemy.utils import (
+    get_session,
+    get_session_factory,
     init_db,
     sa_init_db,
     sa_session,
@@ -33,7 +35,7 @@ from aiohttp_sqlalchemy.views import (
     SAView,
 )
 
-__version__ = '0.18.1'
+__version__ = '0.19.0'
 
 __all__ = [
     'SA_DEFAULT_KEY',
@@ -44,11 +46,11 @@ __all__ = [
     'SAModelMixin',
     'SAModelView',
     'bind',
+    'get_session',
+    'get_session_factory',
     'init_db',
     'sa_decorator',
     'sa_middleware',
-    'sa_session',
-    'sa_session_factory',
     'setup',
     # Synonyms
     'DEFAULT_KEY',
@@ -56,6 +58,8 @@ __all__ = [
     'SAView',
     'sa_bind',
     'sa_init_db',
+    'sa_session',
+    'sa_session_factory',
 ]
 
 
