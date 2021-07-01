@@ -6,7 +6,7 @@ from aiohttp.web import View
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from aiohttp_sqlalchemy.constants import SA_DEFAULT_KEY
-from aiohttp_sqlalchemy.utils import sa_session
+from aiohttp_sqlalchemy.utils import get_session
 
 
 class SAMixin(AbstractView, metaclass=ABCMeta):
@@ -19,7 +19,7 @@ class SAMixin(AbstractView, metaclass=ABCMeta):
 
         :param key: key of SQLAlchemy binding.
         """
-        return sa_session(self.request, key or self.sa_session_key)
+        return get_session(self.request, key or self.sa_session_key)
 
 
 class SAModelMixin(SAMixin, metaclass=ABCMeta):

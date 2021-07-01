@@ -11,16 +11,16 @@ Multiple session factories in application
 -----------------------------------------
 .. code-block:: python
 
-  import aiohttp_sqlalchemy
+  import aiohttp_sqlalchemy as ahsa
 
   postgresql_url = 'postgresql+asyncpg://user:password@host/database'
   mysql_url = 'mysql+aiomysql://user:password@host/database'
   sqlite_url = 'sqlite+aiosqlite:///path/to/file.sqlite3'
 
-  aiohttp_sqlalchemy.setup(app, [
-      aiohttp_sqlalchemy.bind(postgresql_url),
-      aiohttp_sqlalchemy.bind(mysql_url, 'sa_second'),
-      aiohttp_sqlalchemy.bind(sqlite_url, 'sa_third'),
+  ahsa.setup(app, [
+      ahsa.bind(postgresql_url),
+      ahsa.bind(mysql_url, 'sa_second'),
+      ahsa.bind(sqlite_url, 'sa_third'),
   ])
 
 
@@ -37,37 +37,36 @@ use a ``sa_decorator(key)``. For example:
 
 .. code-block:: python
 
-  from aiohttp_sqlalchemy import sa_decorator
+  import aiohttp_sqlalchemy as ahsa
 
-  @sa_decorator('sa_specific')
+  @ahsa.sa_decorator('sa_specific')
   async def specific_handler(request):
-      specific_db_session = sa_session(request, 'sa_specific')
+      specific_db_session = ahsa.get_session(request, 'sa_specific')
 
       async with specific_db_session.begin():
           # some your code
 
-  aiohttp_sqlalchemy.setup(app, [
-      aiohttp_sqlalchemy.bind(specific_db_url, 'sa_specific', middleware=False),
+  ahsa.setup(app, [
+      ahsa.bind(specific_db_url, 'sa_specific', middleware=False),
   ])
 
 You can combine the use of decorators with the use of middlewares. For example:
 
 .. code-block:: python
 
-  from aiohttp_sqlalchemy import sa_decorator
-
+  import aiohttp_sqlalchemy as ahsa
 
   async def simple_handler(request):
-      main_db_session = sa_session(request)
+      main_db_session = ahsa.get_session(request)
 
       async with main_db_session.begin():
           # some your code
 
 
-  @sa_decorator('sa_specific')
+  @ahsa.sa_decorator('sa_specific')
   async def specific_handler(request):
-      main_db_session = sa_session(request)
-      specific_db_session = sa_session(request, 'sa_specific')
+      main_db_session = ahsa.get_session(request)
+      specific_db_session = ahsa.get_session(request, 'sa_specific')
 
       async with main_db_session.begin():
           # some your code
@@ -76,9 +75,9 @@ You can combine the use of decorators with the use of middlewares. For example:
           # some your code
 
 
-  aiohttp_sqlalchemy.setup(app, [
-      aiohttp_sqlalchemy.bind(main_db_url),
-      aiohttp_sqlalchemy.bind(specific_db_url, 'sa_specific', middleware=False),
+  ahsa.setup(app, [
+      ahsa.bind(main_db_url),
+      ahsa.bind(specific_db_url, 'sa_specific', middleware=False),
   ])
   app.add_routes([
       web.get('/simple', simple_handler),
@@ -90,30 +89,30 @@ You can apply ``sa_decorator(key)`` with class based views. For example:
 .. code-block:: python
 
   from aiohttp import web
-  from aiohttp_sqlalchemy import SABaseView, sa_decorator
+  import aiohttp_sqlalchemy as ahsa
 
 
   SPECIFIC_DB_KEY = 'sa_specific'
   SPECIFIC_DB_URL = 'sqlite+aiosqlite:///'
 
 
-  class SpecificHandler(SABaseView):
+  class SpecificHandler(ahsa.SABaseView):
       @property
       def specific_session(self):
           return self.sa_session(SPECIFIC_DB_KEY)
 
-      @sa_decorator(SPECIFIC_DB_KEY)
+      @ahsa.sa_decorator(SPECIFIC_DB_KEY)
       async def get(self):
           async with self.specific_session.begin():
               # some your code
 
-      @sa_decorator(SPECIFIC_DB_KEY)
+      @ahsa.sa_decorator(SPECIFIC_DB_KEY)
       async def post(self):
           async with self.specific_session.begin():
               # some your code
 
 
-  aiohttp_sqlalchemy.setup(app, [
-      aiohttp_sqlalchemy.bind(SPECIFIC_DB_URL, SPECIFIC_DB_KEY, middleware=False),
+  ahsa.setup(app, [
+      ahsa.bind(SPECIFIC_DB_URL, SPECIFIC_DB_KEY, middleware=False),
   ])
   app.add_routes([web.view('/', SpecificHandler)])

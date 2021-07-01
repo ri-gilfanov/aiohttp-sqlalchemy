@@ -5,7 +5,6 @@ from aiohttp import web
 from sqlalchemy import orm
 
 import aiohttp_sqlalchemy
-from aiohttp_sqlalchemy import sa_session
 
 metadata = sa.MetaData()
 Base = orm.declarative_base(metadata=metadata)
@@ -19,11 +18,11 @@ class MyModel(Base):
 
 
 async def main(request):
-    db_session = sa_session(request)
+    sa_session = aiohttp_sqlalchemy.get_session(request)
 
-    async with db_session.begin():
-        db_session.add(MyModel())
-        result = await db_session.execute(sa.select(MyModel))
+    async with sa_session.begin():
+        sa_session.add(MyModel())
+        result = await sa_session.execute(sa.select(MyModel))
         result = result.scalars()
 
     data = {
