@@ -7,7 +7,7 @@ Main user functionality
 
 .. autofunction:: aiohttp_sqlalchemy.bind
 
-.. autofunction:: aiohttp_sqlalchemy.sa_init_db
+.. autofunction:: aiohttp_sqlalchemy.init_db
 
 .. autofunction:: aiohttp_sqlalchemy.get_session
 
