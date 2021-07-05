@@ -28,7 +28,7 @@ class SAModelMixin(SAMixin, metaclass=ABCMeta):
     sa_model: Any = None  # Not all developers use declarative mapping
 
 
-class SAInstanceMixin(
+class SAItemMixin(
     PrimaryKeyMixin,  # type: ignore
     SAModelMixin,
     metaclass=ABCMeta,
@@ -49,7 +49,7 @@ class SAModelView(View, SAModelMixin):
     """SQLAlchemy single model class based view."""
 
 
-class SAInstanceView(View, SAInstanceMixin, metaclass=ABCMeta):
+class SAItemView(View, SAItemMixin, metaclass=ABCMeta):
     """SQLAlchemy single instance class based view."""
 
 

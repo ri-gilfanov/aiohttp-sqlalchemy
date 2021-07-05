@@ -14,6 +14,7 @@ Main user functionality
 Class based views
 -----------------
 .. autoclass:: aiohttp_sqlalchemy.SAMixin
+  :inherited-members:
   :members:
   :show-inheritance:
 
@@ -21,7 +22,8 @@ Class based views
   :members:
   :show-inheritance:
 
-.. autoclass:: aiohttp_sqlalchemy.SAInstanceMixin
+.. autoclass:: aiohttp_sqlalchemy.SAItemMixin
+  :inherited-members:
   :members:
   :show-inheritance:
 
@@ -33,7 +35,7 @@ Class based views
   :members:
   :show-inheritance:
 
-.. autoclass:: aiohttp_sqlalchemy.SAInstanceView
+.. autoclass:: aiohttp_sqlalchemy.SAItemView
   :members:
   :show-inheritance:
 

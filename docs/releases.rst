@@ -5,8 +5,8 @@ Version 0.20
 ------------
 **Added**
 
-* Added ``SAInstanceMixin``;
-* Added ``SAInstanceView``.
+* Added ``SAItemMixin``;
+* Added ``SAItemView``.
 
 Version 0.19
 ------------

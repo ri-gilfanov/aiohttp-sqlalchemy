@@ -12,7 +12,6 @@
 
 from aiohttp_sqlalchemy import __version__
 
-
 # -- Project information -----------------------------------------------------
 
 project = 'aiohttp-sqlalchemy'
