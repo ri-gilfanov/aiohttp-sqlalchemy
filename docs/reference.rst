@@ -15,15 +15,27 @@ Class based views
 -----------------
 .. autoclass:: aiohttp_sqlalchemy.SAMixin
   :members:
+  :show-inheritance:
 
 .. autoclass:: aiohttp_sqlalchemy.SAModelMixin
   :members:
+  :show-inheritance:
+
+.. autoclass:: aiohttp_sqlalchemy.SAInstanceMixin
+  :members:
+  :show-inheritance:
 
 .. autoclass:: aiohttp_sqlalchemy.SABaseView
   :members:
+  :show-inheritance:
 
 .. autoclass:: aiohttp_sqlalchemy.SAModelView
   :members:
+  :show-inheritance:
+
+.. autoclass:: aiohttp_sqlalchemy.SAInstanceView
+  :members:
+  :show-inheritance:
 
 Additional functionality
 ------------------------
