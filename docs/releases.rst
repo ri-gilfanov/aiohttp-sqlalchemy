@@ -1,6 +1,45 @@
 ========
 Releases
 ========
+Version 0.20
+------------
+**Added**
+
+* Added ``SAItemMixin``;
+* Added ``SAItemView``.
+
+Version 0.19
+------------
+**Added**
+
+* Synonym ``sa_session`` for ``get_session``;
+* Synonym ``sa_session_factory`` for ``get_session_factory``.
+
+**Changed**
+
+* Rename ``sa_session`` to ``get_session``;
+* Rename ``sa_session_factory`` to ``get_session_factory``.
+
+Version 0.18.1
+--------------
+**Added**
+
+* Synonym ``SAView`` for ``SAModelView``.
+
+**Changed**
+
+* Rename ``SAView`` to ``SAModelView``.
+
+Version 0.18
+------------
+**Changed**
+
+* First argument of function ``aiohttp_sqlalchemy.bind()`` renamed from
+  ``bind_to`` to ``target``;
+* Type hint alias ``TBinding`` renamed to ``TBind``;
+* Type hint alias ``TBindings`` renamed to ``TBinds``;
+* Type hint alias ``TBindTo`` renamed to ``TTarget``.
+
 Version 0.17
 ------------
 **Added**

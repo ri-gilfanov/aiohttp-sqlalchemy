@@ -7,7 +7,7 @@ import aiohttp_sqlalchemy
 
 
 def test_bind_to_url() -> None:
-    binding = aiohttp_sqlalchemy.bind("sqlite+aiosqlite:///")
+    binding = aiohttp_sqlalchemy.bind('sqlite+aiosqlite:///')
     session_factory = binding[0]
     session = session_factory()
     assert isinstance(session, AsyncSession)
@@ -21,7 +21,7 @@ def test_bind_to_async_engine(orm_async_engine: AsyncEngine) -> None:
 
 
 def test_bind_to_sync_engine() -> None:
-    engine = create_engine("sqlite+aiosqlite:///")
+    engine = create_engine('sqlite+aiosqlite:///')
     with pytest.raises(TypeError):
         aiohttp_sqlalchemy.bind(engine)
 
@@ -33,7 +33,7 @@ def test_bind_with_ready_session(orm_async_engine: AsyncEngine) -> None:
 
 
 def test_bind_with_sync_session() -> None:
-    engine = create_engine("sqlite+aiosqlite:///")
+    engine = create_engine('sqlite+aiosqlite:///')
     Session = sessionmaker(engine)
     session = Session()
     with pytest.raises(TypeError):

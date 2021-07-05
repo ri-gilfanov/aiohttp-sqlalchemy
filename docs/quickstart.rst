@@ -1,28 +1,6 @@
 ==========
 Quickstart
 ==========
-Installation
-------------
-Installing ``aiohttp-sqlalchemy`` with pip: ::
-
-  pip install aiohttp-sqlalchemy
-
-
-Optional requirements
----------------------
-
-For PostgreSQL support, you also need install ``asyncpg``: ::
-
-  pip install asyncpg
-
-For MySQL support, you also need install ``aiomysql``: ::
-
-  pip install aiomysql
-
-For SQLite3 support, you also need install ``aiosqlite``: ::
-
-  pip install aiosqlite
-
 
 Simple example
 --------------
@@ -40,26 +18,25 @@ Copy and paste this code in a file and run:
   from aiohttp import web
   from sqlalchemy import orm
 
-  import aiohttp_sqlalchemy
-  from aiohttp_sqlalchemy import sa_session
+  import aiohttp_sqlalchemy as ahsa
 
   metadata = sa.MetaData()
   Base = orm.declarative_base(metadata=metadata)
 
 
   class MyModel(Base):
-      __tablename__ = "my_table"
+      __tablename__ = 'my_table'
 
       pk = sa.Column(sa.Integer, primary_key=True)
       timestamp = sa.Column(sa.DateTime(), default=datetime.now)
 
 
   async def main(request):
-      db_session = sa_session(request)
+      sa_session = ahsa.get_session(request)
 
-      async with db_session.begin():
-          db_session.add(MyModel())
-          result = await db_session.execute(sa.select(MyModel))
+      async with sa_session.begin():
+          sa_session.add(MyModel())
+          result = await sa_session.execute(sa.select(MyModel))
           result = result.scalars()
 
       data = {
@@ -72,16 +49,16 @@ Copy and paste this code in a file and run:
   async def app_factory():
       app = web.Application()
 
-      bind = aiohttp_sqlalchemy.bind("sqlite+aiosqlite:///")
-      aiohttp_sqlalchemy.setup(app, [bind])
-      await aiohttp_sqlalchemy.init_db(app, metadata)
+      ahsa.setup(app, [
+          ahsa.bind('sqlite+aiosqlite:///'),
+      ])
+      await ahsa.init_db(app, metadata)
 
-      app.add_routes([web.get("/", main)])
-
+      app.add_routes([web.get('/', main)])
       return app
 
 
-  if __name__ == "__main__":
+  if __name__ == '__main__':
       web.run_app(app_factory())
 
 
@@ -95,13 +72,35 @@ More control in configuration
 -----------------------------
 .. code-block:: python
 
-  import aiohttp_sqlalchemy
+  import aiohttp_sqlalchemy as ahsa
   from sqlalchemy import orm
 
   url = 'sqlite+aiosqlite:///'
   engine = create_async_engine(url, echo=True)
   Session = orm.sessionmaker(main_engine, AsyncSession, expire_on_commit=False)
 
-  aiohttp_sqlalchemy.setup(app, [
-      aiohttp_sqlalchemy.bind(Session),
+  ahsa.setup(app, [
+      ahsa.bind(Session),
   ])
+
+
+Class based views
+-----------------
+.. code-block:: python
+
+  from aiohttp import web
+  import aiohttp_sqlalchemy as ahsa
+
+
+  class MyClassBasedView(ahsa.SABaseView):
+      async def get(self):
+          db_session = self.sa_session()
+
+          async with db_session.begin():
+              # some your code
+
+
+  ahsa.setup(app, [
+      ahsa.bind(MainSession),
+  ])
+  app.add_routes([web.view('/', MyClassBasedView)])

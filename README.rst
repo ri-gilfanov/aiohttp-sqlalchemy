@@ -1,11 +1,11 @@
 ==================
 aiohttp-sqlalchemy
 ==================
-|Python versions| |PyPI release| |PyPI downloads| |License| |ReadTheDocs| |GitHub CI| |Codecov| |Codacy|
+|ReadTheDocs| |PyPI release| |PyPI downloads| |License| |Python versions| |GitHub CI| |Codecov| |Codacy|
 
-.. |Python versions| image:: https://img.shields.io/badge/Python-3.7%20%7C%203.8%20%7C%203.9-blue
-  :target: https://pypi.org/project/aiohttp-sqlalchemy/
-  :alt: Python version support
+.. |ReadTheDocs| image:: https://readthedocs.org/projects/aiohttp-sqlalchemy/badge/?version=latest
+  :target: https://aiohttp-sqlalchemy.readthedocs.io/en/latest/?badge=latest
+  :alt: Read The Docs build
 
 .. |PyPI release| image:: https://badge.fury.io/py/aiohttp-sqlalchemy.svg
   :target: https://pypi.org/project/aiohttp-sqlalchemy/
@@ -19,9 +19,9 @@ aiohttp-sqlalchemy
   :target: https://github.com/ri-gilfanov/aiohttp-sqlalchemy/blob/master/LICENSE
   :alt: MIT License
 
-.. |ReadTheDocs| image:: https://readthedocs.org/projects/aiohttp-sqlalchemy/badge/?version=latest
-  :target: https://aiohttp-sqlalchemy.readthedocs.io/en/latest/?badge=latest
-  :alt: Read The Docs build
+.. |Python versions| image:: https://img.shields.io/badge/Python-3.7%20%7C%203.8%20%7C%203.9-blue
+  :target: https://pypi.org/project/aiohttp-sqlalchemy/
+  :alt: Python version support
 
 .. |GitHub CI| image:: https://github.com/ri-gilfanov/aiohttp-sqlalchemy/actions/workflows/ci.yml/badge.svg?branch=master
   :target: https://github.com/ri-gilfanov/aiohttp-sqlalchemy/actions/workflows/ci.yml
@@ -76,26 +76,25 @@ Copy and paste this code in a file and run:
   from aiohttp import web
   from sqlalchemy import orm
 
-  import aiohttp_sqlalchemy
-  from aiohttp_sqlalchemy import sa_session
+  import aiohttp_sqlalchemy as ahsa
 
   metadata = sa.MetaData()
   Base = orm.declarative_base(metadata=metadata)
 
 
   class MyModel(Base):
-      __tablename__ = "my_table"
+      __tablename__ = 'my_table'
 
       pk = sa.Column(sa.Integer, primary_key=True)
       timestamp = sa.Column(sa.DateTime(), default=datetime.now)
 
 
   async def main(request):
-      db_session = sa_session(request)
+      sa_session = ahsa.get_session(request)
 
-      async with db_session.begin():
-          db_session.add(MyModel())
-          result = await db_session.execute(sa.select(MyModel))
+      async with sa_session.begin():
+          sa_session.add(MyModel())
+          result = await sa_session.execute(sa.select(MyModel))
           result = result.scalars()
 
       data = {
@@ -108,14 +107,14 @@ Copy and paste this code in a file and run:
   async def app_factory():
       app = web.Application()
 
-      bind = aiohttp_sqlalchemy.bind("sqlite+aiosqlite:///")
-      aiohttp_sqlalchemy.setup(app, [bind])
-      await aiohttp_sqlalchemy.init_db(app, metadata)
+      ahsa.setup(app, [
+          ahsa.bind('sqlite+aiosqlite:///'),
+      ])
+      await ahsa.init_db(app, metadata)
 
-      app.add_routes([web.get("/", main)])
-
+      app.add_routes([web.get('/', main)])
       return app
 
 
-  if __name__ == "__main__":
+  if __name__ == '__main__':
       web.run_app(app_factory())
