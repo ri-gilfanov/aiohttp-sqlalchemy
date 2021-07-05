@@ -9,7 +9,7 @@ from aiohttp_sqlalchemy.constants import SA_DEFAULT_KEY
 from aiohttp_sqlalchemy.utils import get_session
 
 
-class SAMixin(ContextMixin, metaclass=ABCMeta):  # type: ignore
+class SAMixin(ContextMixin, metaclass=ABCMeta):
     """SQLAlchemy class based view mixin."""
 
     sa_session_key: str = SA_DEFAULT_KEY
@@ -28,11 +28,7 @@ class SAModelMixin(SAMixin, metaclass=ABCMeta):
     sa_model: Any = None  # Not all developers use declarative mapping
 
 
-class SAItemMixin(
-    PrimaryKeyMixin,  # type: ignore
-    SAModelMixin,
-    metaclass=ABCMeta,
-):
+class SAItemMixin(PrimaryKeyMixin, SAModelMixin, metaclass=ABCMeta):
     """
     SQLAlchemy single instance class based view mixin.
 
