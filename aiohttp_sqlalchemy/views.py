@@ -28,18 +28,20 @@ class SAModelMixin(SAMixin, metaclass=ABCMeta):
     sa_model: Any = None  # Not all developers use declarative mapping
 
 
-class SAInstanceMixin(
-    InstanceMixin,
-    PrimaryKeyMixin,
-    SAModelMixin,
-    metaclass=ABCMeta,
-):
+class SAPrimaryKeyMixin(PrimaryKeyMixin, SAModelMixin, metaclass=ABCMeta):
     """
-    SQLAlchemy single instance class based view mixin.
+    Primary key mixin for deleting, editing and viewing a single instance
+    by primary key.
 
     :param sa_pk_attr: primary key column or hybrid attribute.
     """
     sa_pk_attr: Any = getattr(SAModelMixin.sa_model, 'pk', None)
+
+
+class SAInstanceMixin(InstanceMixin, SAModelMixin, metaclass=ABCMeta):
+    """
+    Instance mixin for adding, editing and viewing a single instance.
+    """
 
 
 class SABaseView(View, SAMixin):

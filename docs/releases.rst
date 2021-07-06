@@ -1,6 +1,13 @@
 ========
 Releases
 ========
+Unreleased
+----------
+**Changed**
+
+* ``SAInstanceMixin`` divided into ``SAInstanceMixin`` and
+  ``SAPrimaryKeyMixin``.
+
 Version 0.21
 ------------
 **Changed**

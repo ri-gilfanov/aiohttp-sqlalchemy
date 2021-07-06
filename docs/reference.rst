@@ -22,6 +22,11 @@ Class based views
   :members:
   :show-inheritance:
 
+.. autoclass:: aiohttp_sqlalchemy.SAPrimaryKeyMixin
+  :inherited-members:
+  :members:
+  :show-inheritance:
+
 .. autoclass:: aiohttp_sqlalchemy.SAInstanceMixin
   :inherited-members:
   :members:
