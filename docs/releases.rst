@@ -1,8 +1,8 @@
 ========
 Releases
 ========
-Unreleased
-----------
+Version 0.21
+------------
 **Changed**
 
 * Rename ``SAItemMixin`` to ``SAInstanceMixin``;

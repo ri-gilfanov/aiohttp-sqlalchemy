@@ -2,7 +2,7 @@ from abc import ABCMeta
 from typing import Any, Optional
 
 from aiohttp.web import View
-from aiohttp_things.views import ContextMixin, ItemMixin
+from aiohttp_things.views import ContextMixin, InstanceMixin, PrimaryKeyMixin
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from aiohttp_sqlalchemy.constants import SA_DEFAULT_KEY
@@ -28,7 +28,12 @@ class SAModelMixin(SAMixin, metaclass=ABCMeta):
     sa_model: Any = None  # Not all developers use declarative mapping
 
 
-class SAInstanceMixin(ItemMixin, SAModelMixin, metaclass=ABCMeta):
+class SAInstanceMixin(
+    InstanceMixin,
+    PrimaryKeyMixin,
+    SAModelMixin,
+    metaclass=ABCMeta,
+):
     """
     SQLAlchemy single instance class based view mixin.
 

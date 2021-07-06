@@ -19,7 +19,7 @@ speedups = ["aiodns", "brotlipy", "cchardet"]
 
 [[package]]
 name = "aiohttp-things"
-version = "0.5.0"
+version = "0.6.0"
 description = "Modest utility collection for development with AIOHTTP framework."
 category = "main"
 optional = false
@@ -680,7 +680,7 @@ sqlite = ["aiosqlite"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "c733595691aea9f46019af23087fb0d325a82f351af00d819bd4a402faf291c9"
+content-hash = "34367d6c41be851ac48cb5a0cbf02bd85f4c71ab94eba2de05984ab3354ab27d"
 
 [metadata.files]
 aiohttp = [
@@ -723,8 +723,8 @@ aiohttp = [
     {file = "aiohttp-3.7.4.post0.tar.gz", hash = "sha256:493d3299ebe5f5a7c66b9819eacdcfbbaaf1a8e84911ddffcdc48888497afecf"},
 ]
 aiohttp-things = [
-    {file = "aiohttp-things-0.5.0.tar.gz", hash = "sha256:51bea463012342af72e634395d92a86102511d9300228c427602638775da15fb"},
-    {file = "aiohttp_things-0.5.0-py3-none-any.whl", hash = "sha256:523d5a3683cd4abb2e0794fb048a7533713d05e0a764625368b7b0a98a563c8b"},
+    {file = "aiohttp-things-0.6.0.tar.gz", hash = "sha256:fb58e94f3ff0bed380923a3e3367fc604d31ed421c1e662636ce29acbcdd5958"},
+    {file = "aiohttp_things-0.6.0-py3-none-any.whl", hash = "sha256:117f0d351b8f050f8e71b9a5be7675e40550789c9bc32df2ae37a65505937582"},
 ]
 aiomysql = [
     {file = "aiomysql-0.0.21-py3-none-any.whl", hash = "sha256:a81a97da3dd732635926a8ea6adbbf2d1345799680bf61b5f89e730bcec88cc5"},
@@ -781,7 +781,6 @@ chardet = [
 ]
 colorama = [
     {file = "colorama-0.4.4-py2.py3-none-any.whl", hash = "sha256:9f47eda37229f68eee03b24b9748937c7dc3868f906e8ba69fbcbdd3bc5dc3e2"},
-    {file = "colorama-0.4.4.tar.gz", hash = "sha256:5941b2b48a20143d2267e95b1c2a7603ce057ee39fd88e7329b0c292aa16869b"},
 ]
 coverage = [
     {file = "coverage-5.5-cp27-cp27m-macosx_10_9_x86_64.whl", hash = "sha256:b6d534e4b2ab35c9f93f46229363e17f63c53ad01330df9f2d6bd1187e5eaacf"},
@@ -909,7 +908,6 @@ importlib-metadata = [
     {file = "importlib_metadata-4.6.1.tar.gz", hash = "sha256:079ada16b7fc30dfbb5d13399a5113110dab1aa7c2bc62f66af75f0b717c8cac"},
 ]
 iniconfig = [
-    {file = "iniconfig-1.1.1-py2.py3-none-any.whl", hash = "sha256:011e24c64b7f47f6ebd835bb12a743f2fbe9a26d4cecaa7f53bc4f35ee9da8b3"},
     {file = "iniconfig-1.1.1.tar.gz", hash = "sha256:bc3af051d7d14b2ee5ef9969666def0cd1a000e121eaea580d4a313df4b37f32"},
 ]
 isort = [
