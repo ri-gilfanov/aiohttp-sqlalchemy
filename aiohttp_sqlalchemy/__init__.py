@@ -29,6 +29,8 @@ from aiohttp_sqlalchemy.utils import (
 from aiohttp_sqlalchemy.views import (
     SAAbstractView,
     SABaseView,
+    SAInstanceMixin,
+    SAInstanceView,
     SAItemMixin,
     SAItemView,
     SAMixin,
@@ -44,6 +46,8 @@ __all__ = [
     'DuplicateAppKeyError',
     'DuplicateRequestKeyError',
     'SABaseView',
+    'SAInstanceMixin',
+    'SAInstanceView',
     'SAItemMixin',
     'SAItemView',
     'SAMixin',

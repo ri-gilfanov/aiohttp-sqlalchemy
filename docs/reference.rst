@@ -22,7 +22,7 @@ Class based views
   :members:
   :show-inheritance:
 
-.. autoclass:: aiohttp_sqlalchemy.SAItemMixin
+.. autoclass:: aiohttp_sqlalchemy.SAInstanceMixin
   :inherited-members:
   :members:
   :show-inheritance:
@@ -35,7 +35,7 @@ Class based views
   :members:
   :show-inheritance:
 
-.. autoclass:: aiohttp_sqlalchemy.SAItemView
+.. autoclass:: aiohttp_sqlalchemy.SAInstanceView
   :members:
   :show-inheritance:
 

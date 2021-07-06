@@ -1,6 +1,18 @@
 ========
 Releases
 ========
+Unreleased
+----------
+**Changed**
+
+* Rename ``SAItemMixin`` to ``SAInstanceMixin``;
+* Rename ``SAItemView`` to ``SAInstanceView``.
+
+**Added**
+
+* Synonym ``SAItemMixin`` for ``SAInstanceMixin``;
+* Synonym ``SAItemView`` for ``SAInstanceView``.
+
 Version 0.20
 ------------
 **Added**
