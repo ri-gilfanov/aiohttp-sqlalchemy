@@ -1,16 +1,35 @@
 ========
 Releases
 ========
+Version 0.21
+------------
+**Changed**
+
+* Rename ``SAItemMixin`` to ``SAInstanceMixin``;
+* Rename ``SAItemView`` to ``SAInstanceView``.
+
+**Added**
+
+* Synonym ``SAItemMixin`` for ``SAInstanceMixin``;
+* Synonym ``SAItemView`` for ``SAInstanceView``.
+
+Version 0.20
+------------
+**Added**
+
+* Added ``SAItemMixin``;
+* Added ``SAItemView``.
+
 Version 0.19
 ------------
 **Added**
 
-* Synonym ``sa_session`` for ``get_session``.
+* Synonym ``sa_session`` for ``get_session``;
 * Synonym ``sa_session_factory`` for ``get_session_factory``.
 
 **Changed**
 
-* Rename ``sa_session`` to ``get_session``.
+* Rename ``sa_session`` to ``get_session``;
 * Rename ``sa_session_factory`` to ``get_session_factory``.
 
 Version 0.18.1

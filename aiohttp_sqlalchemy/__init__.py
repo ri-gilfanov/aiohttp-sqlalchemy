@@ -29,19 +29,27 @@ from aiohttp_sqlalchemy.utils import (
 from aiohttp_sqlalchemy.views import (
     SAAbstractView,
     SABaseView,
+    SAInstanceMixin,
+    SAInstanceView,
+    SAItemMixin,
+    SAItemView,
     SAMixin,
     SAModelMixin,
     SAModelView,
     SAView,
 )
 
-__version__ = '0.19.0'
+__version__ = '0.21.0'
 
 __all__ = [
     'SA_DEFAULT_KEY',
     'DuplicateAppKeyError',
     'DuplicateRequestKeyError',
     'SABaseView',
+    'SAInstanceMixin',
+    'SAInstanceView',
+    'SAItemMixin',
+    'SAItemView',
     'SAMixin',
     'SAModelMixin',
     'SAModelView',
