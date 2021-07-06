@@ -19,7 +19,7 @@ speedups = ["aiodns", "brotlipy", "cchardet"]
 
 [[package]]
 name = "aiohttp-things"
-version = "0.3.1"
+version = "0.5.0"
 description = "Modest utility collection for development with AIOHTTP framework."
 category = "main"
 optional = false
@@ -723,8 +723,8 @@ aiohttp = [
     {file = "aiohttp-3.7.4.post0.tar.gz", hash = "sha256:493d3299ebe5f5a7c66b9819eacdcfbbaaf1a8e84911ddffcdc48888497afecf"},
 ]
 aiohttp-things = [
-    {file = "aiohttp-things-0.3.1.tar.gz", hash = "sha256:cb3e780715ba33afa6829830166c6fbc5734eaa79aec9a7da87fe00cddddcef9"},
-    {file = "aiohttp_things-0.3.1-py3-none-any.whl", hash = "sha256:0f0667f8b1ede19182d2f21ab2a8dcaa662fb7441a3b707ef6fe70d691b5f740"},
+    {file = "aiohttp-things-0.5.0.tar.gz", hash = "sha256:51bea463012342af72e634395d92a86102511d9300228c427602638775da15fb"},
+    {file = "aiohttp_things-0.5.0-py3-none-any.whl", hash = "sha256:523d5a3683cd4abb2e0794fb048a7533713d05e0a764625368b7b0a98a563c8b"},
 ]
 aiomysql = [
     {file = "aiomysql-0.0.21-py3-none-any.whl", hash = "sha256:a81a97da3dd732635926a8ea6adbbf2d1345799680bf61b5f89e730bcec88cc5"},
