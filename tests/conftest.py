@@ -1,6 +1,7 @@
 from typing import cast
 
 import pytest
+import sqlalchemy as sa
 from aiohttp import web
 from aiohttp.hdrs import METH_GET
 from aiohttp.test_utils import make_mocked_request
@@ -23,6 +24,12 @@ pytest_plugins = 'aiohttp.pytest_plugin'
 @pytest.fixture
 def wrong_key() -> str:
     return 'wrong_key'
+
+
+@pytest.fixture
+def base_model() -> orm.Mapper:
+    metadata = sa.MetaData()
+    return orm.declarative_base(metadata=metadata)
 
 
 @pytest.fixture

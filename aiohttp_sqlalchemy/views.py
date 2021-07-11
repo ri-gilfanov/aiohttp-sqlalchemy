@@ -1,5 +1,5 @@
 from abc import ABCMeta
-from typing import Any, Optional
+from typing import Any, List, Optional
 
 from aiohttp.web import View
 from aiohttp_things.views import (
@@ -111,6 +111,8 @@ class SAListMixin(ListMixin, SAModelMixin, metaclass=ABCMeta):
 
 
 class SAListAddMixin(SAListMixin, metaclass=ABCMeta):
+    items: List[Any]
+
     def sa_add_all(self, *, key: Optional[str] = None) -> None:
         self.sa_session(key).add_all(self.items)
 
