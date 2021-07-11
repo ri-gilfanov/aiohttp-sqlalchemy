@@ -56,11 +56,6 @@ class SAInstanceMixin(InstanceMixin, SAModelMixin, metaclass=ABCMeta):
     """
 
 
-class SAInstanceAddMixin(SAInstanceMixin, metaclass=ABCMeta):
-    def sa_add(self, *, key: Optional[str] = None) -> None:
-        self.sa_session(key).add(self.instance)
-
-
 class SAPrimaryKeyMixin(PrimaryKeyMixin, SAModelMixin, metaclass=ABCMeta):
     """
     Primary key mixin for deleting, editing and viewing a single instance
@@ -82,19 +77,7 @@ class SAInstanceDeleteMixin(
             where(self.sa_pk_attr == self.pk)
 
 
-class SAInstanceEditMixin(
-    SAInstanceMixin,
-    SAModelEditMixin,
-    SAPrimaryKeyMixin,
-    metaclass=ABCMeta,
-):
-    def get_sa_edit_stmt(self, model: Any = None) -> Update:
-        return super(). \
-            get_sa_update_stmt(model). \
-            where(self.sa_pk_attr == self.pk)
-
-
-class SAInstanceViewMixin(
+class SAInstanceGetMixin(
     SAInstanceMixin,
     SAModelViewMixin,
     SAPrimaryKeyMixin,
@@ -106,26 +89,43 @@ class SAInstanceViewMixin(
             where(self.sa_pk_attr == self.pk)
 
 
+class SAInstancePostMixin(SAInstanceMixin, metaclass=ABCMeta):
+    def sa_add(self, *, key: Optional[str] = None) -> None:
+        self.sa_session(key).add(self.instance)
+
+
+class SAInstancePutMixin(
+    SAInstanceMixin,
+    SAModelEditMixin,
+    SAPrimaryKeyMixin,
+    metaclass=ABCMeta,
+):
+    def get_sa_edit_stmt(self, model: Any = None) -> Update:
+        return super(). \
+            get_sa_update_stmt(model). \
+            where(self.sa_pk_attr == self.pk)
+
+
 class SAListMixin(ListMixin, SAModelMixin, metaclass=ABCMeta):
     pass
-
-
-class SAListAddMixin(SAListMixin, metaclass=ABCMeta):
-    items: List[Any]
-
-    def sa_add_all(self, *, key: Optional[str] = None) -> None:
-        self.sa_session(key).add_all(self.items)
 
 
 class SAListDeleteMixin(SAListMixin, SAModelDeleteMixin, metaclass=ABCMeta):
     pass
 
 
-class SAListEditMixin(SAListMixin, SAModelEditMixin, metaclass=ABCMeta):
+class SAListGetMixin(SAListMixin, SAModelViewMixin, metaclass=ABCMeta):
     pass
 
 
-class SAListViewMixin(SAListMixin, SAModelViewMixin, metaclass=ABCMeta):
+class SAListPostMixin(SAListMixin, metaclass=ABCMeta):
+    items: List[Any]
+
+    def sa_add_all(self, *, key: Optional[str] = None) -> None:
+        self.sa_session(key).add_all(self.items)
+
+
+class SAListPutMixin(SAListMixin, SAModelEditMixin, metaclass=ABCMeta):
     pass
 
 

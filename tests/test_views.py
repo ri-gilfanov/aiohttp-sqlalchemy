@@ -8,11 +8,11 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from aiohttp_sqlalchemy import (
     SA_DEFAULT_KEY,
     SABaseView,
-    SAInstanceAddMixin,
     SAInstanceDeleteMixin,
-    SAInstanceEditMixin,
-    SAInstanceViewMixin,
-    SAListAddMixin,
+    SAInstanceGetMixin,
+    SAInstancePostMixin,
+    SAInstancePutMixin,
+    SAListPostMixin,
 )
 
 
@@ -27,26 +27,23 @@ def test_sa_session(
         view.sa_session('wrong key')
 
 
-def test_instance_add(
-    mocked_request: Request,
-    session: AsyncSession,
-    base_model: orm.Mapper,
-) -> None:
+def test_instance_get(mocked_request: Request, base_model: orm.Mapper) -> None:
     class Model(base_model):  # type: ignore
         __tablename__ = 'model'
 
         pk = sa.Column(sa.Integer, primary_key=True)
 
-    class InstanceAdd(web.View, SAInstanceAddMixin):
+    class InstanceView(web.View, SAInstanceGetMixin):
         sa_model = Model
 
-    mocked_request[SA_DEFAULT_KEY] = session
-    view = InstanceAdd(mocked_request)
-    view.instance = Model()
-    view.sa_add()
+    view = InstanceView(mocked_request)
+    view.get_sa_view_stmt()
 
 
-def test_delete_stmt(mocked_request: Request, base_model: orm.Mapper) -> None:
+def test_instance_delete(
+    mocked_request: Request,
+    base_model: orm.Mapper,
+) -> None:
     class Model(base_model):  # type: ignore
         __tablename__ = 'model'
 
@@ -59,33 +56,7 @@ def test_delete_stmt(mocked_request: Request, base_model: orm.Mapper) -> None:
     view.get_sa_delete_stmt()
 
 
-def test_edit_stmt(mocked_request: Request, base_model: orm.Mapper) -> None:
-    class Model(base_model):  # type: ignore
-        __tablename__ = 'model'
-
-        pk = sa.Column(sa.Integer, primary_key=True)
-
-    class InstanceEdit(web.View, SAInstanceEditMixin):
-        sa_model = Model
-
-    view = InstanceEdit(mocked_request)
-    view.get_sa_edit_stmt()
-
-
-def test_view_stmt(mocked_request: Request, base_model: orm.Mapper) -> None:
-    class Model(base_model):  # type: ignore
-        __tablename__ = 'model'
-
-        pk = sa.Column(sa.Integer, primary_key=True)
-
-    class InstanceView(web.View, SAInstanceViewMixin):
-        sa_model = Model
-
-    view = InstanceView(mocked_request)
-    view.get_sa_view_stmt()
-
-
-def test_list_add(
+def test_instance_post(
     mocked_request: Request,
     session: AsyncSession,
     base_model: orm.Mapper,
@@ -95,7 +66,39 @@ def test_list_add(
 
         pk = sa.Column(sa.Integer, primary_key=True)
 
-    class ListAdd(web.View, SAListAddMixin):
+    class InstanceAdd(web.View, SAInstancePostMixin):
+        sa_model = Model
+
+    mocked_request[SA_DEFAULT_KEY] = session
+    view = InstanceAdd(mocked_request)
+    view.instance = Model()
+    view.sa_add()
+
+
+def test_instance_put(mocked_request: Request, base_model: orm.Mapper) -> None:
+    class Model(base_model):  # type: ignore
+        __tablename__ = 'model'
+
+        pk = sa.Column(sa.Integer, primary_key=True)
+
+    class InstanceEdit(web.View, SAInstancePutMixin):
+        sa_model = Model
+
+    view = InstanceEdit(mocked_request)
+    view.get_sa_edit_stmt()
+
+
+def test_list_post(
+    mocked_request: Request,
+    session: AsyncSession,
+    base_model: orm.Mapper,
+) -> None:
+    class Model(base_model):  # type: ignore
+        __tablename__ = 'model'
+
+        pk = sa.Column(sa.Integer, primary_key=True)
+
+    class ListAdd(web.View, SAListPostMixin):
         sa_model = Model
 
     mocked_request[SA_DEFAULT_KEY] = session
