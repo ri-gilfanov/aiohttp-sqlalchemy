@@ -1,11 +1,10 @@
 ========
 Releases
 ========
-Unreleased
-----------
-
+Version 0.23
+------------
 **Add**
-* ``SAItemMixin``.
+* ``SAItemMixin`` as a separate mixin;
 * ``SAInstanceAddMixin`` as a synonym for ``SAItemAddMixin``;
 * ``SAInstanceDeleteMixin`` as a synonym for ``SAItemDeleteMixin``;
 * ``SAInstanceEditMixin`` as a synonym for ``SAItemEditMixin``;
