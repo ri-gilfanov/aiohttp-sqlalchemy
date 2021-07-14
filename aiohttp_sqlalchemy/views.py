@@ -56,11 +56,6 @@ class SAInstanceMixin(InstanceMixin, SAModelMixin, metaclass=ABCMeta):
     """
 
 
-class SAInstanceAddMixin(SAInstanceMixin, metaclass=ABCMeta):
-    def sa_add(self, *, key: Optional[str] = None) -> None:
-        self.sa_session(key).add(self.instance)
-
-
 class SAPrimaryKeyMixin(PrimaryKeyMixin, SAModelMixin, metaclass=ABCMeta):
     """
     Primary key mixin for deleting, editing and viewing a single instance
@@ -71,7 +66,17 @@ class SAPrimaryKeyMixin(PrimaryKeyMixin, SAModelMixin, metaclass=ABCMeta):
     sa_pk_attr: Any = getattr(SAModelMixin.sa_model, 'pk', None)
 
 
-class SAInstanceDeleteMixin(
+class SAItemMixin(SAModelMixin, metaclass=ABCMeta):
+    pass
+
+
+class SAItemAddMixin(SAItemMixin, SAInstanceMixin, metaclass=ABCMeta):
+    def sa_add(self, *, key: Optional[str] = None) -> None:
+        self.sa_session(key).add(self.instance)
+
+
+class SAItemDeleteMixin(
+    SAItemMixin,
     SAModelDeleteMixin,
     SAPrimaryKeyMixin,
     metaclass=ABCMeta,
@@ -82,7 +87,8 @@ class SAInstanceDeleteMixin(
             where(self.sa_pk_attr == self.pk)
 
 
-class SAInstanceEditMixin(
+class SAItemEditMixin(
+    SAItemMixin,
     SAInstanceMixin,
     SAModelEditMixin,
     SAPrimaryKeyMixin,
@@ -94,7 +100,8 @@ class SAInstanceEditMixin(
             where(self.sa_pk_attr == self.pk)
 
 
-class SAInstanceViewMixin(
+class SAItemViewMixin(
+    SAItemMixin,
     SAInstanceMixin,
     SAModelViewMixin,
     SAPrimaryKeyMixin,
@@ -143,7 +150,10 @@ class SAInstanceView(View, SAInstanceMixin, metaclass=ABCMeta):
 
 # Synonyms
 SAAbstractView = SAMixin
-SAItemMixin = SAInstanceMixin
 SAItemView = SAInstanceView
 SAOneModelMixin = SAModelMixin
 SAView = SAModelView
+SAInstanceAddMixin = SAItemAddMixin
+SAInstanceDeleteMixin = SAItemDeleteMixin
+SAInstanceEditMixin = SAItemEditMixin
+SAInstanceViewMixin = SAItemViewMixin

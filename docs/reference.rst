@@ -53,22 +53,22 @@ Instance mixins
   :members:
   :show-inheritance:
 
-  .. autoclass:: aiohttp_sqlalchemy.SAInstanceAddMixin
+  .. autoclass:: aiohttp_sqlalchemy.SAItemAddMixin
     :inherited-members:
     :members:
     :show-inheritance:
 
-.. autoclass:: aiohttp_sqlalchemy.SAInstanceDeleteMixin
+.. autoclass:: aiohttp_sqlalchemy.SAItemDeleteMixin
   :inherited-members:
   :members:
   :show-inheritance:
 
-.. autoclass:: aiohttp_sqlalchemy.SAInstanceEditMixin
+.. autoclass:: aiohttp_sqlalchemy.SAItemEditMixin
   :inherited-members:
   :members:
   :show-inheritance:
 
-.. autoclass:: aiohttp_sqlalchemy.SAInstanceViewMixin
+.. autoclass:: aiohttp_sqlalchemy.SAItemViewMixin
   :inherited-members:
   :members:
   :show-inheritance:

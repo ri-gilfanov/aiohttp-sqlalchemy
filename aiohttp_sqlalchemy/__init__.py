@@ -35,8 +35,12 @@ from aiohttp_sqlalchemy.views import (
     SAInstanceMixin,
     SAInstanceView,
     SAInstanceViewMixin,
+    SAItemAddMixin,
+    SAItemDeleteMixin,
+    SAItemEditMixin,
     SAItemMixin,
     SAItemView,
+    SAItemViewMixin,
     SAListAddMixin,
     SAListDeleteMixin,
     SAListEditMixin,
@@ -52,7 +56,7 @@ from aiohttp_sqlalchemy.views import (
     SAView,
 )
 
-__version__ = '0.22.0.post0'
+__version__ = '0.23.0'
 
 __all__ = [
     'DEFAULT_KEY',
@@ -61,6 +65,24 @@ __all__ = [
     'SAAbstractView',
     'SABaseView',
     'SA_DEFAULT_KEY',
+
+    'SAModelMixin',
+    'SAModelDeleteMixin',
+    'SAModelEditMixin',
+    'SAModelViewMixin',
+
+    'SAItemMixin',
+    'SAItemAddMixin',
+    'SAItemDeleteMixin',
+    'SAItemEditMixin',
+    'SAItemViewMixin',
+
+    'SAListMixin',
+    'SAListAddMixin',
+    'SAListDeleteMixin',
+    'SAListEditMixin',
+    'SAListViewMixin',
+
     'SAInstanceAddMixin',
     'SAInstanceDeleteMixin',
     'SAInstanceEditMixin',
@@ -69,17 +91,8 @@ __all__ = [
     'SAInstanceViewMixin',
     'SAItemMixin',
     'SAItemView',
-    'SAListAddMixin',
-    'SAListDeleteMixin',
-    'SAListEditMixin',
-    'SAListMixin',
-    'SAListViewMixin',
     'SAMixin',
-    'SAModelDeleteMixin',
-    'SAModelEditMixin',
-    'SAModelMixin',
     'SAModelView',
-    'SAModelViewMixin',
     'SAPrimaryKeyMixin',
     'SAView',
     'bind',
