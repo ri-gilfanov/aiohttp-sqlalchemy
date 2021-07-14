@@ -92,7 +92,7 @@ Class based views
   import aiohttp_sqlalchemy as ahsa
 
 
-  class MyClassBasedView(ahsa.SABaseView):
+  class MyClassBasedView(web.View, ahsa.SAMixin):
       async def get(self):
           db_session = self.sa_session()
 
