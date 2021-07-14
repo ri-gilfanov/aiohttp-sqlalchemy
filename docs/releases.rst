@@ -1,12 +1,23 @@
 ========
 Releases
 ========
-Unreleased
-----------
-**Changed**
+Version 0.22
+------------
+**Added**
 
-* ``SAInstanceMixin`` divided into ``SAInstanceMixin`` and
-  ``SAPrimaryKeyMixin``.
+* ``SAModelDeleteMixin``;
+* ``SAModelEditMixin``;
+* ``SAModelViewMixin``;
+* ``SAPrimaryKeyMixin``;
+* ``SAInstanceAddMixin``;
+* ``SAInstanceDeleteMixin``;
+* ``SAInstanceEditMixin``;
+* ``SAInstanceViewMixin``;
+* ``SAListMixin``;
+* ``SAListAddMixin``;
+* ``SAListDeleteMixin``;
+* ``SAListEditMixin``;
+* ``SAListViewMixin``.
 
 Version 0.21
 ------------
