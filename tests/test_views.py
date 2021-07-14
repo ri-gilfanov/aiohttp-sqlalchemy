@@ -8,10 +8,10 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from aiohttp_sqlalchemy import (
     SA_DEFAULT_KEY,
     SABaseView,
-    SAInstanceAddMixin,
-    SAInstanceDeleteMixin,
-    SAInstanceEditMixin,
-    SAInstanceViewMixin,
+    SAItemAddMixin,
+    SAItemDeleteMixin,
+    SAItemEditMixin,
+    SAItemViewMixin,
     SAListAddMixin,
 )
 
@@ -37,7 +37,7 @@ def test_instance_add(
 
         pk = sa.Column(sa.Integer, primary_key=True)
 
-    class InstanceAdd(web.View, SAInstanceAddMixin):
+    class InstanceAdd(web.View, SAItemAddMixin):
         sa_model = Model
 
     mocked_request[SA_DEFAULT_KEY] = session
@@ -52,7 +52,7 @@ def test_delete_stmt(mocked_request: Request, base_model: orm.Mapper) -> None:
 
         pk = sa.Column(sa.Integer, primary_key=True)
 
-    class InstanceDelete(web.View, SAInstanceDeleteMixin):
+    class InstanceDelete(web.View, SAItemDeleteMixin):
         sa_model = Model
 
     view = InstanceDelete(mocked_request)
@@ -65,7 +65,7 @@ def test_edit_stmt(mocked_request: Request, base_model: orm.Mapper) -> None:
 
         pk = sa.Column(sa.Integer, primary_key=True)
 
-    class InstanceEdit(web.View, SAInstanceEditMixin):
+    class InstanceEdit(web.View, SAItemEditMixin):
         sa_model = Model
 
     view = InstanceEdit(mocked_request)
@@ -78,7 +78,7 @@ def test_view_stmt(mocked_request: Request, base_model: orm.Mapper) -> None:
 
         pk = sa.Column(sa.Integer, primary_key=True)
 
-    class InstanceView(web.View, SAInstanceViewMixin):
+    class InstanceView(web.View, SAItemViewMixin):
         sa_model = Model
 
     view = InstanceView(mocked_request)

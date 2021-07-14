@@ -1,6 +1,24 @@
 ========
 Releases
 ========
+Unreleased
+----------
+
+**Add**
+* ``SAItemMixin``.
+* ``SAInstanceAddMixin`` as a synonym for ``SAItemAddMixin``;
+* ``SAInstanceDeleteMixin`` as a synonym for ``SAItemDeleteMixin``;
+* ``SAInstanceEditMixin`` as a synonym for ``SAItemEditMixin``;
+* ``SAInstanceViewMixin`` as a synonym for ``SAItemViewMixin``;
+
+**Changed**
+
+* ``SAInstanceAddMixin`` renamed to ``SAItemAddMixin``;
+* ``SAInstanceDeleteMixin`` renamed to ``SAItemDeleteMixin``;
+* ``SAInstanceEditMixin`` renamed to ``SAItemEditMixin``;
+* ``SAInstanceViewMixin`` renamed to ``SAItemViewMixin``;
+* ``SAItemMixin`` is no longer a synonym for ``SAInstanceMixin``.
+
 Version 0.22
 ------------
 **Added**
@@ -28,8 +46,8 @@ Version 0.21
 
 **Added**
 
-* Synonym ``SAItemMixin`` for ``SAInstanceMixin``;
-* Synonym ``SAItemView`` for ``SAInstanceView``.
+* ``SAItemMixin`` as a synonym for ``SAInstanceMixin``;
+* ``SAItemView`` as a synonym for ``SAInstanceView``.
 
 Version 0.20
 ------------
@@ -42,8 +60,8 @@ Version 0.19
 ------------
 **Added**
 
-* Synonym ``sa_session`` for ``get_session``;
-* Synonym ``sa_session_factory`` for ``get_session_factory``.
+* ``sa_session`` as a synonym for ``get_session``;
+* ``sa_session_factory`` as a synonym for ``get_session_factory``.
 
 **Changed**
 
@@ -54,7 +72,7 @@ Version 0.18.1
 --------------
 **Added**
 
-* Synonym ``SAView`` for ``SAModelView``.
+* ``SAView`` as a synonym for ``SAModelView``.
 
 **Changed**
 
@@ -74,8 +92,8 @@ Version 0.17
 ------------
 **Added**
 
-* ``views.SAAbstractView`` synonym for ``views.SAMixin``;
-* ``views.SAOneModelMixin`` synonym for ``views.SAModelMixin``;
+* ``views.SAAbstractView`` as a synonym for ``views.SAMixin``;
+* ``views.SAOneModelMixin`` as a synonym for ``views.SAModelMixin``;
 
 **Changed**
 
