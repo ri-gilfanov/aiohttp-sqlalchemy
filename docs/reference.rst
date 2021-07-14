@@ -13,6 +13,10 @@ Main user functionality
 
 Class based views
 -----------------
+.. warning::
+
+  API of most view classes module stabilizes to version 1.0.
+
 .. autoclass:: aiohttp_sqlalchemy.SAMixin
   :inherited-members:
   :members:
