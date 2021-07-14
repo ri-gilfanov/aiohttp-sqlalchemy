@@ -7,7 +7,7 @@ from aiohttp import web
 from sqlalchemy import orm
 
 import aiohttp_sqlalchemy
-from aiohttp_sqlalchemy import SA_DEFAULT_KEY, SAView, sa_decorator, sa_session
+from aiohttp_sqlalchemy import SA_DEFAULT_KEY, SAMixin, sa_decorator, sa_session
 
 metadata = sa.MetaData()
 Base: Any = orm.declarative_base(metadata=metadata)
@@ -63,7 +63,7 @@ class ClassOrganizedHandler:
         )
 
 
-class ClassBasedView(SAView):
+class ClassBasedView(web.View, SAMixin):
     @sa_decorator(THIRD_KEY)
     @sa_decorator(FOURTH_KEY)
     async def get(self):

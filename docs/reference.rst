@@ -44,18 +44,16 @@ Instance mixins
   :members:
   :show-inheritance:
 
-.. autoclass:: aiohttp_sqlalchemy.SAInstanceAddMixin
-  :inherited-members:
-  :members:
-  :show-inheritance:
-
 .. autoclass:: aiohttp_sqlalchemy.SAPrimaryKeyMixin
   :inherited-members:
   :members:
   :show-inheritance:
 
-Common actions
-^^^^^^^^^^^^^^
+  .. autoclass:: aiohttp_sqlalchemy.SAInstanceAddMixin
+    :inherited-members:
+    :members:
+    :show-inheritance:
+
 .. autoclass:: aiohttp_sqlalchemy.SAInstanceDeleteMixin
   :inherited-members:
   :members:

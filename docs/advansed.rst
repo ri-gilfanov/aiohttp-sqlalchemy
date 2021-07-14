@@ -96,7 +96,7 @@ You can apply ``sa_decorator(key)`` with class based views. For example:
   SPECIFIC_DB_URL = 'sqlite+aiosqlite:///'
 
 
-  class SpecificHandler(ahsa.SABaseView):
+  class SpecificHandler(web.View, ahsa.SAMixin):
       @property
       def specific_session(self):
           return self.sa_session(SPECIFIC_DB_KEY)
