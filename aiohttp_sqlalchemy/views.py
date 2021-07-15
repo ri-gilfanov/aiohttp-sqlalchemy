@@ -149,11 +149,5 @@ class SAInstanceView(View, SAInstanceMixin, metaclass=ABCMeta):
 
 
 # Synonyms
-SAAbstractView = SAMixin
 SAItemView = SAInstanceView
-SAOneModelMixin = SAModelMixin
 SAView = SAModelView
-SAInstanceAddMixin = SAItemAddMixin
-SAInstanceDeleteMixin = SAItemDeleteMixin
-SAInstanceEditMixin = SAItemEditMixin
-SAInstanceViewMixin = SAItemViewMixin

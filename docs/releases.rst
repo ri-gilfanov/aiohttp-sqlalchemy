@@ -1,6 +1,16 @@
 ========
 Releases
 ========
+Unreleased
+----------
+**Removed**
+* ``SAAbstractView`` synonym for ``SAMixin``;
+* ``SAOneModelMixin`` synonym for ``SAModelMixin``;
+* ``SAInstanceAddMixin`` synonym for ``SAItemAddMixin``;
+* ``SAInstanceDeleteMixin`` synonym for ``SAItemDeleteMixin``;
+* ``SAInstanceEditMixin`` synonym for ``SAItemEditMixin``;
+* ``SAInstanceViewMixin`` synonym for ``SAItemViewMixin``.
+
 Version 0.23
 ------------
 **Add**
