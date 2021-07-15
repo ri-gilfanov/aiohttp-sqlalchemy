@@ -1,8 +1,8 @@
 ========
 Releases
 ========
-Unreleased
-----------
+Version 0.26
+------------
 **Changed**
 
 * ``SAListViewMixin`` inherited by ``aiohttp_things.PaginationMixin``.
