@@ -144,10 +144,4 @@ class SAModelView(View, SAModelMixin):
     """SQLAlchemy single model class based view."""
 
 
-class SAInstanceView(View, SAInstanceMixin, metaclass=ABCMeta):
-    """SQLAlchemy single instance class based view."""
-
-
-# Synonyms
-SAItemView = SAInstanceView
 SAView = SAModelView

@@ -110,10 +110,6 @@ Views
   :members:
   :show-inheritance:
 
-.. autoclass:: aiohttp_sqlalchemy.SAInstanceView
-  :members:
-  :show-inheritance:
-
 Additional functionality
 ------------------------
 .. autofunction:: aiohttp_sqlalchemy.sa_decorator

@@ -29,12 +29,10 @@ from aiohttp_sqlalchemy.utils import (
 from aiohttp_sqlalchemy.views import (
     SABaseView,
     SAInstanceMixin,
-    SAInstanceView,
     SAItemAddMixin,
     SAItemDeleteMixin,
     SAItemEditMixin,
     SAItemMixin,
-    SAItemView,
     SAItemViewMixin,
     SAListAddMixin,
     SAListDeleteMixin,
@@ -79,9 +77,7 @@ __all__ = [
     'SAListViewMixin',
 
     'SAInstanceMixin',
-    'SAInstanceView',
     'SAItemMixin',
-    'SAItemView',
     'SAMixin',
     'SAModelView',
     'SAPrimaryKeyMixin',
