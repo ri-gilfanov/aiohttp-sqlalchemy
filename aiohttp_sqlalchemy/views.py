@@ -117,7 +117,12 @@ class SAListEditMixin(ahth.ListMixin, SAModelEditMixin, metaclass=ABCMeta):
     pass
 
 
-class SAListViewMixin(ahth.ListMixin, SAModelViewMixin, metaclass=ABCMeta):
+class SAListViewMixin(
+    ahth.ListMixin,
+    ahth.PaginationMixin,
+    SAModelViewMixin,
+    metaclass=ABCMeta,
+):
     pass
 
 

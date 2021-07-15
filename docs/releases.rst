@@ -3,6 +3,10 @@ Releases
 ========
 Unreleased
 ----------
+**Changed**
+
+* ``SAListViewMixin`` inherited by ``aiohttp_things.PaginationMixin``.
+
 **Removed**
 
 * ``SAListMixin`` class removed, use ``aiohttp_things.ListMixin``.
