@@ -15,7 +15,7 @@ Class based views
 -----------------
 .. warning::
 
-  API of most view classes module stabilizes to version 1.0.
+  API of most classes of stabilizes to version 1.0.
 
 .. autoclass:: aiohttp_sqlalchemy.SAMixin
   :inherited-members:
@@ -107,10 +107,6 @@ Views
   :show-inheritance:
 
 .. autoclass:: aiohttp_sqlalchemy.SAModelView
-  :members:
-  :show-inheritance:
-
-.. autoclass:: aiohttp_sqlalchemy.SAInstanceView
   :members:
   :show-inheritance:
 

@@ -27,19 +27,12 @@ from aiohttp_sqlalchemy.utils import (
     sa_session_factory,
 )
 from aiohttp_sqlalchemy.views import (
-    SAAbstractView,
     SABaseView,
-    SAInstanceAddMixin,
-    SAInstanceDeleteMixin,
-    SAInstanceEditMixin,
     SAInstanceMixin,
-    SAInstanceView,
-    SAInstanceViewMixin,
     SAItemAddMixin,
     SAItemDeleteMixin,
     SAItemEditMixin,
     SAItemMixin,
-    SAItemView,
     SAItemViewMixin,
     SAListAddMixin,
     SAListDeleteMixin,
@@ -56,7 +49,7 @@ from aiohttp_sqlalchemy.views import (
     SAView,
 )
 
-__version__ = '0.23.0'
+__version__ = '0.24.0'
 
 __all__ = [
     'DEFAULT_KEY',
@@ -83,14 +76,8 @@ __all__ = [
     'SAListEditMixin',
     'SAListViewMixin',
 
-    'SAInstanceAddMixin',
-    'SAInstanceDeleteMixin',
-    'SAInstanceEditMixin',
     'SAInstanceMixin',
-    'SAInstanceView',
-    'SAInstanceViewMixin',
     'SAItemMixin',
-    'SAItemView',
     'SAMixin',
     'SAModelView',
     'SAPrimaryKeyMixin',
@@ -104,7 +91,6 @@ __all__ = [
     'setup',
     # Synonyms
     'DEFAULT_KEY',
-    'SAAbstractView',
     'SAView',
     'sa_bind',
     'sa_init_db',
