@@ -1,6 +1,11 @@
 ========
 Releases
 ========
+Unreleased
+----------
+**Removed**
+* ``SAInstanceMixin``
+
 Version 0.24
 ------------
 **Removed**

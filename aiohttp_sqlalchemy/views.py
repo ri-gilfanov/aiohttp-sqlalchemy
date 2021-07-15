@@ -50,12 +50,6 @@ class SAModelViewMixin(SAModelMixin):
         return select(model or self.sa_model)
 
 
-class SAInstanceMixin(InstanceMixin, SAModelMixin, metaclass=ABCMeta):
-    """
-    Instance mixin for adding, editing and viewing a single instance.
-    """
-
-
 class SAPrimaryKeyMixin(PrimaryKeyMixin, SAModelMixin, metaclass=ABCMeta):
     """
     Primary key mixin for deleting, editing and viewing a single instance
@@ -70,7 +64,7 @@ class SAItemMixin(SAModelMixin, metaclass=ABCMeta):
     pass
 
 
-class SAItemAddMixin(SAItemMixin, SAInstanceMixin, metaclass=ABCMeta):
+class SAItemAddMixin(SAItemMixin, InstanceMixin, metaclass=ABCMeta):
     def sa_add(self, *, key: Optional[str] = None) -> None:
         self.sa_session(key).add(self.instance)
 
@@ -89,7 +83,7 @@ class SAItemDeleteMixin(
 
 class SAItemEditMixin(
     SAItemMixin,
-    SAInstanceMixin,
+    InstanceMixin,
     SAModelEditMixin,
     SAPrimaryKeyMixin,
     metaclass=ABCMeta,
@@ -102,7 +96,7 @@ class SAItemEditMixin(
 
 class SAItemViewMixin(
     SAItemMixin,
-    SAInstanceMixin,
+    InstanceMixin,
     SAModelViewMixin,
     SAPrimaryKeyMixin,
     metaclass=ABCMeta,
