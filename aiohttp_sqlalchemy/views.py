@@ -1,13 +1,8 @@
 from abc import ABCMeta
 from typing import Any, List, Optional
 
+import aiohttp_things as ahth
 from aiohttp.web import View
-from aiohttp_things.views import (
-    ContextMixin,
-    ItemMixin,
-    ListMixin,
-    PrimaryKeyMixin,
-)
 from sqlalchemy import delete, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.sql import Delete, Select, Update
@@ -16,7 +11,7 @@ from aiohttp_sqlalchemy.constants import SA_DEFAULT_KEY
 from aiohttp_sqlalchemy.utils import get_session
 
 
-class SAMixin(ContextMixin, metaclass=ABCMeta):
+class SAMixin(ahth.ContextMixin, metaclass=ABCMeta):
     """SQLAlchemy class based view mixin."""
 
     sa_session_key: str = SA_DEFAULT_KEY
@@ -50,7 +45,7 @@ class SAModelViewMixin(SAModelMixin):
         return select(model or self.sa_model)
 
 
-class SAPrimaryKeyMixin(PrimaryKeyMixin, SAModelMixin, metaclass=ABCMeta):
+class SAPrimaryKeyMixin(ahth.PrimaryKeyMixin, SAModelMixin, metaclass=ABCMeta):
     """
     Primary key mixin for deleting, editing and viewing a single instance
     by primary key.
@@ -64,7 +59,7 @@ class SAItemMixin(SAModelMixin, metaclass=ABCMeta):
     pass
 
 
-class SAItemAddMixin(SAItemMixin, ItemMixin, metaclass=ABCMeta):
+class SAItemAddMixin(SAItemMixin, ahth.ItemMixin, metaclass=ABCMeta):
     def sa_add(self, *, key: Optional[str] = None) -> None:
         self.sa_session(key).add(self.item)
 
@@ -83,7 +78,7 @@ class SAItemDeleteMixin(
 
 class SAItemEditMixin(
     SAItemMixin,
-    ItemMixin,
+    ahth.ItemMixin,
     SAModelEditMixin,
     SAPrimaryKeyMixin,
     metaclass=ABCMeta,
@@ -96,7 +91,7 @@ class SAItemEditMixin(
 
 class SAItemViewMixin(
     SAItemMixin,
-    ItemMixin,
+    ahth.ItemMixin,
     SAModelViewMixin,
     SAPrimaryKeyMixin,
     metaclass=ABCMeta,
@@ -107,26 +102,22 @@ class SAItemViewMixin(
             where(self.sa_pk_attr == self.pk)
 
 
-class SAListMixin(ListMixin, SAModelMixin, metaclass=ABCMeta):
-    pass
-
-
-class SAListAddMixin(SAListMixin, metaclass=ABCMeta):
+class SAListAddMixin(ahth.ListMixin, SAModelMixin, metaclass=ABCMeta):
     items: List[Any]
 
     def sa_add_all(self, *, key: Optional[str] = None) -> None:
         self.sa_session(key).add_all(self.items)
 
 
-class SAListDeleteMixin(SAListMixin, SAModelDeleteMixin, metaclass=ABCMeta):
+class SAListDeleteMixin(ahth.ListMixin, SAModelDeleteMixin, metaclass=ABCMeta):
     pass
 
 
-class SAListEditMixin(SAListMixin, SAModelEditMixin, metaclass=ABCMeta):
+class SAListEditMixin(ahth.ListMixin, SAModelEditMixin, metaclass=ABCMeta):
     pass
 
 
-class SAListViewMixin(SAListMixin, SAModelViewMixin, metaclass=ABCMeta):
+class SAListViewMixin(ahth.ListMixin, SAModelViewMixin, metaclass=ABCMeta):
     pass
 
 

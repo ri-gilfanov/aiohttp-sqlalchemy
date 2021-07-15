@@ -1,6 +1,12 @@
 ========
 Releases
 ========
+Unreleased
+----------
+**Removed**
+
+* ``SAListMixin`` class removed, use ``aiohttp_things.ListMixin``.
+
 Version 0.25
 ------------
 **Changed**

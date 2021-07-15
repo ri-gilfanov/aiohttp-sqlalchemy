@@ -36,7 +36,6 @@ from aiohttp_sqlalchemy.views import (
     SAListAddMixin,
     SAListDeleteMixin,
     SAListEditMixin,
-    SAListMixin,
     SAListViewMixin,
     SAMixin,
     SAModelDeleteMixin,
@@ -69,7 +68,6 @@ __all__ = [
     'SAItemEditMixin',
     'SAItemViewMixin',
 
-    'SAListMixin',
     'SAListAddMixin',
     'SAListDeleteMixin',
     'SAListEditMixin',
