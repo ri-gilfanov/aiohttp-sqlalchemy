@@ -70,11 +70,6 @@ Instance mixins
 
 List mixins
 ^^^^^^^^^^^
-.. autoclass:: aiohttp_sqlalchemy.SAListMixin
-  :inherited-members:
-  :members:
-  :show-inheritance:
-
 .. autoclass:: aiohttp_sqlalchemy.SAListAddMixin
   :inherited-members:
   :members:

@@ -1,6 +1,17 @@
 ========
 Releases
 ========
+Version 0.26
+------------
+**Changed**
+
+* ``SAListViewMixin`` inherited by ``aiohttp_things.PaginationMixin``.
+
+**Removed**
+
+* ``SAListMixin`` class removed, use ``aiohttp_things.ListMixin``;
+* ``SAItemMixin`` class removed, use ``aiohttp_things.ItemMixin``.
+
 Version 0.25
 ------------
 **Changed**
