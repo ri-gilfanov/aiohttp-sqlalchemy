@@ -1,8 +1,8 @@
 ========
 Releases
 ========
-Unreleased
-----------
+Version 0.24
+------------
 **Removed**
 * ``SAInstanceView`` class;
 * ``SAItemView`` synonym for ``SAInstanceView``;
