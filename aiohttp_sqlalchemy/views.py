@@ -55,17 +55,12 @@ class SAPrimaryKeyMixin(ahth.PrimaryKeyMixin, SAModelMixin, metaclass=ABCMeta):
     sa_pk_attr: Any = getattr(SAModelMixin.sa_model, 'pk', None)
 
 
-class SAItemMixin(SAModelMixin, metaclass=ABCMeta):
-    pass
-
-
-class SAItemAddMixin(SAItemMixin, ahth.ItemMixin, metaclass=ABCMeta):
+class SAItemAddMixin(SAModelMixin, ahth.ItemMixin, metaclass=ABCMeta):
     def sa_add(self, *, key: Optional[str] = None) -> None:
         self.sa_session(key).add(self.item)
 
 
 class SAItemDeleteMixin(
-    SAItemMixin,
     SAModelDeleteMixin,
     SAPrimaryKeyMixin,
     metaclass=ABCMeta,
@@ -77,7 +72,6 @@ class SAItemDeleteMixin(
 
 
 class SAItemEditMixin(
-    SAItemMixin,
     ahth.ItemMixin,
     SAModelEditMixin,
     SAPrimaryKeyMixin,
@@ -90,7 +84,6 @@ class SAItemEditMixin(
 
 
 class SAItemViewMixin(
-    SAItemMixin,
     ahth.ItemMixin,
     SAModelViewMixin,
     SAPrimaryKeyMixin,

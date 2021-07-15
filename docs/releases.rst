@@ -9,7 +9,8 @@ Unreleased
 
 **Removed**
 
-* ``SAListMixin`` class removed, use ``aiohttp_things.ListMixin``.
+* ``SAListMixin`` class removed, use ``aiohttp_things.ListMixin``;
+* ``SAItemMixin`` class removed, use ``aiohttp_things.ItemMixin``.
 
 Version 0.25
 ------------
