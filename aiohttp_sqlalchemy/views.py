@@ -4,7 +4,7 @@ from typing import Any, List, Optional
 from aiohttp.web import View
 from aiohttp_things.views import (
     ContextMixin,
-    InstanceMixin,
+    ItemMixin,
     ListMixin,
     PrimaryKeyMixin,
 )
@@ -50,12 +50,6 @@ class SAModelViewMixin(SAModelMixin):
         return select(model or self.sa_model)
 
 
-class SAInstanceMixin(InstanceMixin, SAModelMixin, metaclass=ABCMeta):
-    """
-    Instance mixin for adding, editing and viewing a single instance.
-    """
-
-
 class SAPrimaryKeyMixin(PrimaryKeyMixin, SAModelMixin, metaclass=ABCMeta):
     """
     Primary key mixin for deleting, editing and viewing a single instance
@@ -70,9 +64,9 @@ class SAItemMixin(SAModelMixin, metaclass=ABCMeta):
     pass
 
 
-class SAItemAddMixin(SAItemMixin, SAInstanceMixin, metaclass=ABCMeta):
+class SAItemAddMixin(SAItemMixin, ItemMixin, metaclass=ABCMeta):
     def sa_add(self, *, key: Optional[str] = None) -> None:
-        self.sa_session(key).add(self.instance)
+        self.sa_session(key).add(self.item)
 
 
 class SAItemDeleteMixin(
@@ -89,7 +83,7 @@ class SAItemDeleteMixin(
 
 class SAItemEditMixin(
     SAItemMixin,
-    SAInstanceMixin,
+    ItemMixin,
     SAModelEditMixin,
     SAPrimaryKeyMixin,
     metaclass=ABCMeta,
@@ -102,7 +96,7 @@ class SAItemEditMixin(
 
 class SAItemViewMixin(
     SAItemMixin,
-    SAInstanceMixin,
+    ItemMixin,
     SAModelViewMixin,
     SAPrimaryKeyMixin,
     metaclass=ABCMeta,

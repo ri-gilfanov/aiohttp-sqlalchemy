@@ -42,7 +42,7 @@ def test_instance_add(
 
     mocked_request[SA_DEFAULT_KEY] = session
     view = InstanceAdd(mocked_request)
-    view.instance = Model()
+    view.item = Model()
     view.sa_add()
 
 

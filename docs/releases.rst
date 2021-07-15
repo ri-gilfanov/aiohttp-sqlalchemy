@@ -1,9 +1,21 @@
 ========
 Releases
 ========
+Version 0.25
+------------
+**Changed**
+
+* Attribute ``instance`` renamed to ``item`` in ``SAItemAddMixin``,
+  ``SAItemEditMixin``, ``SAItemViewMixin``.
+
+**Removed**
+
+* ``SAInstanceMixin`` removed, use ``SAItemMixin``.
+
 Version 0.24
 ------------
 **Removed**
+
 * ``SAInstanceView`` class;
 * ``SAItemView`` synonym for ``SAInstanceView``;
 * ``SAAbstractView`` synonym for ``SAMixin``;
@@ -16,6 +28,7 @@ Version 0.24
 Version 0.23
 ------------
 **Add**
+
 * ``SAItemMixin`` as a separate mixin;
 * ``SAInstanceAddMixin`` as a synonym for ``SAItemAddMixin``;
 * ``SAInstanceDeleteMixin`` as a synonym for ``SAItemDeleteMixin``;
