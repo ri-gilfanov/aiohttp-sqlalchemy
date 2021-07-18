@@ -1,6 +1,10 @@
 ========
 Releases
 ========
+Version 0.28
+------------
+* Renamed ``handlers`` module to ``web_handlers``.
+
 Version 0.27
 ------------
 **Added**

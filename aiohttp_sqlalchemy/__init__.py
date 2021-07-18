@@ -16,7 +16,7 @@ from aiohttp_sqlalchemy.exceptions import (
     DuplicateAppKeyError,
     DuplicateRequestKeyError,
 )
-from aiohttp_sqlalchemy.handlers import (
+from aiohttp_sqlalchemy.web_handlers import (
     ItemAddMixin,
     ItemDeleteMixin,
     ItemEditMixin,
