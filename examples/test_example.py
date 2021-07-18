@@ -67,9 +67,9 @@ class ClassBasedView(web.View, SAMixin):
     @sa_decorator(THIRD_KEY)
     @sa_decorator(FOURTH_KEY)
     async def get(self):
-        await add_instance(self.sa_session(choice(KEY_LIST)))
+        await add_instance(self.get_sa_session(choice(KEY_LIST)))
         return web.json_response(
-            {key: await select_instances(self.sa_session(key))
+            {key: await select_instances(self.get_sa_session(key))
              for key in KEY_LIST}
         )
 

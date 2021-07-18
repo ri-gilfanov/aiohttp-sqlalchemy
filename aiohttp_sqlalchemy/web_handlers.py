@@ -14,7 +14,7 @@ from aiohttp_sqlalchemy.utils import get_session
 class SAMixin(ahth.ContextMixin, metaclass=ABCMeta):
     sa_session_key: str = SA_DEFAULT_KEY
 
-    def sa_session(self, key: Optional[str] = None) -> AsyncSession:
+    def get_sa_session(self, key: Optional[str] = None) -> AsyncSession:
         return get_session(self.request, key or self.sa_session_key)
 
 
@@ -23,12 +23,12 @@ class SAModelMixin(SAMixin, metaclass=ABCMeta):
 
 
 class SAModelDeleteMixin(SAModelMixin):
-    def get_sa_delete_stmt(self, model: Any = None) -> Delete:
+    def get_delete_stmt(self, model: Any = None) -> Delete:
         return delete(model or self.sa_model)
 
 
 class SAModelEditMixin(SAModelMixin):
-    def get_sa_update_stmt(self, model: Any = None) -> Update:
+    def get_update_stmt(self, model: Any = None) -> Update:
         return update(model or self.sa_model)
 
 
@@ -43,7 +43,7 @@ class PrimaryKeyMixin(ahth.PrimaryKeyMixin, SAModelMixin, metaclass=ABCMeta):
 
 class ItemAddMixin(SAModelMixin, ahth.ItemMixin, metaclass=ABCMeta):
     def sa_add(self, *, key: Optional[str] = None) -> None:
-        self.sa_session(key).add(self.item)
+        self.get_sa_session(key).add(self.item)
 
 
 class ItemDeleteMixin(
@@ -51,9 +51,9 @@ class ItemDeleteMixin(
     PrimaryKeyMixin,
     metaclass=ABCMeta,
 ):
-    def get_sa_delete_stmt(self, model: Any = None) -> Delete:
+    def get_delete_stmt(self, model: Any = None) -> Delete:
         return super(). \
-            get_sa_delete_stmt(model). \
+            get_delete_stmt(model). \
             where(self.sa_pk_attr == self.pk)
 
 
@@ -65,7 +65,7 @@ class ItemEditMixin(
 ):
     def get_sa_edit_stmt(self, model: Any = None) -> Update:
         return super(). \
-            get_sa_update_stmt(model). \
+            get_update_stmt(model). \
             where(self.sa_pk_attr == self.pk)
 
 
@@ -75,7 +75,7 @@ class ItemViewMixin(
     PrimaryKeyMixin,
     metaclass=ABCMeta,
 ):
-    def get_sa_view_stmt(self, model: Any = None) -> Select:
+    def get_select_stmt(self, model: Any = None) -> Select:
         return super(). \
             get_sa_select_stmt(model). \
             where(self.sa_pk_attr == self.pk)
@@ -85,7 +85,7 @@ class ListAddMixin(ahth.ListMixin, SAModelMixin, metaclass=ABCMeta):
     items: List[Any]
 
     def sa_add_all(self, *, key: Optional[str] = None) -> None:
-        self.sa_session(key).add_all(self.items)
+        self.get_sa_session(key).add_all(self.items)
 
 
 class ListDeleteMixin(ahth.ListMixin, SAModelDeleteMixin, metaclass=ABCMeta):

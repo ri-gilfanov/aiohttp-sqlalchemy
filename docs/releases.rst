@@ -3,7 +3,16 @@ Releases
 ========
 Version 0.28
 ------------
-* Renamed ``handlers`` module to ``web_handlers``.
+**Changed**
+
+* Renamed ``handlers`` module to ``web_handlers``;
+* Renamed ``sa_session`` method to ``get_sa_session`` in ``SAMixin``;
+* Renamed ``get_sa_delete_stmt`` method to ``get_delete_stmt``
+  in ``SAModelDeleteMixin`` and ``ItemDeleteMixin``;
+* Renamed ``get_sa_update_stmt`` method to ``get_update_stmt``
+  in ``SAModelEditMixin`` and ``ItemEditMixin``;
+* Renamed ``get_sa_view_stmt`` method to ``get_select_stmt``
+  in ``SAModelViewMixin`` and ``ItemViewMixin``.
 
 Version 0.27
 ------------
