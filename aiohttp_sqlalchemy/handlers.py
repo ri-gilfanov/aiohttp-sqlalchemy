@@ -37,18 +37,18 @@ class SAModelViewMixin(SAModelMixin):
         return select(model or self.sa_model)
 
 
-class SAPrimaryKeyMixin(ahth.PrimaryKeyMixin, SAModelMixin, metaclass=ABCMeta):
+class PrimaryKeyMixin(ahth.PrimaryKeyMixin, SAModelMixin, metaclass=ABCMeta):
     sa_pk_attr: Any = getattr(SAModelMixin.sa_model, 'pk', None)
 
 
-class SAItemAddMixin(SAModelMixin, ahth.ItemMixin, metaclass=ABCMeta):
+class ItemAddMixin(SAModelMixin, ahth.ItemMixin, metaclass=ABCMeta):
     def sa_add(self, *, key: Optional[str] = None) -> None:
         self.sa_session(key).add(self.item)
 
 
-class SAItemDeleteMixin(
+class ItemDeleteMixin(
     SAModelDeleteMixin,
-    SAPrimaryKeyMixin,
+    PrimaryKeyMixin,
     metaclass=ABCMeta,
 ):
     def get_sa_delete_stmt(self, model: Any = None) -> Delete:
@@ -57,10 +57,10 @@ class SAItemDeleteMixin(
             where(self.sa_pk_attr == self.pk)
 
 
-class SAItemEditMixin(
+class ItemEditMixin(
     ahth.ItemMixin,
     SAModelEditMixin,
-    SAPrimaryKeyMixin,
+    PrimaryKeyMixin,
     metaclass=ABCMeta,
 ):
     def get_sa_edit_stmt(self, model: Any = None) -> Update:
@@ -69,10 +69,10 @@ class SAItemEditMixin(
             where(self.sa_pk_attr == self.pk)
 
 
-class SAItemViewMixin(
+class ItemViewMixin(
     ahth.ItemMixin,
     SAModelViewMixin,
-    SAPrimaryKeyMixin,
+    PrimaryKeyMixin,
     metaclass=ABCMeta,
 ):
     def get_sa_view_stmt(self, model: Any = None) -> Select:
@@ -81,22 +81,22 @@ class SAItemViewMixin(
             where(self.sa_pk_attr == self.pk)
 
 
-class SAListAddMixin(ahth.ListMixin, SAModelMixin, metaclass=ABCMeta):
+class ListAddMixin(ahth.ListMixin, SAModelMixin, metaclass=ABCMeta):
     items: List[Any]
 
     def sa_add_all(self, *, key: Optional[str] = None) -> None:
         self.sa_session(key).add_all(self.items)
 
 
-class SAListDeleteMixin(ahth.ListMixin, SAModelDeleteMixin, metaclass=ABCMeta):
+class ListDeleteMixin(ahth.ListMixin, SAModelDeleteMixin, metaclass=ABCMeta):
     pass
 
 
-class SAListEditMixin(ahth.ListMixin, SAModelEditMixin, metaclass=ABCMeta):
+class ListEditMixin(ahth.ListMixin, SAModelEditMixin, metaclass=ABCMeta):
     pass
 
 
-class SAListViewMixin(
+class ListViewMixin(
     ahth.ListMixin,
     ahth.PaginationMixin,
     SAModelViewMixin,
@@ -113,4 +113,12 @@ class SAModelView(View, SAModelMixin):
     pass
 
 
-SAView = SAModelView
+SAItemAddMixin = ItemAddMixin
+SAItemDeleteMixin = ItemDeleteMixin
+SAItemEditMixin = ItemEditMixin
+SAItemViewMixin = ItemViewMixin
+SAListAddMixin = ListAddMixin
+SAListDeleteMixin = ListDeleteMixin
+SAListEditMixin = ListEditMixin
+SAListViewMixin = ListViewMixin
+SAPrimaryKeyMixin = PrimaryKeyMixin

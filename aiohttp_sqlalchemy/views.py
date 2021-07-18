@@ -15,7 +15,6 @@ from aiohttp_sqlalchemy.handlers import (
     SAModelView,
     SAModelViewMixin,
     SAPrimaryKeyMixin,
-    SAView,
 )
 
 __all__ = [

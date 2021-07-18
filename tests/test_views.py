@@ -8,11 +8,11 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from aiohttp_sqlalchemy import (
     SA_DEFAULT_KEY,
     SABaseView,
-    SAItemAddMixin,
-    SAItemDeleteMixin,
-    SAItemEditMixin,
-    SAItemViewMixin,
-    SAListAddMixin,
+    ItemAddMixin,
+    ItemDeleteMixin,
+    ItemEditMixin,
+    ItemViewMixin,
+    ListAddMixin,
 )
 
 
@@ -37,11 +37,11 @@ def test_instance_add(
 
         pk = sa.Column(sa.Integer, primary_key=True)
 
-    class InstanceAdd(web.View, SAItemAddMixin):
+    class ItemAdd(web.View, ItemAddMixin):
         sa_model = Model
 
     mocked_request[SA_DEFAULT_KEY] = session
-    view = InstanceAdd(mocked_request)
+    view = ItemAdd(mocked_request)
     view.item = Model()
     view.sa_add()
 
@@ -52,10 +52,10 @@ def test_delete_stmt(mocked_request: Request, base_model: orm.Mapper) -> None:
 
         pk = sa.Column(sa.Integer, primary_key=True)
 
-    class InstanceDelete(web.View, SAItemDeleteMixin):
+    class ItemDelete(web.View, ItemDeleteMixin):
         sa_model = Model
 
-    view = InstanceDelete(mocked_request)
+    view = ItemDelete(mocked_request)
     view.get_sa_delete_stmt()
 
 
@@ -65,7 +65,7 @@ def test_edit_stmt(mocked_request: Request, base_model: orm.Mapper) -> None:
 
         pk = sa.Column(sa.Integer, primary_key=True)
 
-    class InstanceEdit(web.View, SAItemEditMixin):
+    class InstanceEdit(web.View, ItemEditMixin):
         sa_model = Model
 
     view = InstanceEdit(mocked_request)
@@ -78,7 +78,7 @@ def test_view_stmt(mocked_request: Request, base_model: orm.Mapper) -> None:
 
         pk = sa.Column(sa.Integer, primary_key=True)
 
-    class InstanceView(web.View, SAItemViewMixin):
+    class InstanceView(web.View, ItemViewMixin):
         sa_model = Model
 
     view = InstanceView(mocked_request)
@@ -95,7 +95,7 @@ def test_list_add(
 
         pk = sa.Column(sa.Integer, primary_key=True)
 
-    class ListAdd(web.View, SAListAddMixin):
+    class ListAdd(web.View, ListAddMixin):
         sa_model = Model
 
     mocked_request[SA_DEFAULT_KEY] = session

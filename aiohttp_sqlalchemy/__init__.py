@@ -26,7 +26,16 @@ from aiohttp_sqlalchemy.utils import (
     sa_session,
     sa_session_factory,
 )
-from aiohttp_sqlalchemy.views import (
+from aiohttp_sqlalchemy.handlers import (
+    ItemAddMixin,
+    ItemDeleteMixin,
+    ItemEditMixin,
+    ItemViewMixin,
+    ListAddMixin,
+    ListDeleteMixin,
+    ListEditMixin,
+    ListViewMixin,
+    PrimaryKeyMixin,
     SABaseView,
     SAItemAddMixin,
     SAItemDeleteMixin,
@@ -51,7 +60,19 @@ __all__ = [
     'DEFAULT_KEY',
     'DuplicateAppKeyError',
     'DuplicateRequestKeyError',
-    'SAAbstractView',
+
+    'ItemAddMixin',
+    'ItemDeleteMixin',
+    'ItemEditMixin',
+    'ItemViewMixin',
+
+    'ListAddMixin',
+    'ListDeleteMixin',
+    'ListEditMixin',
+    'ListViewMixin',
+
+    'PrimaryKeyMixin',
+
     'SABaseView',
     'SA_DEFAULT_KEY',
 
