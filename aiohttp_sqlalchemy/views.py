@@ -35,5 +35,4 @@ __all__ = [
     'SAModelView',
     'SAModelViewMixin',
     'SAPrimaryKeyMixin',
-    'SAView',
 ]

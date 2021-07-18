@@ -12,21 +12,13 @@ from aiohttp_sqlalchemy.utils import get_session
 
 
 class SAMixin(ahth.ContextMixin, metaclass=ABCMeta):
-    """SQLAlchemy class based view mixin."""
-
     sa_session_key: str = SA_DEFAULT_KEY
 
     def sa_session(self, key: Optional[str] = None) -> AsyncSession:
-        """Return `AsyncSession` instance.
-
-        :param key: key of SQLAlchemy binding.
-        """
         return get_session(self.request, key or self.sa_session_key)
 
 
 class SAModelMixin(SAMixin, metaclass=ABCMeta):
-    """SQLAlchemy single model class based view mixin."""
-
     sa_model: Any = None  # Not all developers use declarative mapping
 
 
@@ -46,12 +38,6 @@ class SAModelViewMixin(SAModelMixin):
 
 
 class SAPrimaryKeyMixin(ahth.PrimaryKeyMixin, SAModelMixin, metaclass=ABCMeta):
-    """
-    Primary key mixin for deleting, editing and viewing a single instance
-    by primary key.
-
-    :param sa_pk_attr: primary key column or hybrid attribute.
-    """
     sa_pk_attr: Any = getattr(SAModelMixin.sa_model, 'pk', None)
 
 
@@ -120,11 +106,11 @@ class SAListViewMixin(
 
 
 class SABaseView(View, SAMixin):
-    """SQLAlchemy class based view."""
+    pass
 
 
 class SAModelView(View, SAModelMixin):
-    """SQLAlchemy single model class based view."""
+    pass
 
 
 SAView = SAModelView

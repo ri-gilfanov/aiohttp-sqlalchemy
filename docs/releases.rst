@@ -9,6 +9,10 @@ Version 0.27
 * classes from ``handlers`` temporarily imported to empty ``views`` module for
   backward compatibility.
 
+**Removed**
+
+* ``SAView`` a synonym for ``SAModelView``.
+
 Version 0.26
 ------------
 **Changed**
