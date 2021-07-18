@@ -1,6 +1,14 @@
 ========
 Releases
 ========
+Version 0.27
+------------
+**Changed**
+
+* ``views`` module renamed to ``handlers``;
+* classes from ``handlers`` temporarily imported to empty ``views`` module for
+  backward compatibility.
+
 Version 0.26
 ------------
 **Changed**
