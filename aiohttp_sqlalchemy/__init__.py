@@ -16,16 +16,6 @@ from aiohttp_sqlalchemy.exceptions import (
     DuplicateAppKeyError,
     DuplicateRequestKeyError,
 )
-from aiohttp_sqlalchemy.middlewares import sa_middleware
-from aiohttp_sqlalchemy.typedefs import TBind, TBinds, TSessionFactory, TTarget
-from aiohttp_sqlalchemy.utils import (
-    get_session,
-    get_session_factory,
-    init_db,
-    sa_init_db,
-    sa_session,
-    sa_session_factory,
-)
 from aiohttp_sqlalchemy.handlers import (
     ItemAddMixin,
     ItemDeleteMixin,
@@ -53,8 +43,18 @@ from aiohttp_sqlalchemy.handlers import (
     SAModelViewMixin,
     SAPrimaryKeyMixin,
 )
+from aiohttp_sqlalchemy.middlewares import sa_middleware
+from aiohttp_sqlalchemy.typedefs import TBind, TBinds, TSessionFactory, TTarget
+from aiohttp_sqlalchemy.utils import (
+    get_session,
+    get_session_factory,
+    init_db,
+    sa_init_db,
+    sa_session,
+    sa_session_factory,
+)
 
-__version__ = '0.26.0'
+__version__ = '0.27.0'
 
 __all__ = [
     'DEFAULT_KEY',

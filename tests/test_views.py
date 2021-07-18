@@ -7,12 +7,12 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from aiohttp_sqlalchemy import (
     SA_DEFAULT_KEY,
-    SABaseView,
     ItemAddMixin,
     ItemDeleteMixin,
     ItemEditMixin,
     ItemViewMixin,
     ListAddMixin,
+    SABaseView,
 )
 
 
