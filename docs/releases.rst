@@ -1,6 +1,39 @@
 ========
 Releases
 ========
+Version 0.27
+------------
+**Added**
+
+* ``SAItemAddMixin`` as a synonym for ``ItemAddMixin``;
+* ``SAItemDeleteMixin`` as a synonym for ``ItemDeleteMixin``;
+* ``SAItemEditMixin`` as a synonym for ``ItemEditMixin``;
+* ``SAItemViewMixin`` as a synonym for ``ItemViewMixin``;
+* ``SAListAddMixin`` as a synonym for ``ListAddMixin``;
+* ``SAListDeleteMixin`` as a synonym for ``ListDeleteMixin``;
+* ``SAListEditMixin`` as a synonym for ``ListEditMixin``;
+* ``SAListViewMixin`` as a synonym for ``ListViewMixin``;
+* ``SAPrimaryKeyMixin`` as a synonym for ``PrimaryKeyMixin``.
+
+**Changed**
+
+* ``views`` module renamed to ``handlers``;
+* classes from ``handlers`` temporarily imported to empty ``views`` module for
+  backward compatibility;
+* ``SAItemAddMixin`` renamed to ``ItemAddMixin``;
+* ``SAItemDeleteMixin`` renamed to ``ItemDeleteMixin``;
+* ``SAItemEditMixin`` renamed to ``ItemEditMixin``;
+* ``SAItemViewMixin`` renamed to ``ItemViewMixin``;
+* ``SAListAddMixin`` renamed to ``ListAddMixin``;
+* ``SAListDeleteMixin`` renamed to ``ListDeleteMixin``;
+* ``SAListEditMixin`` renamed to ``ListEditMixin``;
+* ``SAListViewMixin`` renamed to ``ListViewMixin``;
+* ``SAPrimaryKeyMixin`` renamed to ``PrimaryKeyMixin``.
+
+**Removed**
+
+* ``SAView`` a synonym for ``SAModelView``.
+
 Version 0.26
 ------------
 **Changed**

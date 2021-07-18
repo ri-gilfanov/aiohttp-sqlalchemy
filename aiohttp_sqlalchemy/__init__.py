@@ -16,17 +16,16 @@ from aiohttp_sqlalchemy.exceptions import (
     DuplicateAppKeyError,
     DuplicateRequestKeyError,
 )
-from aiohttp_sqlalchemy.middlewares import sa_middleware
-from aiohttp_sqlalchemy.typedefs import TBind, TBinds, TSessionFactory, TTarget
-from aiohttp_sqlalchemy.utils import (
-    get_session,
-    get_session_factory,
-    init_db,
-    sa_init_db,
-    sa_session,
-    sa_session_factory,
-)
-from aiohttp_sqlalchemy.views import (
+from aiohttp_sqlalchemy.handlers import (
+    ItemAddMixin,
+    ItemDeleteMixin,
+    ItemEditMixin,
+    ItemViewMixin,
+    ListAddMixin,
+    ListDeleteMixin,
+    ListEditMixin,
+    ListViewMixin,
+    PrimaryKeyMixin,
     SABaseView,
     SAItemAddMixin,
     SAItemDeleteMixin,
@@ -43,16 +42,37 @@ from aiohttp_sqlalchemy.views import (
     SAModelView,
     SAModelViewMixin,
     SAPrimaryKeyMixin,
-    SAView,
+)
+from aiohttp_sqlalchemy.middlewares import sa_middleware
+from aiohttp_sqlalchemy.typedefs import TBind, TBinds, TSessionFactory, TTarget
+from aiohttp_sqlalchemy.utils import (
+    get_session,
+    get_session_factory,
+    init_db,
+    sa_init_db,
+    sa_session,
+    sa_session_factory,
 )
 
-__version__ = '0.26.0'
+__version__ = '0.27.0'
 
 __all__ = [
     'DEFAULT_KEY',
     'DuplicateAppKeyError',
     'DuplicateRequestKeyError',
-    'SAAbstractView',
+
+    'ItemAddMixin',
+    'ItemDeleteMixin',
+    'ItemEditMixin',
+    'ItemViewMixin',
+
+    'ListAddMixin',
+    'ListDeleteMixin',
+    'ListEditMixin',
+    'ListViewMixin',
+
+    'PrimaryKeyMixin',
+
     'SABaseView',
     'SA_DEFAULT_KEY',
 
@@ -74,7 +94,6 @@ __all__ = [
     'SAMixin',
     'SAModelView',
     'SAPrimaryKeyMixin',
-    'SAView',
     'bind',
     'get_session',
     'get_session_factory',
@@ -84,7 +103,6 @@ __all__ = [
     'setup',
     # Synonyms
     'DEFAULT_KEY',
-    'SAView',
     'sa_bind',
     'sa_init_db',
     'sa_session',

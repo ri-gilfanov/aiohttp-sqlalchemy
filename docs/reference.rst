@@ -43,49 +43,49 @@ Class based views
 
 Instance mixins
 ^^^^^^^^^^^^^^^
-.. autoclass:: aiohttp_sqlalchemy.SAPrimaryKeyMixin
+.. autoclass:: aiohttp_sqlalchemy.PrimaryKeyMixin
   :inherited-members:
   :members:
   :show-inheritance:
 
-  .. autoclass:: aiohttp_sqlalchemy.SAItemAddMixin
+  .. autoclass:: aiohttp_sqlalchemy.ItemAddMixin
     :inherited-members:
     :members:
     :show-inheritance:
 
-.. autoclass:: aiohttp_sqlalchemy.SAItemDeleteMixin
+.. autoclass:: aiohttp_sqlalchemy.ItemDeleteMixin
   :inherited-members:
   :members:
   :show-inheritance:
 
-.. autoclass:: aiohttp_sqlalchemy.SAItemEditMixin
+.. autoclass:: aiohttp_sqlalchemy.ItemEditMixin
   :inherited-members:
   :members:
   :show-inheritance:
 
-.. autoclass:: aiohttp_sqlalchemy.SAItemViewMixin
+.. autoclass:: aiohttp_sqlalchemy.ItemViewMixin
   :inherited-members:
   :members:
   :show-inheritance:
 
 List mixins
 ^^^^^^^^^^^
-.. autoclass:: aiohttp_sqlalchemy.SAListAddMixin
+.. autoclass:: aiohttp_sqlalchemy.ListAddMixin
   :inherited-members:
   :members:
   :show-inheritance:
 
-.. autoclass:: aiohttp_sqlalchemy.SAListDeleteMixin
+.. autoclass:: aiohttp_sqlalchemy.ListDeleteMixin
   :inherited-members:
   :members:
   :show-inheritance:
 
-.. autoclass:: aiohttp_sqlalchemy.SAListEditMixin
+.. autoclass:: aiohttp_sqlalchemy.ListEditMixin
   :inherited-members:
   :members:
   :show-inheritance:
 
-.. autoclass:: aiohttp_sqlalchemy.SAListViewMixin
+.. autoclass:: aiohttp_sqlalchemy.ListViewMixin
   :inherited-members:
   :members:
   :show-inheritance:
