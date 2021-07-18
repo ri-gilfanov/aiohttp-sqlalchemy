@@ -1,4 +1,4 @@
-from aiohttp_sqlalchemy.handlers import (
+from aiohttp_sqlalchemy.web_handlers import (
     SABaseView,
     SAItemAddMixin,
     SAItemDeleteMixin,

@@ -99,7 +99,7 @@ You can apply ``sa_decorator(key)`` with class based views. For example:
   class SpecificHandler(web.View, ahsa.SAMixin):
       @property
       def specific_session(self):
-          return self.sa_session(SPECIFIC_DB_KEY)
+          return self.get_sa_session(SPECIFIC_DB_KEY)
 
       @ahsa.sa_decorator(SPECIFIC_DB_KEY)
       async def get(self):

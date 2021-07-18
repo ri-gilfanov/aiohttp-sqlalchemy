@@ -94,7 +94,7 @@ Class based views
 
   class MyClassBasedView(web.View, ahsa.SAMixin):
       async def get(self):
-          db_session = self.sa_session()
+          db_session = self.get_sa_session()
 
           async with db_session.begin():
               # some your code

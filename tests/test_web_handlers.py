@@ -22,9 +22,9 @@ def test_sa_session(
 ) -> None:
     mocked_request[SA_DEFAULT_KEY] = session
     view = SABaseView(mocked_request)
-    assert view.sa_session() is session
+    assert view.get_sa_session() is session
     with pytest.raises(TypeError):
-        view.sa_session('wrong key')
+        view.get_sa_session('wrong key')
 
 
 def test_instance_add(
@@ -56,7 +56,7 @@ def test_delete_stmt(mocked_request: Request, base_model: orm.Mapper) -> None:
         sa_model = Model
 
     view = ItemDelete(mocked_request)
-    view.get_sa_delete_stmt()
+    view.get_delete_stmt()
 
 
 def test_edit_stmt(mocked_request: Request, base_model: orm.Mapper) -> None:
@@ -82,7 +82,7 @@ def test_view_stmt(mocked_request: Request, base_model: orm.Mapper) -> None:
         sa_model = Model
 
     view = InstanceView(mocked_request)
-    view.get_sa_view_stmt()
+    view.get_select_stmt()
 
 
 def test_list_add(
