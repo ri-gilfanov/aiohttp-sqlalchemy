@@ -1,6 +1,17 @@
 ========
 Releases
 ========
+Version 0.29
+------------
+**Added**
+
+* ``OffsetPagination``.
+
+**Changed**
+
+* ``SAListViewMixin`` class is no longer inherited from
+  ``aiohttp_things.PaginationMixin``.
+
 Version 0.28
 ------------
 **Changed**
