@@ -19,7 +19,7 @@ speedups = ["aiodns", "brotlipy", "cchardet"]
 
 [[package]]
 name = "aiohttp-things"
-version = "0.12.0"
+version = "0.13.0"
 description = "Modest utility collection for development with AIOHTTP framework."
 category = "main"
 optional = false
@@ -614,6 +614,22 @@ pymysql = ["pymysql (<1)", "pymysql"]
 sqlcipher = ["sqlcipher3-binary"]
 
 [[package]]
+name = "sqlalchemy-things"
+version = "0.9.0"
+description = "Utility collection for development with SQLalchemy ORM."
+category = "main"
+optional = false
+python-versions = ">=3.7,<4.0"
+
+[package.dependencies]
+sqlalchemy = ">=1.4.21,<2.0.0"
+
+[package.extras]
+mysql = ["aiomysql (>=0.0.21)"]
+sqlite = ["aiosqlite (>=0.17.0)"]
+postgresql = ["asyncpg (>=0.23.0)"]
+
+[[package]]
 name = "toml"
 version = "0.10.2"
 description = "Python Library for Tom's Obvious, Minimal Language"
@@ -691,7 +707,7 @@ sqlite = ["aiosqlite"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "2b054b4533c8c1c38917b76be98e3355158d3523847a54c620f8b3dc920f7675"
+content-hash = "0f143e644885847061c72cccda1f33d061ca6dfe273ac6f32deaf41cc17e15b0"
 
 [metadata.files]
 aiohttp = [
@@ -734,8 +750,8 @@ aiohttp = [
     {file = "aiohttp-3.7.4.post0.tar.gz", hash = "sha256:493d3299ebe5f5a7c66b9819eacdcfbbaaf1a8e84911ddffcdc48888497afecf"},
 ]
 aiohttp-things = [
-    {file = "aiohttp-things-0.12.0.tar.gz", hash = "sha256:11c0e54005facb617ece512c4538c765662584a5dfaa628da567a1ed0f8bdfb9"},
-    {file = "aiohttp_things-0.12.0-py3-none-any.whl", hash = "sha256:34417d95a615a47934a4cc4684b883a6098de6c25e3e6b80e15e9f8c46bc101a"},
+    {file = "aiohttp-things-0.13.0.tar.gz", hash = "sha256:c59f7a71e1478f6d533a90e8f04413435504d5641db74be2d1f17fb23e6d5237"},
+    {file = "aiohttp_things-0.13.0-py3-none-any.whl", hash = "sha256:94749e09865348fa7d6810b36fc6ac3e948e2cde31055fd549de4c4cae312111"},
 ]
 aiomysql = [
     {file = "aiomysql-0.0.21-py3-none-any.whl", hash = "sha256:a81a97da3dd732635926a8ea6adbbf2d1345799680bf61b5f89e730bcec88cc5"},
@@ -796,6 +812,7 @@ charset-normalizer = [
 ]
 colorama = [
     {file = "colorama-0.4.4-py2.py3-none-any.whl", hash = "sha256:9f47eda37229f68eee03b24b9748937c7dc3868f906e8ba69fbcbdd3bc5dc3e2"},
+    {file = "colorama-0.4.4.tar.gz", hash = "sha256:5941b2b48a20143d2267e95b1c2a7603ce057ee39fd88e7329b0c292aa16869b"},
 ]
 coverage = [
     {file = "coverage-5.5-cp27-cp27m-macosx_10_9_x86_64.whl", hash = "sha256:b6d534e4b2ab35c9f93f46229363e17f63c53ad01330df9f2d6bd1187e5eaacf"},
@@ -923,6 +940,7 @@ importlib-metadata = [
     {file = "importlib_metadata-4.6.1.tar.gz", hash = "sha256:079ada16b7fc30dfbb5d13399a5113110dab1aa7c2bc62f66af75f0b717c8cac"},
 ]
 iniconfig = [
+    {file = "iniconfig-1.1.1-py2.py3-none-any.whl", hash = "sha256:011e24c64b7f47f6ebd835bb12a743f2fbe9a26d4cecaa7f53bc4f35ee9da8b3"},
     {file = "iniconfig-1.1.1.tar.gz", hash = "sha256:bc3af051d7d14b2ee5ef9969666def0cd1a000e121eaea580d4a313df4b37f32"},
 ]
 isort = [
@@ -1156,6 +1174,10 @@ sqlalchemy = [
     {file = "SQLAlchemy-1.4.21-cp39-cp39-win32.whl", hash = "sha256:640fc3556a1022a781f3f07fd5dc9da842ef87f873139402d5d98d64d776360f"},
     {file = "SQLAlchemy-1.4.21-cp39-cp39-win_amd64.whl", hash = "sha256:5042a7d43a8e0a8ffc8d2acacbd5fad1edf8336c376714632a5c61eff56ac06e"},
     {file = "SQLAlchemy-1.4.21.tar.gz", hash = "sha256:07e9054f4df612beadd12ca8a5342246bffcad74a1fa8df1368d1f2bb07d8fc7"},
+]
+sqlalchemy-things = [
+    {file = "sqlalchemy-things-0.9.0.tar.gz", hash = "sha256:678ad0d8f664c0b315b978aed453f6fe5777c561ffbb70a22f6c107c013e78c5"},
+    {file = "sqlalchemy_things-0.9.0-py3-none-any.whl", hash = "sha256:3aa3633b87c11a1aaa398bb74420e94356ebfe974d4c8757237404f9f85e4fe5"},
 ]
 toml = [
     {file = "toml-0.10.2-py2.py3-none-any.whl", hash = "sha256:806143ae5bfb6a3c6e736a764057db0e6a0e05e338b5630894a5f779cabb4f9b"},

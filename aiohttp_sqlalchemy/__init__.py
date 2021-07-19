@@ -35,6 +35,7 @@ from aiohttp_sqlalchemy.web_handlers import (
     ListDeleteMixin,
     ListEditMixin,
     ListViewMixin,
+    OffsetPagination,
     PrimaryKeyMixin,
     SABaseView,
     SAItemAddMixin,
@@ -54,7 +55,7 @@ from aiohttp_sqlalchemy.web_handlers import (
     SAPrimaryKeyMixin,
 )
 
-__version__ = '0.28.0'
+__version__ = '0.29.0'
 
 __all__ = [
     'DEFAULT_KEY',
@@ -71,6 +72,7 @@ __all__ = [
     'ListEditMixin',
     'ListViewMixin',
 
+    'OffsetPagination',
     'PrimaryKeyMixin',
 
     'SABaseView',

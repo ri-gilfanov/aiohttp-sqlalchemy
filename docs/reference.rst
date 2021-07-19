@@ -70,6 +70,11 @@ Instance mixins
 
 List mixins
 ^^^^^^^^^^^
+.. autoclass:: aiohttp_sqlalchemy.OffsetPagination
+  :inherited-members:
+  :members:
+  :show-inheritance:
+
 .. autoclass:: aiohttp_sqlalchemy.ListAddMixin
   :inherited-members:
   :members:
