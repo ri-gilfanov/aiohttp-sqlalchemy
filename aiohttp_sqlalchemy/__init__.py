@@ -49,7 +49,7 @@ from aiohttp_sqlalchemy.web_handlers import (
     SAModelViewMixin,
 )
 
-__version__ = '0.30.1'
+__version__ = '0.30.2'
 
 __all__ = [
     'DEFAULT_KEY',
