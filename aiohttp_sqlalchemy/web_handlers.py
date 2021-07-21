@@ -67,14 +67,14 @@ class OffsetPaginationMixin(ahth.PaginationMixin, SelectStatementMixin):
             self.context['items'] = page.items
 
             if page.next:
-                next_ = str(page.next)
-                self.context['next_url'] = route.url_for(page_key=next_)
+                kw = {'page_key': page.next}
+                self.context['next_url'] = route.url_for().with_query(kw)
             else:
                 self.context['next_url'] = page.next
 
             if page.previous:
-                previous_ = str(page.previous)
-                self.context['previous_url'] = route.url_for(page_key=previous_)
+                kw = {'page_key': page.previous}
+                self.context['previous_url'] = route.url_for().with_query(kw)
             else:
                 self.context['previous_url'] = page.previous
 

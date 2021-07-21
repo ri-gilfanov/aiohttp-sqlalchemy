@@ -108,6 +108,7 @@ async def test_offset_pagination(
     request = make_mocked_request(METH_GET, '/?page_key=1')
     request[SA_DEFAULT_KEY] = session
     handler = OffsetPaginationHandler(request)
+    assert handler.page_key == 1
     page = await handler.execute_select_stmt()
     isinstance(page, OffsetPage)
     await handler.prepare_context()
@@ -130,6 +131,7 @@ async def test_offset_pagination(
     request = make_mocked_request(METH_GET, '/?page_key=2')
     request[SA_DEFAULT_KEY] = session
     handler = OffsetPaginationHandler(request)
+    assert handler.page_key == 2
     page = await handler.execute_select_stmt()
     isinstance(page, OffsetPage)
     await handler.prepare_context()
