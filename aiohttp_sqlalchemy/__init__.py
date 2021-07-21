@@ -1,7 +1,9 @@
 """AIOHTTP-SQLAlchemy. SQLAlchemy 1.4 / 2.0 support for aiohttp."""
-from typing import cast
+import warnings
+from typing import Any, cast
 
 from aiohttp.web import Application
+from aiohttp_things import web_handlers
 from sqlalchemy.engine import Engine
 from sqlalchemy.ext.asyncio import (
     AsyncEngine,
@@ -12,6 +14,7 @@ from sqlalchemy.orm import Session, sessionmaker
 
 from aiohttp_sqlalchemy.constants import DEFAULT_KEY, SA_DEFAULT_KEY
 from aiohttp_sqlalchemy.decorators import sa_decorator
+from aiohttp_sqlalchemy.deprecation import _handle_deprecation
 from aiohttp_sqlalchemy.exceptions import (
     DuplicateAppKeyError,
     DuplicateRequestKeyError,
@@ -38,24 +41,15 @@ from aiohttp_sqlalchemy.web_handlers import (
     OffsetPagination,
     PrimaryKeyMixin,
     SABaseView,
-    SAItemAddMixin,
-    SAItemDeleteMixin,
-    SAItemEditMixin,
-    SAItemViewMixin,
-    SAListAddMixin,
-    SAListDeleteMixin,
-    SAListEditMixin,
-    SAListViewMixin,
     SAMixin,
     SAModelDeleteMixin,
     SAModelEditMixin,
     SAModelMixin,
     SAModelView,
     SAModelViewMixin,
-    SAPrimaryKeyMixin,
 )
 
-__version__ = '0.29.0'
+__version__ = '0.30.1'
 
 __all__ = [
     'DEFAULT_KEY',
@@ -83,19 +77,8 @@ __all__ = [
     'SAModelEditMixin',
     'SAModelViewMixin',
 
-    'SAItemAddMixin',
-    'SAItemDeleteMixin',
-    'SAItemEditMixin',
-    'SAItemViewMixin',
-
-    'SAListAddMixin',
-    'SAListDeleteMixin',
-    'SAListEditMixin',
-    'SAListViewMixin',
-
     'SAMixin',
     'SAModelView',
-    'SAPrimaryKeyMixin',
     'bind',
     'get_session',
     'get_session_factory',
@@ -168,3 +151,19 @@ def setup(app: Application, binds: "TBinds") -> None:
 
 # Synonyms
 sa_bind = bind
+
+
+def __getattr__(name: str) -> Any:
+    if name == 'views':
+        warnings.warn(
+            '`views` module is deprecated. '
+            'Use `web_handlers` module.',
+            DeprecationWarning,
+            stacklevel=2,
+        )
+        return web_handlers
+
+    name = _handle_deprecation(name)
+    if name:
+        return globals().get(name)
+    raise AttributeError(f"module {__name__} has no attribute {name}")

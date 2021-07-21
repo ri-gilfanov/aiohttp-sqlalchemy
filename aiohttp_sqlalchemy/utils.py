@@ -57,7 +57,7 @@ def get_session_factory(
     """
     if isinstance(source, Request):
         return cast(TOptSessionFactory, source.config_dict.get(key))
-    elif isinstance(source, Application):
+    if isinstance(source, Application):
         return cast(TOptSessionFactory, source.get(key))
     raise TypeError(
         'Arg `source` must be `Application` or `Request` from `aiohttp.web`.'

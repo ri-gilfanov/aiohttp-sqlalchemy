@@ -9,6 +9,7 @@ from sqlalchemy.sql import Delete, Select, Update
 from sqlalchemy_things.pagination import OffsetPaginator
 
 from aiohttp_sqlalchemy.constants import SA_DEFAULT_KEY
+from aiohttp_sqlalchemy.deprecation import _handle_deprecation
 from aiohttp_sqlalchemy.utils import get_session
 
 
@@ -117,12 +118,8 @@ class SAModelView(View, SAModelMixin):
     pass
 
 
-SAItemAddMixin = ItemAddMixin
-SAItemDeleteMixin = ItemDeleteMixin
-SAItemEditMixin = ItemEditMixin
-SAItemViewMixin = ItemViewMixin
-SAListAddMixin = ListAddMixin
-SAListDeleteMixin = ListDeleteMixin
-SAListEditMixin = ListEditMixin
-SAListViewMixin = ListViewMixin
-SAPrimaryKeyMixin = PrimaryKeyMixin
+def __getattr__(name: str) -> Any:
+    name = _handle_deprecation(name)
+    if name:
+        return globals().get(name)
+    raise AttributeError(f"module {__name__} has no attribute {name}")
