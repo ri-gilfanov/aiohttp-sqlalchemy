@@ -1,7 +1,8 @@
-from typing import Any
 import warnings
+from typing import Any
 
 DEPRECATION_MAP = {
+    'OffsetPagination': 'OffsetPaginationMixin',
     'SAItemAddMixin': 'ItemAddMixin',
     'SAItemDeleteMixin': 'ItemDeleteMixin',
     'SAItemEditMixin': 'ItemEditMixin',
@@ -10,6 +11,9 @@ DEPRECATION_MAP = {
     'SAListDeleteMixin': 'ListDeleteMixin',
     'SAListEditMixin': 'ListEditMixin',
     'SAListViewMixin': 'ListViewMixin',
+    'SAModelDeleteMixin': 'DeleteStatementMixin',
+    'SAModelEditMixin': 'UpdateStatementMixin',
+    'SAModelViewMixin': 'SelectStatementMixin',
     'SAPrimaryKeyMixin': 'PrimaryKeyMixin',
 }
 

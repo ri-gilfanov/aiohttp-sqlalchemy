@@ -1,9 +1,12 @@
 import pytest
 import sqlalchemy as sa
 from aiohttp import web
+from aiohttp.hdrs import METH_GET
+from aiohttp.test_utils import make_mocked_request
 from aiohttp.web import Request
 from sqlalchemy import orm
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy_things.pagination import OffsetPage
 
 from aiohttp_sqlalchemy import (
     SA_DEFAULT_KEY,
@@ -12,7 +15,9 @@ from aiohttp_sqlalchemy import (
     ItemEditMixin,
     ItemViewMixin,
     ListAddMixin,
+    OffsetPaginationMixin,
     SABaseView,
+    init_db,
 )
 
 
@@ -83,6 +88,28 @@ def test_view_stmt(mocked_request: Request, base_model: orm.Mapper) -> None:
 
     view = InstanceView(mocked_request)
     view.get_select_stmt()
+
+
+async def test_offset_pagination(
+    middlewared_app: web.Application,
+    session: AsyncSession,
+    base_model: orm.Mapper,
+) -> None:
+    class Model(base_model):  # type: ignore
+        __tablename__ = 'model'
+
+        pk = sa.Column(sa.Integer, primary_key=True)
+
+    class OffsetPaginationHandler(web.View, OffsetPaginationMixin):
+        sa_model = Model
+
+    await init_db(middlewared_app, Model.metadata)
+
+    request = make_mocked_request(METH_GET, '/?page_key=2')
+    request[SA_DEFAULT_KEY] = session
+    handler = OffsetPaginationHandler(request)
+    page = await handler.execute_select_stmt()
+    isinstance(page, OffsetPage)
 
 
 def test_list_add(
