@@ -3,6 +3,7 @@ from typing import Any, List, Optional
 
 import aiohttp_things as ahth
 from aiohttp.web import View
+from aiohttp.web_urldispatcher import AbstractRoute
 from sqlalchemy import delete, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.sql import Delete, Select, Update
@@ -56,6 +57,26 @@ class OffsetPaginationMixin(ahth.PaginationMixin, SelectStatementMixin):
                 self.page_key,
             )
         return page
+
+    async def prepare_context(self) -> None:
+        page: Optional[OffsetPage] = await self.execute_select_stmt()
+
+        if page:
+            route: AbstractRoute = self.request.match_info.route
+
+            self.context['items'] = page.items
+
+            if page.next:
+                next_ = str(page.next)
+                self.context['next_url'] = route.url_for(page_key=next_)
+            else:
+                self.context['next_url'] = page.next
+
+            if page.previous:
+                previous_ = str(page.previous)
+                self.context['previous_url'] = route.url_for(page_key=previous_)
+            else:
+                self.context['previous_url'] = page.previous
 
 
 class PrimaryKeyMixin(ahth.PrimaryKeyMixin, SAModelMixin, metaclass=ABCMeta):
