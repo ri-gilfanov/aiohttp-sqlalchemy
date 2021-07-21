@@ -1,6 +1,22 @@
 ========
 Releases
 ========
+Unreleased
+------------
+**Deprecated**
+
+* ``views`` module is deprecated. Use import from ``aiohttp_sqlalchemy``
+  or ``aiohttp_sqlalchemy.web_handlers``;
+* ``SAItemAddMixin`` synonym is deprecated. Use ``ItemAddMixin`` class;
+* ``SAItemDeleteMixin`` is deprecated. Use ``ItemDeleteMixin`` class;
+* ``SAItemEditMixin`` synonym is deprecated. Use ``ItemEditMixin`` class;
+* ``SAItemViewMixin`` synonym is deprecated. Use ``ItemViewMixin`` class;
+* ``SAListAddMixin`` synonym is deprecated. Use ``ListAddMixin`` class;
+* ``SAListDeleteMixin`` synonym is deprecated. Use ``ListDeleteMixin`` class;
+* ``SAListEditMixin`` synonym is deprecated. Use ``ListEditMixin`` class;
+* ``SAListViewMixin`` synonym is deprecated. Use ``ListViewMixin`` class;
+* ``SAPrimaryKeyMixin`` synonym is deprecated. Use ``PrimaryKeyMixin`` class.
+
 Version 0.29
 ------------
 **Added**

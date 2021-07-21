@@ -1,7 +1,9 @@
 """AIOHTTP-SQLAlchemy. SQLAlchemy 1.4 / 2.0 support for aiohttp."""
-from typing import cast
+import warnings
+from typing import Any, cast
 
 from aiohttp.web import Application
+from aiohttp_things import web_handlers
 from sqlalchemy.engine import Engine
 from sqlalchemy.ext.asyncio import (
     AsyncEngine,
@@ -38,24 +40,15 @@ from aiohttp_sqlalchemy.web_handlers import (
     OffsetPagination,
     PrimaryKeyMixin,
     SABaseView,
-    SAItemAddMixin,
-    SAItemDeleteMixin,
-    SAItemEditMixin,
-    SAItemViewMixin,
-    SAListAddMixin,
-    SAListDeleteMixin,
-    SAListEditMixin,
-    SAListViewMixin,
     SAMixin,
     SAModelDeleteMixin,
     SAModelEditMixin,
     SAModelMixin,
     SAModelView,
     SAModelViewMixin,
-    SAPrimaryKeyMixin,
 )
 
-__version__ = '0.29.0'
+__version__ = '0.30.0'
 
 __all__ = [
     'DEFAULT_KEY',
@@ -168,3 +161,35 @@ def setup(app: Application, binds: "TBinds") -> None:
 
 # Synonyms
 sa_bind = bind
+
+
+def __getattr__(name: str) -> Any:
+    if name == 'views':
+        warnings.warn(
+            '`views` module is deprecated. '
+            'Use `web_handlers` module.',
+            DeprecationWarning,
+            stacklevel=2,
+        )
+        return web_handlers
+
+    DEPRECATION_MAP = {
+        'SAItemAddMixin': 'ItemAddMixin',
+        'SAItemDeleteMixin': 'ItemDeleteMixin',
+        'SAItemEditMixin': 'ItemEditMixin',
+        'SAItemViewMixin': 'ItemViewMixin',
+        'SAListAddMixin': 'ListAddMixin',
+        'SAListDeleteMixin': 'ListDeleteMixin',
+        'SAListEditMixin': 'ListEditMixin',
+        'SAListViewMixin': 'ListViewMixin',
+        'SAPrimaryKeyMixin': 'PrimaryKeyMixin',
+    }
+    if name in DEPRECATION_MAP.keys():
+        warnings.warn(
+            f'`{name}` is deprecated. '
+            f'Use `{DEPRECATION_MAP[name]}`.',
+            DeprecationWarning,
+            stacklevel=2,
+        )
+        return getattr(web_handlers, DEPRECATION_MAP[name])
+    raise AttributeError(f"module {__name__} has no attribute {name}")
