@@ -35,7 +35,7 @@ class SAModelEditMixin(SAModelMixin):
 
 
 class SAModelViewMixin(SAModelMixin):
-    def get_sa_select_stmt(self, model: Any = None) -> Select:
+    def get_select_stmt(self, model: Any = None) -> Select:
         return select(model or self.sa_model)
 
 
@@ -69,7 +69,7 @@ class ItemEditMixin(
     PrimaryKeyMixin,
     metaclass=ABCMeta,
 ):
-    def get_sa_edit_stmt(self, model: Any = None) -> Update:
+    def get_update_stmt(self, model: Any = None) -> Update:
         return super(). \
             get_update_stmt(model). \
             where(self.sa_pk_attr == self.pk)
@@ -83,7 +83,7 @@ class ItemViewMixin(
 ):
     def get_select_stmt(self, model: Any = None) -> Select:
         return super(). \
-            get_sa_select_stmt(model). \
+            get_select_stmt(model). \
             where(self.sa_pk_attr == self.pk)
 
 

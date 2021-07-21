@@ -69,7 +69,7 @@ def test_edit_stmt(mocked_request: Request, base_model: orm.Mapper) -> None:
         sa_model = Model
 
     view = InstanceEdit(mocked_request)
-    view.get_sa_edit_stmt()
+    view.get_update_stmt()
 
 
 def test_view_stmt(mocked_request: Request, base_model: orm.Mapper) -> None:
