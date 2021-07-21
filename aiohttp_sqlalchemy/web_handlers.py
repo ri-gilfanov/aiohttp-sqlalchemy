@@ -1,3 +1,4 @@
+import warnings
 from abc import ABCMeta
 from typing import Any, List, Optional
 
@@ -6,7 +7,9 @@ from aiohttp.web import View
 from sqlalchemy import delete, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.sql import Delete, Select, Update
+from sqlalchemy_things.pagination import OffsetPaginator
 
+import aiohttp_sqlalchemy
 from aiohttp_sqlalchemy.constants import SA_DEFAULT_KEY
 from aiohttp_sqlalchemy.utils import get_session
 
@@ -35,6 +38,10 @@ class SAModelEditMixin(SAModelMixin):
 class SAModelViewMixin(SAModelMixin):
     def get_sa_select_stmt(self, model: Any = None) -> Select:
         return select(model or self.sa_model)
+
+
+class OffsetPagination(ahth.PaginationMixin):
+    paginator = OffsetPaginator()
 
 
 class PrimaryKeyMixin(ahth.PrimaryKeyMixin, SAModelMixin, metaclass=ABCMeta):
@@ -98,7 +105,6 @@ class ListEditMixin(ahth.ListMixin, SAModelEditMixin, metaclass=ABCMeta):
 
 class ListViewMixin(
     ahth.ListMixin,
-    ahth.PaginationMixin,
     SAModelViewMixin,
     metaclass=ABCMeta,
 ):
@@ -113,12 +119,24 @@ class SAModelView(View, SAModelMixin):
     pass
 
 
-SAItemAddMixin = ItemAddMixin
-SAItemDeleteMixin = ItemDeleteMixin
-SAItemEditMixin = ItemEditMixin
-SAItemViewMixin = ItemViewMixin
-SAListAddMixin = ListAddMixin
-SAListDeleteMixin = ListDeleteMixin
-SAListEditMixin = ListEditMixin
-SAListViewMixin = ListViewMixin
-SAPrimaryKeyMixin = PrimaryKeyMixin
+def __getattr__(name: str) -> Any:
+    DEPRECATION_MAP = {
+        'SAItemAddMixin': 'ItemAddMixin',
+        'SAItemDeleteMixin': 'ItemDeleteMixin',
+        'SAItemEditMixin': 'ItemEditMixin',
+        'SAItemViewMixin': 'ItemViewMixin',
+        'SAListAddMixin': 'ListAddMixin',
+        'SAListDeleteMixin': 'ListDeleteMixin',
+        'SAListEditMixin': 'ListEditMixin',
+        'SAListViewMixin': 'ListViewMixin',
+        'SAPrimaryKeyMixin': 'PrimaryKeyMixin',
+    }
+    if name in DEPRECATION_MAP.keys():
+        warnings.warn(
+            f'`{name}` is deprecated. '
+            f'Use `{DEPRECATION_MAP[name]}`.',
+            DeprecationWarning,
+            stacklevel=2,
+        )
+        return getattr(aiohttp_sqlalchemy.web_handlers, DEPRECATION_MAP[name])
+    raise AttributeError(f"module {__name__} has no attribute {name}")
