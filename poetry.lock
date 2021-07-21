@@ -19,7 +19,7 @@ speedups = ["aiodns", "brotlipy", "cchardet"]
 
 [[package]]
 name = "aiohttp-things"
-version = "0.13.0"
+version = "0.14.0"
 description = "Modest utility collection for development with AIOHTTP framework."
 category = "main"
 optional = false
@@ -615,7 +615,7 @@ sqlcipher = ["sqlcipher3-binary"]
 
 [[package]]
 name = "sqlalchemy-things"
-version = "0.9.0"
+version = "0.10.0"
 description = "Utility collection for development with SQLalchemy ORM."
 category = "main"
 optional = false
@@ -707,7 +707,7 @@ sqlite = ["aiosqlite"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "0f143e644885847061c72cccda1f33d061ca6dfe273ac6f32deaf41cc17e15b0"
+content-hash = "3d38bfd1aea3968fbbd14fc37e3e3f145406d09a98ce9ca6b7412c398cfd68f7"
 
 [metadata.files]
 aiohttp = [
@@ -750,8 +750,8 @@ aiohttp = [
     {file = "aiohttp-3.7.4.post0.tar.gz", hash = "sha256:493d3299ebe5f5a7c66b9819eacdcfbbaaf1a8e84911ddffcdc48888497afecf"},
 ]
 aiohttp-things = [
-    {file = "aiohttp-things-0.13.0.tar.gz", hash = "sha256:c59f7a71e1478f6d533a90e8f04413435504d5641db74be2d1f17fb23e6d5237"},
-    {file = "aiohttp_things-0.13.0-py3-none-any.whl", hash = "sha256:94749e09865348fa7d6810b36fc6ac3e948e2cde31055fd549de4c4cae312111"},
+    {file = "aiohttp-things-0.14.0.tar.gz", hash = "sha256:7691fa92cf86767ab64352d45961c9e5012297716f93a0f3f189ae7d5aa9fb92"},
+    {file = "aiohttp_things-0.14.0-py3-none-any.whl", hash = "sha256:a421bc734826c0034373809ea3a6ef245ea7806178cedefe487a7d7302fd8de0"},
 ]
 aiomysql = [
     {file = "aiomysql-0.0.21-py3-none-any.whl", hash = "sha256:a81a97da3dd732635926a8ea6adbbf2d1345799680bf61b5f89e730bcec88cc5"},
@@ -1176,8 +1176,8 @@ sqlalchemy = [
     {file = "SQLAlchemy-1.4.21.tar.gz", hash = "sha256:07e9054f4df612beadd12ca8a5342246bffcad74a1fa8df1368d1f2bb07d8fc7"},
 ]
 sqlalchemy-things = [
-    {file = "sqlalchemy-things-0.9.0.tar.gz", hash = "sha256:678ad0d8f664c0b315b978aed453f6fe5777c561ffbb70a22f6c107c013e78c5"},
-    {file = "sqlalchemy_things-0.9.0-py3-none-any.whl", hash = "sha256:3aa3633b87c11a1aaa398bb74420e94356ebfe974d4c8757237404f9f85e4fe5"},
+    {file = "sqlalchemy-things-0.10.0.tar.gz", hash = "sha256:1d5514e226ff11eaaf7814c6c5ad343ae4ad0140d0a9451beee40403af333a64"},
+    {file = "sqlalchemy_things-0.10.0-py3-none-any.whl", hash = "sha256:16a020500d65b2829655641ff9e38ee0678124700c54f13e7b65fb3358465e1e"},
 ]
 toml = [
     {file = "toml-0.10.2-py2.py3-none-any.whl", hash = "sha256:806143ae5bfb6a3c6e736a764057db0e6a0e05e338b5630894a5f779cabb4f9b"},

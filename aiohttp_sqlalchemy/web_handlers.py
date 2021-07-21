@@ -1,16 +1,16 @@
-import warnings
 from abc import ABCMeta
 from typing import Any, List, Optional
 
 import aiohttp_things as ahth
 from aiohttp.web import View
+from aiohttp.web_urldispatcher import AbstractRoute
 from sqlalchemy import delete, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.sql import Delete, Select, Update
-from sqlalchemy_things.pagination import OffsetPaginator
+from sqlalchemy_things.pagination import OffsetPage, OffsetPaginator
 
-import aiohttp_sqlalchemy
 from aiohttp_sqlalchemy.constants import SA_DEFAULT_KEY
+from aiohttp_sqlalchemy.deprecation import _handle_deprecation
 from aiohttp_sqlalchemy.utils import get_session
 
 
@@ -25,23 +25,58 @@ class SAModelMixin(SAMixin, metaclass=ABCMeta):
     sa_model: Any = None  # Not all developers use declarative mapping
 
 
-class SAModelDeleteMixin(SAModelMixin):
+class DeleteStatementMixin(SAModelMixin):
     def get_delete_stmt(self, model: Any = None) -> Delete:
         return delete(model or self.sa_model)
 
 
-class SAModelEditMixin(SAModelMixin):
+class UpdateStatementMixin(SAModelMixin):
     def get_update_stmt(self, model: Any = None) -> Update:
         return update(model or self.sa_model)
 
 
-class SAModelViewMixin(SAModelMixin):
-    def get_sa_select_stmt(self, model: Any = None) -> Select:
+class SelectStatementMixin(SAModelMixin):
+    def get_select_stmt(self, model: Any = None) -> Select:
         return select(model or self.sa_model)
 
 
-class OffsetPagination(ahth.PaginationMixin):
-    paginator = OffsetPaginator()
+class OffsetPaginationMixin(ahth.PaginationMixin, SelectStatementMixin):
+    page_key: int = 1
+    page_key_adapter = int
+    paginator: OffsetPaginator = OffsetPaginator()
+
+    async def execute_select_stmt(
+        self,
+        model: Any = None,
+        key: Optional[str] = None,
+    ) -> Optional[OffsetPage]:
+        async with self.get_sa_session().begin():
+            page = await self.paginator.get_page_async(
+                self.get_sa_session(key or self.sa_session_key),
+                self.get_select_stmt(model or self.sa_model),
+                self.page_key,
+            )
+        return page
+
+    async def prepare_context(self) -> None:
+        page: Optional[OffsetPage] = await self.execute_select_stmt()
+
+        if page:
+            route: AbstractRoute = self.request.match_info.route
+
+            self.context['items'] = page.items
+
+            if page.next:
+                kw = {'page_key': page.next}
+                self.context['next_url'] = route.url_for().with_query(kw)
+            else:
+                self.context['next_url'] = page.next
+
+            if page.previous:
+                kw = {'page_key': page.previous}
+                self.context['previous_url'] = route.url_for().with_query(kw)
+            else:
+                self.context['previous_url'] = page.previous
 
 
 class PrimaryKeyMixin(ahth.PrimaryKeyMixin, SAModelMixin, metaclass=ABCMeta):
@@ -54,7 +89,7 @@ class ItemAddMixin(SAModelMixin, ahth.ItemMixin, metaclass=ABCMeta):
 
 
 class ItemDeleteMixin(
-    SAModelDeleteMixin,
+    DeleteStatementMixin,
     PrimaryKeyMixin,
     metaclass=ABCMeta,
 ):
@@ -66,11 +101,11 @@ class ItemDeleteMixin(
 
 class ItemEditMixin(
     ahth.ItemMixin,
-    SAModelEditMixin,
+    UpdateStatementMixin,
     PrimaryKeyMixin,
     metaclass=ABCMeta,
 ):
-    def get_sa_edit_stmt(self, model: Any = None) -> Update:
+    def get_update_stmt(self, model: Any = None) -> Update:
         return super(). \
             get_update_stmt(model). \
             where(self.sa_pk_attr == self.pk)
@@ -78,13 +113,13 @@ class ItemEditMixin(
 
 class ItemViewMixin(
     ahth.ItemMixin,
-    SAModelViewMixin,
+    SelectStatementMixin,
     PrimaryKeyMixin,
     metaclass=ABCMeta,
 ):
     def get_select_stmt(self, model: Any = None) -> Select:
         return super(). \
-            get_sa_select_stmt(model). \
+            get_select_stmt(model). \
             where(self.sa_pk_attr == self.pk)
 
 
@@ -95,17 +130,17 @@ class ListAddMixin(ahth.ListMixin, SAModelMixin, metaclass=ABCMeta):
         self.get_sa_session(key).add_all(self.items)
 
 
-class ListDeleteMixin(ahth.ListMixin, SAModelDeleteMixin, metaclass=ABCMeta):
+class ListDeleteMixin(ahth.ListMixin, DeleteStatementMixin, metaclass=ABCMeta):
     pass
 
 
-class ListEditMixin(ahth.ListMixin, SAModelEditMixin, metaclass=ABCMeta):
+class ListEditMixin(ahth.ListMixin, UpdateStatementMixin, metaclass=ABCMeta):
     pass
 
 
 class ListViewMixin(
     ahth.ListMixin,
-    SAModelViewMixin,
+    SelectStatementMixin,
     metaclass=ABCMeta,
 ):
     pass
@@ -120,23 +155,7 @@ class SAModelView(View, SAModelMixin):
 
 
 def __getattr__(name: str) -> Any:
-    DEPRECATION_MAP = {
-        'SAItemAddMixin': 'ItemAddMixin',
-        'SAItemDeleteMixin': 'ItemDeleteMixin',
-        'SAItemEditMixin': 'ItemEditMixin',
-        'SAItemViewMixin': 'ItemViewMixin',
-        'SAListAddMixin': 'ListAddMixin',
-        'SAListDeleteMixin': 'ListDeleteMixin',
-        'SAListEditMixin': 'ListEditMixin',
-        'SAListViewMixin': 'ListViewMixin',
-        'SAPrimaryKeyMixin': 'PrimaryKeyMixin',
-    }
-    if name in DEPRECATION_MAP.keys():
-        warnings.warn(
-            f'`{name}` is deprecated. '
-            f'Use `{DEPRECATION_MAP[name]}`.',
-            DeprecationWarning,
-            stacklevel=2,
-        )
-        return getattr(aiohttp_sqlalchemy.web_handlers, DEPRECATION_MAP[name])
+    name = _handle_deprecation(name)
+    if name:
+        return globals().get(name)
     raise AttributeError(f"module {__name__} has no attribute {name}")

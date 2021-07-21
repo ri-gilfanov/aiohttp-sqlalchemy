@@ -15,7 +15,7 @@ Class based views
 -----------------
 .. warning::
 
-  API of most classes of stabilizes to version 1.0.
+  API of most classes will be stabilized for 1.0 release.
 
 .. autoclass:: aiohttp_sqlalchemy.SAMixin
   :inherited-members:
@@ -26,17 +26,17 @@ Class based views
   :members:
   :show-inheritance:
 
-.. autoclass:: aiohttp_sqlalchemy.SAModelDeleteMixin
+.. autoclass:: aiohttp_sqlalchemy.DeleteStatementMixin
   :inherited-members:
   :members:
   :show-inheritance:
 
-.. autoclass:: aiohttp_sqlalchemy.SAModelEditMixin
+.. autoclass:: aiohttp_sqlalchemy.UpdateStatementMixin
   :inherited-members:
   :members:
   :show-inheritance:
 
-.. autoclass:: aiohttp_sqlalchemy.SAModelViewMixin
+.. autoclass:: aiohttp_sqlalchemy.SelectStatementMixin
   :inherited-members:
   :members:
   :show-inheritance:
@@ -70,7 +70,7 @@ Instance mixins
 
 List mixins
 ^^^^^^^^^^^
-.. autoclass:: aiohttp_sqlalchemy.OffsetPagination
+.. autoclass:: aiohttp_sqlalchemy.OffsetPaginationMixin
   :inherited-members:
   :members:
   :show-inheritance:
