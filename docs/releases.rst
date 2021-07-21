@@ -1,13 +1,18 @@
 ========
 Releases
 ========
+Version 0.32
+------------
+* Added ``prepare_context()`` method for ``OffsetPaginationMixin``.
+
+
 Version 0.31
 ------------
 **Added**
 
 * Added default ``page_key`` and ``page_key_adapter`` attributes
   for ``OffsetPaginationMixin``;
-* Added ``execute_select_stmt`` method for ``OffsetPaginationMixin``.
+* Added ``execute_select_stmt()`` method for ``OffsetPaginationMixin``.
 
 **Deprecated**
 

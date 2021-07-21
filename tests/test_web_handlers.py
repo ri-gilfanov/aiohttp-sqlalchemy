@@ -105,11 +105,37 @@ async def test_offset_pagination(
 
     await init_db(middlewared_app, Model.metadata)
 
+    request = make_mocked_request(METH_GET, '/?page_key=1')
+    request[SA_DEFAULT_KEY] = session
+    handler = OffsetPaginationHandler(request)
+    page = await handler.execute_select_stmt()
+    isinstance(page, OffsetPage)
+    await handler.prepare_context()
+    assert list(handler.context['items']) == []
+    assert handler.context['previous_url'] is None
+    assert handler.context['next_url'] is None
+
+    page_size = handler.paginator.page_size
+
+    async with session.begin():
+        session.add_all([Model() for i in range(page_size + 1)])
+
+    page = await handler.execute_select_stmt()
+    isinstance(page, OffsetPage)
+    await handler.prepare_context()
+    assert len(list(handler.context['items'])) == page_size
+    assert handler.context['previous_url'] is None
+    assert handler.context['next_url'] is not None
+
     request = make_mocked_request(METH_GET, '/?page_key=2')
     request[SA_DEFAULT_KEY] = session
     handler = OffsetPaginationHandler(request)
     page = await handler.execute_select_stmt()
     isinstance(page, OffsetPage)
+    await handler.prepare_context()
+    assert len(list(handler.context['items'])) == 1
+    assert handler.context['previous_url'] is not None
+    assert handler.context['next_url'] is None
 
 
 def test_list_add(
