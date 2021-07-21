@@ -1,6 +1,21 @@
 ========
 Releases
 ========
+Version 0.31
+------------
+**Added**
+
+* Added default ``page_key`` and ``page_key_adapter`` attributes
+  for ``OffsetPaginationMixin``;
+* Added ``execute_select_stmt`` method for ``OffsetPaginationMixin``.
+
+**Deprecated**
+
+* ``OffsetPagination`` is deprecated. Use ``OffsetPaginationMixin``;
+* ``SAModelDeleteMixin`` is deprecated. Use ``DeleteStatementMixin``;
+* ``SAModelEditMixin`` is deprecated. Use ``UpdateStatementMixin``;
+* ``SAModelViewMixin`` is deprecated. Use ``SelectStatementMixin``.
+
 Version 0.30
 ------------
 **Deprecated**

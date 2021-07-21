@@ -6,7 +6,7 @@ from aiohttp.web import View
 from sqlalchemy import delete, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.sql import Delete, Select, Update
-from sqlalchemy_things.pagination import OffsetPaginator
+from sqlalchemy_things.pagination import OffsetPage, OffsetPaginator
 
 from aiohttp_sqlalchemy.constants import SA_DEFAULT_KEY
 from aiohttp_sqlalchemy.deprecation import _handle_deprecation
@@ -24,23 +24,38 @@ class SAModelMixin(SAMixin, metaclass=ABCMeta):
     sa_model: Any = None  # Not all developers use declarative mapping
 
 
-class SAModelDeleteMixin(SAModelMixin):
+class DeleteStatementMixin(SAModelMixin):
     def get_delete_stmt(self, model: Any = None) -> Delete:
         return delete(model or self.sa_model)
 
 
-class SAModelEditMixin(SAModelMixin):
+class UpdateStatementMixin(SAModelMixin):
     def get_update_stmt(self, model: Any = None) -> Update:
         return update(model or self.sa_model)
 
 
-class SAModelViewMixin(SAModelMixin):
+class SelectStatementMixin(SAModelMixin):
     def get_select_stmt(self, model: Any = None) -> Select:
         return select(model or self.sa_model)
 
 
-class OffsetPagination(ahth.PaginationMixin):
-    paginator = OffsetPaginator()
+class OffsetPaginationMixin(ahth.PaginationMixin, SelectStatementMixin):
+    page_key: int = 1
+    page_key_adapter = int
+    paginator: OffsetPaginator = OffsetPaginator()
+
+    async def execute_select_stmt(
+        self,
+        model: Any = None,
+        key: Optional[str] = None,
+    ) -> Optional[OffsetPage]:
+        async with self.get_sa_session().begin():
+            page = await self.paginator.get_page_async(
+                self.get_sa_session(key or self.sa_session_key),
+                self.get_select_stmt(model or self.sa_model),
+                self.page_key,
+            )
+        return page
 
 
 class PrimaryKeyMixin(ahth.PrimaryKeyMixin, SAModelMixin, metaclass=ABCMeta):
@@ -53,7 +68,7 @@ class ItemAddMixin(SAModelMixin, ahth.ItemMixin, metaclass=ABCMeta):
 
 
 class ItemDeleteMixin(
-    SAModelDeleteMixin,
+    DeleteStatementMixin,
     PrimaryKeyMixin,
     metaclass=ABCMeta,
 ):
@@ -65,7 +80,7 @@ class ItemDeleteMixin(
 
 class ItemEditMixin(
     ahth.ItemMixin,
-    SAModelEditMixin,
+    UpdateStatementMixin,
     PrimaryKeyMixin,
     metaclass=ABCMeta,
 ):
@@ -77,7 +92,7 @@ class ItemEditMixin(
 
 class ItemViewMixin(
     ahth.ItemMixin,
-    SAModelViewMixin,
+    SelectStatementMixin,
     PrimaryKeyMixin,
     metaclass=ABCMeta,
 ):
@@ -94,17 +109,17 @@ class ListAddMixin(ahth.ListMixin, SAModelMixin, metaclass=ABCMeta):
         self.get_sa_session(key).add_all(self.items)
 
 
-class ListDeleteMixin(ahth.ListMixin, SAModelDeleteMixin, metaclass=ABCMeta):
+class ListDeleteMixin(ahth.ListMixin, DeleteStatementMixin, metaclass=ABCMeta):
     pass
 
 
-class ListEditMixin(ahth.ListMixin, SAModelEditMixin, metaclass=ABCMeta):
+class ListEditMixin(ahth.ListMixin, UpdateStatementMixin, metaclass=ABCMeta):
     pass
 
 
 class ListViewMixin(
     ahth.ListMixin,
-    SAModelViewMixin,
+    SelectStatementMixin,
     metaclass=ABCMeta,
 ):
     pass

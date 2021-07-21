@@ -38,18 +38,15 @@ from aiohttp_sqlalchemy.web_handlers import (
     ListDeleteMixin,
     ListEditMixin,
     ListViewMixin,
-    OffsetPagination,
+    OffsetPaginationMixin,
     PrimaryKeyMixin,
     SABaseView,
     SAMixin,
-    SAModelDeleteMixin,
-    SAModelEditMixin,
     SAModelMixin,
     SAModelView,
-    SAModelViewMixin,
 )
 
-__version__ = '0.30.2'
+__version__ = '0.31.0'
 
 __all__ = [
     'DEFAULT_KEY',
@@ -66,16 +63,13 @@ __all__ = [
     'ListEditMixin',
     'ListViewMixin',
 
-    'OffsetPagination',
+    'OffsetPaginationMixin',
     'PrimaryKeyMixin',
 
     'SABaseView',
     'SA_DEFAULT_KEY',
 
     'SAModelMixin',
-    'SAModelDeleteMixin',
-    'SAModelEditMixin',
-    'SAModelViewMixin',
 
     'SAMixin',
     'SAModelView',
