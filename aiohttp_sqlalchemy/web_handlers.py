@@ -1,4 +1,3 @@
-import warnings
 from abc import ABCMeta
 from typing import Any, List, Optional
 
@@ -9,8 +8,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.sql import Delete, Select, Update
 from sqlalchemy_things.pagination import OffsetPaginator
 
-import aiohttp_sqlalchemy
 from aiohttp_sqlalchemy.constants import SA_DEFAULT_KEY
+from aiohttp_sqlalchemy.deprecation import _handle_deprecation
 from aiohttp_sqlalchemy.utils import get_session
 
 
@@ -120,23 +119,7 @@ class SAModelView(View, SAModelMixin):
 
 
 def __getattr__(name: str) -> Any:
-    DEPRECATION_MAP = {
-        'SAItemAddMixin': 'ItemAddMixin',
-        'SAItemDeleteMixin': 'ItemDeleteMixin',
-        'SAItemEditMixin': 'ItemEditMixin',
-        'SAItemViewMixin': 'ItemViewMixin',
-        'SAListAddMixin': 'ListAddMixin',
-        'SAListDeleteMixin': 'ListDeleteMixin',
-        'SAListEditMixin': 'ListEditMixin',
-        'SAListViewMixin': 'ListViewMixin',
-        'SAPrimaryKeyMixin': 'PrimaryKeyMixin',
-    }
-    if name in DEPRECATION_MAP.keys():
-        warnings.warn(
-            f'`{name}` is deprecated. '
-            f'Use `{DEPRECATION_MAP[name]}`.',
-            DeprecationWarning,
-            stacklevel=2,
-        )
-        return getattr(aiohttp_sqlalchemy.web_handlers, DEPRECATION_MAP[name])
+    name = _handle_deprecation(name)
+    if name:
+        return globals().get(name)
     raise AttributeError(f"module {__name__} has no attribute {name}")

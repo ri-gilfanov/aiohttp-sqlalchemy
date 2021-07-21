@@ -14,6 +14,7 @@ from sqlalchemy.orm import Session, sessionmaker
 
 from aiohttp_sqlalchemy.constants import DEFAULT_KEY, SA_DEFAULT_KEY
 from aiohttp_sqlalchemy.decorators import sa_decorator
+from aiohttp_sqlalchemy.deprecation import _handle_deprecation
 from aiohttp_sqlalchemy.exceptions import (
     DuplicateAppKeyError,
     DuplicateRequestKeyError,
@@ -48,7 +49,7 @@ from aiohttp_sqlalchemy.web_handlers import (
     SAModelViewMixin,
 )
 
-__version__ = '0.30.0'
+__version__ = '0.30.1'
 
 __all__ = [
     'DEFAULT_KEY',
@@ -76,19 +77,8 @@ __all__ = [
     'SAModelEditMixin',
     'SAModelViewMixin',
 
-    'SAItemAddMixin',
-    'SAItemDeleteMixin',
-    'SAItemEditMixin',
-    'SAItemViewMixin',
-
-    'SAListAddMixin',
-    'SAListDeleteMixin',
-    'SAListEditMixin',
-    'SAListViewMixin',
-
     'SAMixin',
     'SAModelView',
-    'SAPrimaryKeyMixin',
     'bind',
     'get_session',
     'get_session_factory',
@@ -173,23 +163,7 @@ def __getattr__(name: str) -> Any:
         )
         return web_handlers
 
-    DEPRECATION_MAP = {
-        'SAItemAddMixin': 'ItemAddMixin',
-        'SAItemDeleteMixin': 'ItemDeleteMixin',
-        'SAItemEditMixin': 'ItemEditMixin',
-        'SAItemViewMixin': 'ItemViewMixin',
-        'SAListAddMixin': 'ListAddMixin',
-        'SAListDeleteMixin': 'ListDeleteMixin',
-        'SAListEditMixin': 'ListEditMixin',
-        'SAListViewMixin': 'ListViewMixin',
-        'SAPrimaryKeyMixin': 'PrimaryKeyMixin',
-    }
-    if name in DEPRECATION_MAP.keys():
-        warnings.warn(
-            f'`{name}` is deprecated. '
-            f'Use `{DEPRECATION_MAP[name]}`.',
-            DeprecationWarning,
-            stacklevel=2,
-        )
-        return getattr(web_handlers, DEPRECATION_MAP[name])
+    name = _handle_deprecation(name)
+    if name:
+        return globals().get(name)
     raise AttributeError(f"module {__name__} has no attribute {name}")

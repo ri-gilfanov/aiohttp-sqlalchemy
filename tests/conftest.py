@@ -70,13 +70,15 @@ def mocked_request(middlewared_app: Application) -> 'Request':
 @pytest.fixture
 def function_handler() -> THandler:
     async def handler(request: Request) -> Response:
-        return web.json_response({})
+        assert isinstance(request, Request)
+        return web.json_response()
     return handler
 
 
 class ClassHandler:
     async def get(self, request: Request) -> Response:
-        return web.json_response({})
+        assert isinstance(request, Request)
+        return web.json_response()
 
 
 class ClassBasedView(web.View):
