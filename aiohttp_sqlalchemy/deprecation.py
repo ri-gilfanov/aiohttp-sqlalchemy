@@ -2,11 +2,15 @@ import warnings
 from typing import Any
 
 DEPRECATION_MAP = {
+    'ItemAddMixin': 'UnitAddMixin',
+    'ItemDeleteMixin': 'UnitDeleteMixin',
+    'ItemEditMixin': 'UnitEditMixin',
+    'ItemViewMixin': 'UnitViewMixin',
     'OffsetPagination': 'OffsetPaginationMixin',
-    'SAItemAddMixin': 'ItemAddMixin',
-    'SAItemDeleteMixin': 'ItemDeleteMixin',
-    'SAItemEditMixin': 'ItemEditMixin',
-    'SAItemViewMixin': 'ItemViewMixin',
+    'SAItemAddMixin': 'UnitAddMixin',
+    'SAItemDeleteMixin': 'UnitDeleteMixin',
+    'SAItemEditMixin': 'UnitEditMixin',
+    'SAItemViewMixin': 'UnitViewMixin',
     'SAListAddMixin': 'ListAddMixin',
     'SAListDeleteMixin': 'ListDeleteMixin',
     'SAListEditMixin': 'ListEditMixin',

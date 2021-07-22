@@ -83,12 +83,12 @@ class PrimaryKeyMixin(ahth.PrimaryKeyMixin, SAModelMixin, metaclass=ABCMeta):
     sa_pk_attr: Any = getattr(SAModelMixin.sa_model, 'pk', None)
 
 
-class ItemAddMixin(SAModelMixin, ahth.ItemMixin, metaclass=ABCMeta):
+class UnitAddMixin(SAModelMixin, ahth.ItemMixin, metaclass=ABCMeta):
     def sa_add(self, *, key: Optional[str] = None) -> None:
         self.get_sa_session(key).add(self.item)
 
 
-class ItemDeleteMixin(
+class UnitDeleteMixin(
     DeleteStatementMixin,
     PrimaryKeyMixin,
     metaclass=ABCMeta,
@@ -99,7 +99,7 @@ class ItemDeleteMixin(
             where(self.sa_pk_attr == self.pk)
 
 
-class ItemEditMixin(
+class UnitEditMixin(
     ahth.ItemMixin,
     UpdateStatementMixin,
     PrimaryKeyMixin,
@@ -111,7 +111,7 @@ class ItemEditMixin(
             where(self.sa_pk_attr == self.pk)
 
 
-class ItemViewMixin(
+class UnitViewMixin(
     ahth.ItemMixin,
     SelectStatementMixin,
     PrimaryKeyMixin,

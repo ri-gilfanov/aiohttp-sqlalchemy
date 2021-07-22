@@ -10,13 +10,13 @@ from sqlalchemy_things.pagination import OffsetPage
 
 from aiohttp_sqlalchemy import (
     SA_DEFAULT_KEY,
-    ItemAddMixin,
-    ItemDeleteMixin,
-    ItemEditMixin,
-    ItemViewMixin,
     ListAddMixin,
     OffsetPaginationMixin,
     SABaseView,
+    UnitAddMixin,
+    UnitDeleteMixin,
+    UnitEditMixin,
+    UnitViewMixin,
     init_db,
 )
 
@@ -42,7 +42,7 @@ def test_instance_add(
 
         pk = sa.Column(sa.Integer, primary_key=True)
 
-    class ItemAdd(web.View, ItemAddMixin):
+    class ItemAdd(web.View, UnitAddMixin):
         sa_model = Model
 
     mocked_request[SA_DEFAULT_KEY] = session
@@ -57,7 +57,7 @@ def test_delete_stmt(mocked_request: Request, base_model: orm.Mapper) -> None:
 
         pk = sa.Column(sa.Integer, primary_key=True)
 
-    class ItemDelete(web.View, ItemDeleteMixin):
+    class ItemDelete(web.View, UnitDeleteMixin):
         sa_model = Model
 
     view = ItemDelete(mocked_request)
@@ -70,7 +70,7 @@ def test_edit_stmt(mocked_request: Request, base_model: orm.Mapper) -> None:
 
         pk = sa.Column(sa.Integer, primary_key=True)
 
-    class InstanceEdit(web.View, ItemEditMixin):
+    class InstanceEdit(web.View, UnitEditMixin):
         sa_model = Model
 
     view = InstanceEdit(mocked_request)
@@ -83,7 +83,7 @@ def test_view_stmt(mocked_request: Request, base_model: orm.Mapper) -> None:
 
         pk = sa.Column(sa.Integer, primary_key=True)
 
-    class InstanceView(web.View, ItemViewMixin):
+    class InstanceView(web.View, UnitViewMixin):
         sa_model = Model
 
     view = InstanceView(mocked_request)
