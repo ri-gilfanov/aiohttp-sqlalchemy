@@ -1,6 +1,14 @@
 ========
 Releases
 ========
+Version 0.33
+------------
+* ``ItemAddMixin`` is deprecated. Use ``UnitAddMixin``;
+* ``ItemDeleteMixin`` is deprecated. Use ``UnitDeleteMixin``;
+* ``ItemEditMixin`` is deprecated. Use ``UnitEditMixin``;
+* ``ItemViewMixin`` is deprecated. Use ``UnitViewMixin``.
+
+
 Version 0.32
 ------------
 * Added ``prepare_context()`` method for ``OffsetPaginationMixin``.

@@ -30,10 +30,6 @@ from aiohttp_sqlalchemy.utils import (
     sa_session_factory,
 )
 from aiohttp_sqlalchemy.web_handlers import (
-    ItemAddMixin,
-    ItemDeleteMixin,
-    ItemEditMixin,
-    ItemViewMixin,
     ListAddMixin,
     ListDeleteMixin,
     ListEditMixin,
@@ -44,19 +40,23 @@ from aiohttp_sqlalchemy.web_handlers import (
     SAMixin,
     SAModelMixin,
     SAModelView,
+    UnitAddMixin,
+    UnitDeleteMixin,
+    UnitEditMixin,
+    UnitViewMixin,
 )
 
-__version__ = '0.32.0'
+__version__ = '0.33.0'
 
 __all__ = [
     'DEFAULT_KEY',
     'DuplicateAppKeyError',
     'DuplicateRequestKeyError',
 
-    'ItemAddMixin',
-    'ItemDeleteMixin',
-    'ItemEditMixin',
-    'ItemViewMixin',
+    'UnitAddMixin',
+    'UnitDeleteMixin',
+    'UnitEditMixin',
+    'UnitViewMixin',
 
     'ListAddMixin',
     'ListDeleteMixin',
