@@ -2,13 +2,26 @@
 name = "aiohttp-sqlalchemy"
 version = "0.33.0"
 description = "SQLAlchemy 1.4 / 2.0 support for aiohttp."
+license = "MIT"
+
 authors = [
     "Ruslan Ilyasovich Gilfanov <ri.gilfanov@yandex.ru>",
 ]
+maintainers = [
+    "Ruslan Ilyasovich Gilfanov <ri.gilfanov@yandex.ru>",
+]
+
+readme = "README.rst"
+homepage = "https://github.com/ri-gilfanov/aiohttp-sqlalchemy"
+repository = "https://github.com/ri-gilfanov/aiohttp-sqlalchemy"
+documentation = "https://aiohttp-sqlalchemy.readthedocs.io/"
+
+keywords = ["aiohttp", "sqlalchemy", "asyncio"]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Framework :: aiohttp",
     "Framework :: AsyncIO",
+    "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
@@ -24,12 +37,6 @@ classifiers = [
     "Topic :: Software Development :: Libraries :: Python Modules",
     "Typing :: Typed",
 ]
-keywords = ["aiohttp", "sqlalchemy", "asyncio"]
-license = "MIT License"
-readme = "README.rst"
-
-documentation = "https://aiohttp-sqlalchemy.readthedocs.io/"
-repository = "https://github.com/ri-gilfanov/aiohttp-sqlalchemy"
 
 [tool.poetry.dependencies]
 python = "^3.7"
@@ -68,10 +75,7 @@ profile = "wemake"
 src_paths = ["aiohttp_sqlalchemy", "examples", "tests"]
 
 [tool.mypy]
-files = [
-    "aiohttp_sqlalchemy",
-    "tests",
-]
+files = ["aiohttp_sqlalchemy", "tests"]
 plugins = "sqlalchemy.ext.mypy.plugin"
 
 [[tool.mypy.overrides]]
