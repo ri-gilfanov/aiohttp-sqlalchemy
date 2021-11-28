@@ -48,14 +48,14 @@ sqlite = ["aiosqlite"]
 
 [tool.poetry.dev-dependencies]
 aiosqlite = ">=0.17.0"
-flake8 = ">=3.9.2"
-isort = ">=5.9.2"
+flake8 = ">=4.0.1"
+isort = ">=5.10.1"
 mypy = ">=0.910"
-pytest = ">=6.2.4"
-pytest-cov = ">=2.12.1"
-Sphinx = ">=4.1.1"
-sphinx_rtd_theme = ">=0.5.2"
-types-toml = ">=0.1.3"
+pytest = ">=6.2.5"
+pytest-cov = ">=3.0.0"
+Sphinx = ">=4.3.1"
+sphinx_rtd_theme = ">=1.0.0"
+types-toml = ">=0.10.1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
