@@ -55,6 +55,7 @@ postgresql = ["asyncpg"]
 sqlite = ["aiosqlite"]
 
 [tool.poetry.dev-dependencies]
+aiomysql = ">=0.0.22"
 aiosqlite = ">=0.17.0"
 asyncpg = ">=0.25.0"
 flake8 = ">=4.0.1"
