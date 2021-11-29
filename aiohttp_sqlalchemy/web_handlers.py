@@ -10,7 +10,6 @@ from sqlalchemy.sql import Delete, Select, Update
 from sqlalchemy_things.pagination import OffsetPage, OffsetPaginator
 
 from aiohttp_sqlalchemy.constants import SA_DEFAULT_KEY
-from aiohttp_sqlalchemy.deprecation import _handle_deprecation
 from aiohttp_sqlalchemy.utils import get_session
 
 
@@ -152,10 +151,3 @@ class SABaseView(View, SAMixin):
 
 class SAModelView(View, SAModelMixin):
     pass
-
-
-def __getattr__(name: str) -> Any:
-    name = _handle_deprecation(name)
-    if name:
-        return globals().get(name)
-    raise AttributeError(f"module {__name__} has no attribute {name}")

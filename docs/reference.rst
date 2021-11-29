@@ -15,7 +15,7 @@ Class based views
 -----------------
 .. warning::
 
-  API of most classes will be stabilized for 1.0 release.
+  The API of class based views is experimental and unstable.
 
 .. autoclass:: aiohttp_sqlalchemy.SAMixin
   :inherited-members:
@@ -48,22 +48,22 @@ Instance mixins
   :members:
   :show-inheritance:
 
-  .. autoclass:: aiohttp_sqlalchemy.ItemAddMixin
+  .. autoclass:: aiohttp_sqlalchemy.UnitAddMixin
     :inherited-members:
     :members:
     :show-inheritance:
 
-.. autoclass:: aiohttp_sqlalchemy.ItemDeleteMixin
+.. autoclass:: aiohttp_sqlalchemy.UnitDeleteMixin
   :inherited-members:
   :members:
   :show-inheritance:
 
-.. autoclass:: aiohttp_sqlalchemy.ItemEditMixin
+.. autoclass:: aiohttp_sqlalchemy.UnitEditMixin
   :inherited-members:
   :members:
   :show-inheritance:
 
-.. autoclass:: aiohttp_sqlalchemy.ItemViewMixin
+.. autoclass:: aiohttp_sqlalchemy.UnitViewMixin
   :inherited-members:
   :members:
   :show-inheritance:

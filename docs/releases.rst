@@ -1,6 +1,29 @@
 ========
 Releases
 ========
+Unreleased
+----------
+**Removed**
+
+* Removed ``views`` synonym for ``web_handlers``
+* Removed ``ItemAddMixin`` synonym for ``UnitAddMixin``
+* Removed ``ItemDeleteMixin`` synonym for ``UnitDeleteMixin``
+* Removed ``ItemEditMixin`` synonym for ``UnitEditMixin``
+* Removed ``ItemViewMixin`` synonym for ``UnitViewMixin``
+* Removed ``OffsetPagination`` synonym for ``OffsetPaginationMixin``
+* Removed ``SAItemAddMixin`` synonym for ``UnitAddMixin``
+* Removed ``SAItemDeleteMixin`` synonym for ``UnitDeleteMixin``
+* Removed ``SAItemEditMixin`` synonym for ``UnitEditMixin``
+* Removed ``SAItemViewMixin`` synonym for ``UnitViewMixin``
+* Removed ``SAListAddMixin'`` synonym for ``ListAddMixin``
+* Removed ``SAListDeleteMixin`` synonym for ``ListDeleteMixin``
+* Removed ``SAListEditMixin`` synonym for ``ListEditMixin``
+* Removed ``SAListViewMixin`` synonym for ``ListViewMixin``
+* Removed ``SAModelDeleteMixin`` synonym for ``DeleteStatementMixin``
+* Removed ``SAModelEditMixin`` synonym for ``UpdateStatementMixin``
+* Removed ``SAModelViewMixin`` synonym for ``SelectStatementMixin``
+* Removed ``SAPrimaryKeyMixin`` synonym for ``PrimaryKeyMixin``
+
 Version 0.33
 ------------
 * ``ItemAddMixin`` is deprecated. Use ``UnitAddMixin``;

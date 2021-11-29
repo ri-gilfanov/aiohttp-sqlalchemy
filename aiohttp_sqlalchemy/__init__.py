@@ -1,6 +1,5 @@
 """AIOHTTP-SQLAlchemy. SQLAlchemy 1.4 / 2.0 support for aiohttp."""
-import warnings
-from typing import Any, cast
+from typing import cast
 
 from aiohttp.web import Application
 from aiohttp_things import web_handlers
@@ -14,7 +13,6 @@ from sqlalchemy.orm import Session, sessionmaker
 
 from aiohttp_sqlalchemy.constants import DEFAULT_KEY, SA_DEFAULT_KEY
 from aiohttp_sqlalchemy.decorators import sa_decorator
-from aiohttp_sqlalchemy.deprecation import _handle_deprecation
 from aiohttp_sqlalchemy.exceptions import (
     DuplicateAppKeyError,
     DuplicateRequestKeyError,
@@ -80,6 +78,7 @@ __all__ = [
     'sa_decorator',
     'sa_middleware',
     'setup',
+    'web_handlers',
     # Synonyms
     'DEFAULT_KEY',
     'sa_bind',
@@ -145,19 +144,3 @@ def setup(app: Application, binds: "TBinds") -> None:
 
 # Synonyms
 sa_bind = bind
-
-
-def __getattr__(name: str) -> Any:
-    if name == 'views':
-        warnings.warn(
-            '`views` module is deprecated. '
-            'Use `web_handlers` module.',
-            DeprecationWarning,
-            stacklevel=2,
-        )
-        return web_handlers
-
-    name = _handle_deprecation(name)
-    if name:
-        return globals().get(name)
-    raise AttributeError(f"module {__name__} has no attribute {name}")
