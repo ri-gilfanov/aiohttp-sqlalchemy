@@ -1,7 +1,7 @@
 ==================================
 aiohttp-sqlalchemy's documentation
 ==================================
-|ReadTheDocs| |PyPI release| |License| |Python versions| |PyPI downloads| |GitHub CI| |Codecov| |Codacy|
+|ReadTheDocs| |PyPI release| |PyPI downloads| |Python versions| |License| |GitHub CI| |Codecov| |Codacy|
 
 .. |ReadTheDocs| image:: https://readthedocs.org/projects/aiohttp-sqlalchemy/badge/?version=latest
   :target: https://aiohttp-sqlalchemy.readthedocs.io/en/latest/?badge=latest
@@ -11,17 +11,17 @@ aiohttp-sqlalchemy's documentation
   :target: https://pypi.org/project/aiohttp-sqlalchemy/
   :alt: Release
 
-.. |License| image:: https://img.shields.io/badge/License-MIT-green
-  :target: https://github.com/ri-gilfanov/aiohttp-sqlalchemy/blob/master/LICENSE
-  :alt: MIT License
+.. |PyPI downloads| image:: https://static.pepy.tech/personalized-badge/aiohttp-sqlalchemy?period=total&units=international_system&left_color=grey&right_color=blue&left_text=Downloads
+  :target: https://pepy.tech/project/aiohttp-sqlalchemy
+  :alt: PyPI downloads count
 
 .. |Python versions| image:: https://img.shields.io/badge/Python-3.7%20%7C%203.8%20%7C%203.9%20%7C%203.10-blue
   :target: https://pypi.org/project/aiohttp-sqlalchemy/
   :alt: Python version support
 
-.. |PyPI downloads| image:: https://static.pepy.tech/personalized-badge/aiohttp-sqlalchemy?period=total&units=international_system&left_color=grey&right_color=blue&left_text=Downloads
-  :target: https://pepy.tech/project/aiohttp-sqlalchemy
-  :alt: PyPI downloads count
+.. |License| image:: https://img.shields.io/badge/License-MIT-green
+  :target: https://github.com/ri-gilfanov/aiohttp-sqlalchemy/blob/master/LICENSE
+  :alt: MIT License
 
 .. |GitHub CI| image:: https://github.com/ri-gilfanov/aiohttp-sqlalchemy/actions/workflows/ci.yml/badge.svg?branch=master
   :target: https://github.com/ri-gilfanov/aiohttp-sqlalchemy/actions/workflows/ci.yml
