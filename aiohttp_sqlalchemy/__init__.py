@@ -43,7 +43,7 @@ from aiohttp_sqlalchemy.web_handlers import (
     UnitViewMixin,
 )
 
-__version__ = '0.33.0'
+__version__ = '0.34.0'
 
 __all__ = [
     'DEFAULT_KEY',

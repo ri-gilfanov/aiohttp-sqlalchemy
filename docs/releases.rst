@@ -1,8 +1,8 @@
 ========
 Releases
 ========
-Unreleased
-----------
+Version 0.34
+------------
 **Added**
 
 * Add official support Python 3.10;
