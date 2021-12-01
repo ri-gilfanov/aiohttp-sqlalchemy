@@ -1,13 +1,13 @@
 import pytest
 from aiohttp import web
+from sqlalchemy.orm import sessionmaker
 
 import aiohttp_sqlalchemy
 from aiohttp_sqlalchemy import DuplicateAppKeyError
-from aiohttp_sqlalchemy.typedefs import TSessionFactory
 
 
 async def test_duplicate_app_key_error(
-    session_factory: TSessionFactory,
+    session_factory: sessionmaker,
 ) -> None:
 
     with pytest.raises(DuplicateAppKeyError):

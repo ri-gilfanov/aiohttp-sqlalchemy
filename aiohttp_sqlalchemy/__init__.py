@@ -1,6 +1,4 @@
 """AIOHTTP-SQLAlchemy. SQLAlchemy 1.4 / 2.0 support for aiohttp."""
-from typing import cast
-
 from aiohttp.web import Application
 from aiohttp_things import web_handlers
 from sqlalchemy.engine import Engine
@@ -18,8 +16,9 @@ from aiohttp_sqlalchemy.exceptions import (
     DuplicateRequestKeyError,
 )
 from aiohttp_sqlalchemy.middlewares import sa_middleware
-from aiohttp_sqlalchemy.typedefs import TBind, TBinds, TSessionFactory, TTarget
+from aiohttp_sqlalchemy.typedefs import TBind, TBinds, TTarget
 from aiohttp_sqlalchemy.utils import (
+    get_engine,
     get_session,
     get_session_factory,
     init_db,
@@ -72,6 +71,7 @@ __all__ = [
     'SAMixin',
     'SAModelView',
     'bind',
+    'get_engine',
     'get_session',
     'get_session_factory',
     'init_db',
@@ -102,22 +102,18 @@ def bind(
     :param middleware: `bool` for enable middleware. True by default.
     """
     if isinstance(target, str):
-        target = cast(AsyncEngine, create_async_engine(target))
+        target = create_async_engine(target)
 
     if isinstance(target, AsyncEngine):
-        target = cast(
-            TSessionFactory,
-            sessionmaker(
-                bind=target,
-                class_=AsyncSession,
-                expire_on_commit=False,
-            ),
+        target = sessionmaker(
+            bind=target,
+            class_=AsyncSession,
+            expire_on_commit=False,
         )
 
-    for type_ in (AsyncSession, Engine, Session):
-        if isinstance(target, type_):
-            msg = f'{type_} is unsupported type of argument `target`.'
-            raise TypeError(msg)
+    if isinstance(target, (AsyncSession, Engine, Session)):
+        msg = f'{type(target)} is unsupported type of argument `target`.'
+        raise TypeError(msg)
 
     if not callable(target):
         msg = f'{target} is unsupported type of argument `target`.'

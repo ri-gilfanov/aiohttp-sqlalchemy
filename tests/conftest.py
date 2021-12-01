@@ -1,5 +1,3 @@
-from typing import cast
-
 import pytest
 import sqlalchemy as sa
 from aiohttp import web
@@ -13,10 +11,11 @@ from sqlalchemy.ext.asyncio import (
     AsyncSession,
     create_async_engine,
 )
+from sqlalchemy.orm import sessionmaker
 
 import aiohttp_sqlalchemy
 from aiohttp_sqlalchemy import SA_DEFAULT_KEY, sa_bind, sa_middleware
-from aiohttp_sqlalchemy.typedefs import THandler, TSessionFactory
+from aiohttp_sqlalchemy.typedefs import THandler
 
 pytest_plugins = 'aiohttp.pytest_plugin'
 
@@ -38,15 +37,12 @@ def orm_async_engine() -> AsyncEngine:
 
 
 @pytest.fixture
-def session_factory(orm_async_engine: AsyncEngine) -> TSessionFactory:
-    return cast(
-        TSessionFactory,
-        orm.sessionmaker(orm_async_engine, AsyncSession),
-    )
+def session_factory(orm_async_engine: AsyncEngine) -> sessionmaker:
+    return sessionmaker(orm_async_engine, AsyncSession)
 
 
 @pytest.fixture
-def session(session_factory: TSessionFactory) -> AsyncSession:
+def session(session_factory: sessionmaker) -> AsyncSession:
     return session_factory()
 
 
@@ -56,7 +52,7 @@ def main_middleware() -> THandler:
 
 
 @pytest.fixture
-def middlewared_app(session_factory: TSessionFactory) -> Application:
+def middlewared_app(session_factory: sessionmaker) -> Application:
     app = web.Application()
     aiohttp_sqlalchemy.setup(app, [sa_bind(session_factory)])
     return app

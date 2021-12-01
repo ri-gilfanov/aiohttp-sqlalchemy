@@ -2,10 +2,10 @@ import pytest
 import sqlalchemy as sa
 from aiohttp.web import Application, Request
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import sessionmaker
 
 import aiohttp_sqlalchemy
 from aiohttp_sqlalchemy import SA_DEFAULT_KEY, get_session, get_session_factory
-from aiohttp_sqlalchemy.typedefs import TSessionFactory
 
 
 async def test_db_init(middlewared_app: Application) -> None:
@@ -25,7 +25,7 @@ def test_get_session(mocked_request: Request, session: AsyncSession) -> None:
 def test_get_session_factory(
     mocked_request: Request,
     middlewared_app: Application,
-    session_factory: TSessionFactory,
+    session_factory: sessionmaker,
 ) -> None:
     assert get_session_factory(mocked_request) is session_factory
     assert get_session_factory(middlewared_app) is session_factory
