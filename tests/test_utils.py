@@ -1,25 +1,31 @@
 import pytest
 import sqlalchemy as sa
 from aiohttp.web import Application, Request
-from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession
 from sqlalchemy.orm import sessionmaker
 
-import aiohttp_sqlalchemy
-from aiohttp_sqlalchemy import SA_DEFAULT_KEY, get_session, get_session_factory
+import aiohttp_sqlalchemy as ahsa
 
 
 async def test_db_init(middlewared_app: Application) -> None:
     metadata = sa.MetaData()
-    await aiohttp_sqlalchemy.init_db(middlewared_app, metadata)
+    await ahsa.init_db(middlewared_app, metadata)
+
+
+async def test_get_engine(middlewared_app: Application) -> None:
+    engine = await ahsa.get_engine(middlewared_app)
+    assert isinstance(engine, AsyncEngine)
 
 
 def test_get_session(mocked_request: Request, session: AsyncSession) -> None:
-    mocked_request[SA_DEFAULT_KEY] = session
-    assert get_session(mocked_request) is session
+    mocked_request[ahsa.DEFAULT_KEY] = session
+    assert ahsa.get_session(mocked_request) is session
+
     with pytest.raises(TypeError):
-        get_session(None)  # type: ignore
+        ahsa.get_session(None)  # type: ignore
+
     with pytest.raises(TypeError):
-        get_session(mocked_request, 'wrong key')
+        ahsa.get_session(mocked_request, 'wrong key')
 
 
 def test_get_session_factory(
@@ -27,7 +33,7 @@ def test_get_session_factory(
     middlewared_app: Application,
     session_factory: sessionmaker,
 ) -> None:
-    assert get_session_factory(mocked_request) is session_factory
-    assert get_session_factory(middlewared_app) is session_factory
+    assert ahsa.get_session_factory(mocked_request) is session_factory
+    assert ahsa.get_session_factory(middlewared_app) is session_factory
     with pytest.raises(TypeError):
-        get_session_factory(None)  # type: ignore
+        ahsa.get_session_factory(None)  # type: ignore
