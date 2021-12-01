@@ -111,4 +111,6 @@ Additional functionality
 
 .. autofunction:: aiohttp_sqlalchemy.sa_middleware
 
+.. autofunction:: aiohttp_sqlalchemy.get_engine
+
 .. autofunction:: aiohttp_sqlalchemy.get_session_factory

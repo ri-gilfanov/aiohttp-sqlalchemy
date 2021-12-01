@@ -6,6 +6,15 @@ Unreleased
 **Added**
 
 * Add official support Python 3.10;
+* Add ``get_engine`` util.
+
+**Changed**
+
+* Argument ``target`` in signature ``bind(target ,key=SA_DEFAULT_KEY, *,
+  middleware=True)`` can be of the following types ``str``,
+  ``sqlalchemy.ext.asyncio.AsyncEngine``, ``sqlalchemy.orm.sessionmaker``
+  or their compatible descendants. Custom session factory is no longer
+  supported.
 
 **Removed**
 
