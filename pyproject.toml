@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "aiohttp-sqlalchemy"
-version = "0.34.0"
+version = "1.0.0"
 description = "SQLAlchemy 1.4 / 2.0 support for aiohttp."
 license = "MIT"
 
@@ -43,8 +43,7 @@ classifiers = [
 python = "^3.7"
 aiohttp = "^3.8.1"
 aiohttp-things = ">=0.13.0"
-SQLAlchemy = "^1.4.28"
-sqlalchemy-things = ">=0.10.1"
+SQLAlchemy = "^2.0.4"
 aiomysql = { version = ">=0.0.22", optional = true }
 aiosqlite = { version = ">=0.17.0", optional = true }
 asyncpg = { version = ">=0.25.0", optional = true }
