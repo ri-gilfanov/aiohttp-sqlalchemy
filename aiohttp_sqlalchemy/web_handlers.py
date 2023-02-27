@@ -3,11 +3,9 @@ from typing import Any, List, Optional
 
 import aiohttp_things as ahth
 from aiohttp.web import View
-from aiohttp.web_urldispatcher import AbstractRoute
 from sqlalchemy import delete, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.sql import Delete, Select, Update
-from sqlalchemy_things.pagination import OffsetPage, OffsetPaginator
 
 from aiohttp_sqlalchemy.constants import SA_DEFAULT_KEY
 from aiohttp_sqlalchemy.utils import get_session
@@ -37,45 +35,6 @@ class UpdateStatementMixin(SAModelMixin):
 class SelectStatementMixin(SAModelMixin):
     def get_select_stmt(self, model: Any = None) -> Select:
         return select(model or self.sa_model)
-
-
-class OffsetPaginationMixin(ahth.PaginationMixin, SelectStatementMixin):
-    page_key: int = 1
-    page_key_adapter = int
-    paginator: OffsetPaginator = OffsetPaginator()
-
-    async def execute_select_stmt(
-        self,
-        model: Any = None,
-        key: Optional[str] = None,
-    ) -> Optional[OffsetPage]:
-        async with self.get_sa_session().begin():
-            page = await self.paginator.get_page_async(
-                self.get_sa_session(key or self.sa_session_key),
-                self.get_select_stmt(model or self.sa_model),
-                self.page_key,
-            )
-        return page
-
-    async def prepare_context(self) -> None:
-        page: Optional[OffsetPage] = await self.execute_select_stmt()
-
-        if page:
-            route: AbstractRoute = self.request.match_info.route
-
-            self.context['items'] = page.items
-
-            if page.next:
-                kw = {'page_key': page.next}
-                self.context['next_url'] = route.url_for().with_query(kw)
-            else:
-                self.context['next_url'] = page.next
-
-            if page.previous:
-                kw = {'page_key': page.previous}
-                self.context['previous_url'] = route.url_for().with_query(kw)
-            else:
-                self.context['previous_url'] = page.previous
 
 
 class PrimaryKeyMixin(ahth.PrimaryKeyMixin, SAModelMixin, metaclass=ABCMeta):
