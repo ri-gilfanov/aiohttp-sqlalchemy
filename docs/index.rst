@@ -35,7 +35,7 @@ aiohttp-sqlalchemy's documentation
   :target: https://www.codacy.com/gh/ri-gilfanov/aiohttp-sqlalchemy/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ri-gilfanov/aiohttp-sqlalchemy&amp;utm_campaign=Badge_Grade
    :alt: Codacy code quality
 
-`SQLAlchemy 1.4 / 2.0 <https://www.sqlalchemy.org/>`_ support for `AIOHTTP
+`SQLAlchemy 2.0 <https://www.sqlalchemy.org/>`_ support for `AIOHTTP
 <https://docs.aiohttp.org/>`_.
 
 The library provides the next features:

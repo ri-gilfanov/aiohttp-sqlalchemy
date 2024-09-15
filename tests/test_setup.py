@@ -1,13 +1,20 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 import pytest
 from aiohttp import web
-from sqlalchemy.orm import sessionmaker
+
+if TYPE_CHECKING:  # pragma: no cover
+    from sqlalchemy.orm import Session, sessionmaker
+
 
 import aiohttp_sqlalchemy
 from aiohttp_sqlalchemy import DuplicateAppKeyError
 
 
 async def test_duplicate_app_key_error(
-    session_factory: sessionmaker,
+    session_factory: sessionmaker[Session],
 ) -> None:
     with pytest.raises(DuplicateAppKeyError):
         aiohttp_sqlalchemy.setup(

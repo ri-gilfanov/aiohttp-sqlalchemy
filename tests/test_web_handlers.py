@@ -1,12 +1,18 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING, Any
+
 import pytest
 import sqlalchemy as sa
 from aiohttp import web
 from aiohttp.hdrs import METH_GET
 from aiohttp.test_utils import make_mocked_request
-from aiohttp.web import Request
 from sqlalchemy import orm
-from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy_things.pagination import OffsetPage
+
+if TYPE_CHECKING:  # pragma: no cover
+    from aiohttp.web import Request
+    from sqlalchemy.ext.asyncio import AsyncSession
 
 from aiohttp_sqlalchemy import (
     SA_DEFAULT_KEY,
@@ -35,7 +41,7 @@ def test_sa_session(
 def test_instance_add(
     mocked_request: Request,
     session: AsyncSession,
-    base_model: orm.Mapper,
+    base_model: orm.Mapper[Any],
 ) -> None:
     class Model(base_model):  # type: ignore
         __tablename__ = "model"
@@ -51,7 +57,7 @@ def test_instance_add(
     view.sa_add()
 
 
-def test_delete_stmt(mocked_request: Request, base_model: orm.Mapper) -> None:
+def test_delete_stmt(mocked_request: Request, base_model: orm.Mapper[Any]) -> None:
     class Model(base_model):  # type: ignore
         __tablename__ = "model"
 
@@ -64,7 +70,7 @@ def test_delete_stmt(mocked_request: Request, base_model: orm.Mapper) -> None:
     view.get_delete_stmt()
 
 
-def test_edit_stmt(mocked_request: Request, base_model: orm.Mapper) -> None:
+def test_edit_stmt(mocked_request: Request, base_model: orm.Mapper[Any]) -> None:
     class Model(base_model):  # type: ignore
         __tablename__ = "model"
 
@@ -77,7 +83,7 @@ def test_edit_stmt(mocked_request: Request, base_model: orm.Mapper) -> None:
     view.get_update_stmt()
 
 
-def test_view_stmt(mocked_request: Request, base_model: orm.Mapper) -> None:
+def test_view_stmt(mocked_request: Request, base_model: orm.Mapper[Any]) -> None:
     class Model(base_model):  # type: ignore
         __tablename__ = "model"
 
@@ -93,7 +99,7 @@ def test_view_stmt(mocked_request: Request, base_model: orm.Mapper) -> None:
 async def test_offset_pagination(
     middlewared_app: web.Application,
     session: AsyncSession,
-    base_model: orm.Mapper,
+    base_model: orm.Mapper[Any],
 ) -> None:
     class Model(base_model):  # type: ignore
         __tablename__ = "model"
@@ -143,7 +149,7 @@ async def test_offset_pagination(
 def test_list_add(
     mocked_request: Request,
     session: AsyncSession,
-    base_model: orm.Mapper,
+    base_model: orm.Mapper[Any],
 ) -> None:
     class Model(base_model):  # type: ignore
         __tablename__ = "model"

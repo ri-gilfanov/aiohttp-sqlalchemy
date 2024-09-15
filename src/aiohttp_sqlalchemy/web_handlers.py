@@ -39,7 +39,7 @@ class UpdateStatementMixin(SAModelMixin):
 
 
 class SelectStatementMixin(SAModelMixin):
-    def get_select_stmt(self, model: Any = None) -> Select:
+    def get_select_stmt(self, model: Any = None) -> Select[Any]:
         return select(model or self.sa_model)
 
 
@@ -115,7 +115,7 @@ class UnitViewMixin(
     PrimaryKeyMixin,
     metaclass=ABCMeta,
 ):
-    def get_select_stmt(self, model: Any = None) -> Select:
+    def get_select_stmt(self, model: Any = None) -> Select[Any]:
         return super().get_select_stmt(model).where(self.sa_pk_attr == self.pk)
 
 

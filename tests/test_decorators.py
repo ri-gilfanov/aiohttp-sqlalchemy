@@ -1,5 +1,8 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 import pytest
-from aiohttp.web import Request
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from aiohttp_sqlalchemy import (
@@ -7,8 +10,12 @@ from aiohttp_sqlalchemy import (
     DuplicateRequestKeyError,
     sa_decorator,
 )
-from aiohttp_sqlalchemy.typedefs import THandler
 from tests.conftest import ClassBasedView, ClassHandler
+
+if TYPE_CHECKING:  # pragma: no cover
+    from aiohttp.web import Request
+
+    from aiohttp_sqlalchemy.typedefs import THandler
 
 
 async def test_duplicate_request_key_error(

@@ -1,11 +1,21 @@
 ========
 Releases
 ========
+Version 1.0.0
+-------------
+**Added**
+
+* Added support for SQLAlchemy 2.0.
+
+**Removed**
+
+* Dropped support for SQLAlchemy 1.4.
+
 Version 0.35
 ------------
 **Added**
 
-* Python 3.11 and 3.12 support.
+* Added support for Python 3.11 and 3.12.
 
 **Changed**
 
@@ -13,7 +23,7 @@ Version 0.35
 
 **Removed**
 
-* Python 3.7 support.
+* Dropped support for Python 3.7.
 
 Version 0.34
 ------------

@@ -23,11 +23,7 @@ def sa_decorator(key: str = SA_DEFAULT_KEY) -> THandlerWrapper:
     def wrapper(handler: THandler) -> THandler:
         @wraps(handler)
         async def wrapped(*args: Any, **kwargs: Any) -> StreamResponse:
-            request = (
-                args[0].request
-                if isinstance(args[0], AbstractView)
-                else args[-1]
-            )
+            request = args[0].request if isinstance(args[0], AbstractView) else args[-1]
 
             if key in request:
                 raise DuplicateRequestKeyError(key)

@@ -43,10 +43,7 @@ async def select_instances(session):
         stmt = sa.select(MyModel)
         result = await session.execute(stmt)
         instances = result.scalars()
-        return {
-            instance.pk: instance.timestamp.isoformat()
-            for instance in instances
-        }
+        return {instance.pk: instance.timestamp.isoformat() for instance in instances}
 
 
 @sa_decorator(THIRD_KEY)
@@ -54,10 +51,7 @@ async def select_instances(session):
 async def function_handler(request):
     await add_instance(sa_session(request, choice(KEY_LIST)))
     return web.json_response(
-        {
-            key: await select_instances(sa_session(request, key))
-            for key in KEY_LIST
-        }
+        {key: await select_instances(sa_session(request, key)) for key in KEY_LIST}
     )
 
 
@@ -67,10 +61,7 @@ class ClassOrganizedHandler:
     async def get(self, request):
         await add_instance(sa_session(request, choice(KEY_LIST)))
         return web.json_response(
-            {
-                key: await select_instances(sa_session(request, key))
-                for key in KEY_LIST
-            }
+            {key: await select_instances(sa_session(request, key)) for key in KEY_LIST}
         )
 
 
@@ -80,10 +71,7 @@ class ClassBasedView(web.View, SAMixin):
     async def get(self):
         await add_instance(self.get_sa_session(choice(KEY_LIST)))
         return web.json_response(
-            {
-                key: await select_instances(self.get_sa_session(key))
-                for key in KEY_LIST
-            }
+            {key: await select_instances(self.get_sa_session(key)) for key in KEY_LIST}
         )
 
 

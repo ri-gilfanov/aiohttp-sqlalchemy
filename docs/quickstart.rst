@@ -77,7 +77,7 @@ More control in configuration
 
   url = 'sqlite+aiosqlite:///'
   engine = create_async_engine(url, echo=True)
-  Session = orm.sessionmaker(main_engine, AsyncSession, expire_on_commit=False)
+  Session = orm.sessionmaker(main_engine, class_=AsyncSession, expire_on_commit=False)
 
   ahsa.setup(app, [
       ahsa.bind(Session),

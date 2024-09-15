@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import aiohttp_sqlalchemy
 from aiohttp_sqlalchemy import constants
 

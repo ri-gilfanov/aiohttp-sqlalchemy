@@ -9,7 +9,7 @@ from aiohttp_sqlalchemy.constants import SA_DEFAULT_KEY
 
 if TYPE_CHECKING:  # pragma: no cover
     from sqlalchemy import MetaData
-    from sqlalchemy.orm import sessionmaker
+    from sqlalchemy.orm import Session, sessionmaker
 
 
 async def init_db(
@@ -38,7 +38,7 @@ async def get_engine(
     :param key: key of SQLAlchemy binding.
     """
     session_factory = get_session_factory(app, key)
-    return session_factory.kw.get("bind")
+    return session_factory.kw.get("bind")  # type: ignore
 
 
 def get_session(
@@ -64,7 +64,7 @@ def get_session(
 def get_session_factory(
     source: Request | Application,
     key: str = SA_DEFAULT_KEY,
-) -> sessionmaker:
+) -> sessionmaker[Session]:
     """Return callable object which returns an `AsyncSession` instance.
 
     :param source: AIOHTTP request object or your AIOHTTP application.
@@ -72,13 +72,12 @@ def get_session_factory(
     """
     if not isinstance(source, (Request, Application)):
         msg = (
-            "Arg `source` must be `aiohttp.web.Application`"
-            "or `aiohttp.web.Request`."
+            "Arg `source` must be `aiohttp.web.Application`" "or `aiohttp.web.Request`."
         )
         raise TypeError(msg)
     if isinstance(source, Request):
-        return source.config_dict.get(key)
-    return source.get(key)
+        return source.config_dict.get(key)  # type: ignore
+    return source.get(key)  # type: ignore
 
 
 # Synonyms

@@ -1,21 +1,29 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING, Any
+
 import pytest
 import sqlalchemy as sa
 from aiohttp import web
 from aiohttp.hdrs import METH_GET
 from aiohttp.test_utils import make_mocked_request
 from aiohttp.web import Request, Response
-from aiohttp.web_app import Application
 from sqlalchemy import orm
 from sqlalchemy.ext.asyncio import (
     AsyncEngine,
     AsyncSession,
     create_async_engine,
 )
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import Session, sessionmaker
 
 import aiohttp_sqlalchemy
 from aiohttp_sqlalchemy import SA_DEFAULT_KEY, sa_bind, sa_middleware
-from aiohttp_sqlalchemy.typedefs import THandler
+
+if TYPE_CHECKING:  # pragma: no cover
+    from aiohttp.web_app import Application
+
+    from aiohttp_sqlalchemy.typedefs import THandler
+
 
 pytest_plugins = "aiohttp.pytest_plugin"
 
@@ -26,9 +34,9 @@ def wrong_key() -> str:
 
 
 @pytest.fixture
-def base_model() -> orm.Mapper:
+def base_model() -> orm.Mapper[Any]:
     metadata = sa.MetaData()
-    return orm.declarative_base(metadata=metadata)
+    return orm.declarative_base(metadata=metadata)  # type: ignore
 
 
 @pytest.fixture
@@ -37,12 +45,15 @@ def orm_async_engine() -> AsyncEngine:
 
 
 @pytest.fixture
-def session_factory(orm_async_engine: AsyncEngine) -> sessionmaker:
-    return sessionmaker(orm_async_engine, AsyncSession)
+def session_factory(orm_async_engine: AsyncEngine) -> sessionmaker[Session]:
+    return sessionmaker(orm_async_engine, class_=AsyncSession)  # type: ignore
 
 
 @pytest.fixture
-def session(session_factory: sessionmaker) -> AsyncSession:
+def session(session_factory: sessionmaker[Session]) -> AsyncSession:
+    session = session_factory()
+    if not isinstance(session, AsyncSession):
+        raise TypeError
     return session_factory()
 
 
@@ -52,14 +63,14 @@ def main_middleware() -> THandler:
 
 
 @pytest.fixture
-def middlewared_app(session_factory: sessionmaker) -> Application:
+def middlewared_app(session_factory: sessionmaker[Session]) -> Application:
     app = web.Application()
     aiohttp_sqlalchemy.setup(app, [sa_bind(session_factory)])
     return app
 
 
 @pytest.fixture
-def mocked_request(middlewared_app: Application) -> "Request":
+def mocked_request(middlewared_app: Application) -> Request:
     return make_mocked_request(METH_GET, "/", app=middlewared_app)
 
 

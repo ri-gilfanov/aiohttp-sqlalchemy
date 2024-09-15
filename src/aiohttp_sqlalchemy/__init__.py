@@ -1,4 +1,4 @@
-"""AIOHTTP-SQLAlchemy. SQLAlchemy 1.4 / 2.0 support for aiohttp."""
+"""AIOHTTP-SQLAlchemy. SQLAlchemy 2.0 support for aiohttp."""
 
 from __future__ import annotations
 
@@ -110,7 +110,7 @@ def bind(
         target = create_async_engine(target)
 
     if isinstance(target, AsyncEngine):
-        target = sessionmaker(
+        target = sessionmaker(  # type: ignore
             bind=target,
             class_=AsyncSession,
             expire_on_commit=False,
