@@ -9,20 +9,28 @@ from aiohttp_sqlalchemy import DuplicateAppKeyError
 async def test_duplicate_app_key_error(
     session_factory: sessionmaker,
 ) -> None:
+    with pytest.raises(DuplicateAppKeyError):
+        aiohttp_sqlalchemy.setup(
+            web.Application(),
+            [
+                aiohttp_sqlalchemy.bind(session_factory),
+                aiohttp_sqlalchemy.bind(session_factory),
+            ],
+        )
 
     with pytest.raises(DuplicateAppKeyError):
-        aiohttp_sqlalchemy.setup(web.Application(), [
-            aiohttp_sqlalchemy.bind(session_factory),
-            aiohttp_sqlalchemy.bind(session_factory),
-        ])
+        aiohttp_sqlalchemy.setup(
+            web.Application(),
+            [
+                aiohttp_sqlalchemy.bind(session_factory, "sa_secondary"),
+                aiohttp_sqlalchemy.bind(session_factory, "sa_secondary"),
+            ],
+        )
 
-    with pytest.raises(DuplicateAppKeyError):
-        aiohttp_sqlalchemy.setup(web.Application(), [
-            aiohttp_sqlalchemy.bind(session_factory, 'sa_secondary'),
-            aiohttp_sqlalchemy.bind(session_factory, 'sa_secondary'),
-        ])
-
-    aiohttp_sqlalchemy.setup(web.Application(), [
-        aiohttp_sqlalchemy.bind(session_factory),
-        aiohttp_sqlalchemy.bind(session_factory, 'sa_secondary'),
-    ])
+    aiohttp_sqlalchemy.setup(
+        web.Application(),
+        [
+            aiohttp_sqlalchemy.bind(session_factory),
+            aiohttp_sqlalchemy.bind(session_factory, "sa_secondary"),
+        ],
+    )

@@ -25,7 +25,7 @@ def test_get_session(mocked_request: Request, session: AsyncSession) -> None:
         ahsa.get_session(None)  # type: ignore
 
     with pytest.raises(TypeError):
-        ahsa.get_session(mocked_request, 'wrong key')
+        ahsa.get_session(mocked_request, "wrong key")
 
 
 def test_get_session_factory(

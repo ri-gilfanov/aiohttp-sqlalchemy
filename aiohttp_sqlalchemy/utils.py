@@ -1,11 +1,15 @@
-from typing import Union
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 
 from aiohttp.web import Application, Request
-from sqlalchemy import MetaData
 from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession
-from sqlalchemy.orm import sessionmaker
 
 from aiohttp_sqlalchemy.constants import SA_DEFAULT_KEY
+
+if TYPE_CHECKING:  # pragma: no cover
+    from sqlalchemy import MetaData
+    from sqlalchemy.orm import sessionmaker
 
 
 async def init_db(
@@ -34,8 +38,7 @@ async def get_engine(
     :param key: key of SQLAlchemy binding.
     """
     session_factory = get_session_factory(app, key)
-    engine = session_factory.kw.get('bind')
-    return engine
+    return session_factory.kw.get("bind")
 
 
 def get_session(
@@ -48,18 +51,18 @@ def get_session(
     :param key: key of SQLAlchemy binding.
     """
     if not isinstance(request, Request):
-        raise TypeError(f'{request} is not {Request}.')
+        msg = f"{request} is not {Request}."
+        raise TypeError(msg)
 
     session = request.get(key)
     if not isinstance(session, AsyncSession):
-        raise TypeError(
-            f'{session} returned by {key} is not {AsyncSession} instance.'
-        )
+        msg = f"{session} returned by {key} is not {AsyncSession} instance."
+        raise TypeError(msg)
     return session
 
 
 def get_session_factory(
-    source: Union[Request, Application],
+    source: Request | Application,
     key: str = SA_DEFAULT_KEY,
 ) -> sessionmaker:
     """Return callable object which returns an `AsyncSession` instance.
@@ -68,11 +71,12 @@ def get_session_factory(
     :param key: key of SQLAlchemy binding.
     """
     if not isinstance(source, (Request, Application)):
-        raise TypeError(
-            'Arg `source` must be `aiohttp.web.Application` or'
-            ' `aiohttp.web.Request`.'
+        msg = (
+            "Arg `source` must be `aiohttp.web.Application`"
+            "or `aiohttp.web.Request`."
         )
-    elif isinstance(source, Request):
+        raise TypeError(msg)
+    if isinstance(source, Request):
         return source.config_dict.get(key)
     return source.get(key)
 

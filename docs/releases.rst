@@ -1,6 +1,20 @@
 ========
 Releases
 ========
+Version 0.35
+------------
+**Added**
+
+* Python 3.11 and 3.12 support.
+
+**Changed**
+
+* Hold aiohttp-things and sqlalchemy-things versions.
+
+**Removed**
+
+* Python 3.7 support.
+
 Version 0.34
 ------------
 **Added**

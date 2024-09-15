@@ -1,5 +1,10 @@
 """AIOHTTP-SQLAlchemy. SQLAlchemy 1.4 / 2.0 support for aiohttp."""
-from aiohttp.web import Application
+
+from __future__ import annotations
+
+from importlib.metadata import version
+from typing import TYPE_CHECKING
+
 from aiohttp_things import web_handlers
 from sqlalchemy.engine import Engine
 from sqlalchemy.ext.asyncio import (
@@ -43,48 +48,48 @@ from aiohttp_sqlalchemy.web_handlers import (
     UnitViewMixin,
 )
 
-__version__ = '0.34.0'
+if TYPE_CHECKING:  # pragma: no cover
+    from aiohttp.web import Application
+
+__version__ = version(__package__)
 
 __all__ = [
-    'DEFAULT_KEY',
-    'DuplicateAppKeyError',
-    'DuplicateRequestKeyError',
-
-    'UnitAddMixin',
-    'UnitDeleteMixin',
-    'UnitEditMixin',
-    'UnitViewMixin',
-
-    'ListAddMixin',
-    'ListDeleteMixin',
-    'ListEditMixin',
-    'ListViewMixin',
-
-    'OffsetPaginationMixin',
-    'PrimaryKeyMixin',
-
-    'SABaseView',
-    'SA_DEFAULT_KEY',
-
-    'SAModelMixin',
-
-    'SAMixin',
-    'SAModelView',
-    'bind',
-    'get_engine',
-    'get_session',
-    'get_session_factory',
-    'init_db',
-    'sa_decorator',
-    'sa_middleware',
-    'setup',
-    'web_handlers',
+    "DEFAULT_KEY",
+    "DuplicateAppKeyError",
+    "DuplicateRequestKeyError",
+    "UnitAddMixin",
+    "UnitDeleteMixin",
+    "UnitEditMixin",
+    "UnitViewMixin",
+    "ListAddMixin",
+    "ListDeleteMixin",
+    "ListEditMixin",
+    "ListViewMixin",
+    "OffsetPaginationMixin",
+    "PrimaryKeyMixin",
+    "SABaseView",
+    "SA_DEFAULT_KEY",
+    "SAModelMixin",
+    "SAMixin",
+    "SAModelView",
+    "bind",
+    "get_engine",
+    "get_session",
+    "get_session_factory",
+    "init_db",
+    "sa_decorator",
+    "sa_middleware",
+    "setup",
+    "web_handlers",
+    "TBind",
+    "TBinds",
+    "TTarget",
     # Synonyms
-    'DEFAULT_KEY',
-    'sa_bind',
-    'sa_init_db',
-    'sa_session',
-    'sa_session_factory',
+    "DEFAULT_KEY",
+    "sa_bind",
+    "sa_init_db",
+    "sa_session",
+    "sa_session_factory",
 ]
 
 
@@ -93,7 +98,7 @@ def bind(
     key: str = SA_DEFAULT_KEY,
     *,
     middleware: bool = True,
-) -> 'TBind':
+) -> TBind:
     """Function wrapper for binding.
 
     :param target: argument can be database connection url, asynchronous engine
@@ -112,17 +117,17 @@ def bind(
         )
 
     if isinstance(target, (AsyncSession, Engine, Session)):
-        msg = f'{type(target)} is unsupported type of argument `target`.'
+        msg = f"{type(target)} is unsupported type of argument `target`."
         raise TypeError(msg)
 
     if not callable(target):
-        msg = f'{target} is unsupported type of argument `target`.'
+        msg = f"{target} is unsupported type of argument `target`."
         raise TypeError(msg)
 
     return target, key, middleware
 
 
-def setup(app: Application, binds: "TBinds") -> None:
+def setup(app: Application, binds: TBinds) -> None:
     """Setup function for SQLAlchemy binding to AIOHTTP application.
 
     :param app: your AIOHTTP application.

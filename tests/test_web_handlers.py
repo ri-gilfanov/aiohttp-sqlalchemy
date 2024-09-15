@@ -29,7 +29,7 @@ def test_sa_session(
     view = SABaseView(mocked_request)
     assert view.get_sa_session() is session
     with pytest.raises(TypeError):
-        view.get_sa_session('wrong key')
+        view.get_sa_session("wrong key")
 
 
 def test_instance_add(
@@ -38,7 +38,7 @@ def test_instance_add(
     base_model: orm.Mapper,
 ) -> None:
     class Model(base_model):  # type: ignore
-        __tablename__ = 'model'
+        __tablename__ = "model"
 
         pk = sa.Column(sa.Integer, primary_key=True)
 
@@ -53,7 +53,7 @@ def test_instance_add(
 
 def test_delete_stmt(mocked_request: Request, base_model: orm.Mapper) -> None:
     class Model(base_model):  # type: ignore
-        __tablename__ = 'model'
+        __tablename__ = "model"
 
         pk = sa.Column(sa.Integer, primary_key=True)
 
@@ -66,7 +66,7 @@ def test_delete_stmt(mocked_request: Request, base_model: orm.Mapper) -> None:
 
 def test_edit_stmt(mocked_request: Request, base_model: orm.Mapper) -> None:
     class Model(base_model):  # type: ignore
-        __tablename__ = 'model'
+        __tablename__ = "model"
 
         pk = sa.Column(sa.Integer, primary_key=True)
 
@@ -79,7 +79,7 @@ def test_edit_stmt(mocked_request: Request, base_model: orm.Mapper) -> None:
 
 def test_view_stmt(mocked_request: Request, base_model: orm.Mapper) -> None:
     class Model(base_model):  # type: ignore
-        __tablename__ = 'model'
+        __tablename__ = "model"
 
         pk = sa.Column(sa.Integer, primary_key=True)
 
@@ -96,7 +96,7 @@ async def test_offset_pagination(
     base_model: orm.Mapper,
 ) -> None:
     class Model(base_model):  # type: ignore
-        __tablename__ = 'model'
+        __tablename__ = "model"
 
         pk = sa.Column(sa.Integer, primary_key=True)
 
@@ -105,16 +105,16 @@ async def test_offset_pagination(
 
     await init_db(middlewared_app, Model.metadata)
 
-    request = make_mocked_request(METH_GET, '/?page_key=1')
+    request = make_mocked_request(METH_GET, "/?page_key=1")
     request[SA_DEFAULT_KEY] = session
     handler = OffsetPaginationHandler(request)
     assert handler.page_key == 1
     page = await handler.execute_select_stmt()
     isinstance(page, OffsetPage)
     await handler.prepare_context()
-    assert list(handler.context['items']) == []
-    assert handler.context['previous_url'] is None
-    assert handler.context['next_url'] is None
+    assert list(handler.context["items"]) == []
+    assert handler.context["previous_url"] is None
+    assert handler.context["next_url"] is None
 
     page_size = handler.paginator.page_size
 
@@ -124,20 +124,20 @@ async def test_offset_pagination(
     page = await handler.execute_select_stmt()
     isinstance(page, OffsetPage)
     await handler.prepare_context()
-    assert len(list(handler.context['items'])) == page_size
-    assert handler.context['previous_url'] is None
-    assert handler.context['next_url'] is not None
+    assert len(list(handler.context["items"])) == page_size
+    assert handler.context["previous_url"] is None
+    assert handler.context["next_url"] is not None
 
-    request = make_mocked_request(METH_GET, '/?page_key=2')
+    request = make_mocked_request(METH_GET, "/?page_key=2")
     request[SA_DEFAULT_KEY] = session
     handler = OffsetPaginationHandler(request)
     assert handler.page_key == 2
     page = await handler.execute_select_stmt()
     isinstance(page, OffsetPage)
     await handler.prepare_context()
-    assert len(list(handler.context['items'])) == 1
-    assert handler.context['previous_url'] is not None
-    assert handler.context['next_url'] is None
+    assert len(list(handler.context["items"])) == 1
+    assert handler.context["previous_url"] is not None
+    assert handler.context["next_url"] is None
 
 
 def test_list_add(
@@ -146,7 +146,7 @@ def test_list_add(
     base_model: orm.Mapper,
 ) -> None:
     class Model(base_model):  # type: ignore
-        __tablename__ = 'model'
+        __tablename__ = "model"
 
         pk = sa.Column(sa.Integer, primary_key=True)
 
