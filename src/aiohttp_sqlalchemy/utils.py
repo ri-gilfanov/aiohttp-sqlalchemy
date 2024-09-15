@@ -3,13 +3,12 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from aiohttp.web import Application, Request
-from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession
+from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, async_sessionmaker
 
 from aiohttp_sqlalchemy.constants import SA_DEFAULT_KEY
 
 if TYPE_CHECKING:  # pragma: no cover
     from sqlalchemy import MetaData
-    from sqlalchemy.orm import Session, sessionmaker
 
 
 async def init_db(
@@ -64,7 +63,7 @@ def get_session(
 def get_session_factory(
     source: Request | Application,
     key: str = SA_DEFAULT_KEY,
-) -> sessionmaker[Session]:
+) -> async_sessionmaker[AsyncSession]:
     """Return callable object which returns an `AsyncSession` instance.
 
     :param source: AIOHTTP request object or your AIOHTTP application.

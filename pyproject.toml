@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "aiohttp-sqlalchemy"
 packages = [{include = "aiohttp_sqlalchemy", from = "src" }]
-version = "1.0.0"
+version = "1.0.post0"
 description = "SQLAlchemy 2.0 support for aiohttp."
 license = "MIT"
 

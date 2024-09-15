@@ -74,10 +74,11 @@ More control in configuration
 
   import aiohttp_sqlalchemy as ahsa
   from sqlalchemy import orm
+  from sqlalchemy.ext.asyncio import async_sessionmaker
 
   url = 'sqlite+aiosqlite:///'
   engine = create_async_engine(url, echo=True)
-  Session = orm.sessionmaker(main_engine, class_=AsyncSession, expire_on_commit=False)
+  Session = orm.async_sessionmaker(main_engine, class_=AsyncSession, expire_on_commit=False)
 
   ahsa.setup(app, [
       ahsa.bind(Session),

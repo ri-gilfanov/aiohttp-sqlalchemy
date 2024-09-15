@@ -10,9 +10,10 @@ from sqlalchemy.engine import Engine
 from sqlalchemy.ext.asyncio import (
     AsyncEngine,
     AsyncSession,
+    async_sessionmaker,
     create_async_engine,
 )
-from sqlalchemy.orm import Session, sessionmaker
+from sqlalchemy.orm import Session
 
 from aiohttp_sqlalchemy.constants import DEFAULT_KEY, SA_DEFAULT_KEY
 from aiohttp_sqlalchemy.decorators import sa_decorator
@@ -110,7 +111,7 @@ def bind(
         target = create_async_engine(target)
 
     if isinstance(target, AsyncEngine):
-        target = sessionmaker(  # type: ignore
+        target = async_sessionmaker(
             bind=target,
             class_=AsyncSession,
             expire_on_commit=False,

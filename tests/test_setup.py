@@ -6,7 +6,7 @@ import pytest
 from aiohttp import web
 
 if TYPE_CHECKING:  # pragma: no cover
-    from sqlalchemy.orm import Session, sessionmaker
+    from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
 
 import aiohttp_sqlalchemy
@@ -14,7 +14,7 @@ from aiohttp_sqlalchemy import DuplicateAppKeyError
 
 
 async def test_duplicate_app_key_error(
-    session_factory: sessionmaker[Session],
+    session_factory: async_sessionmaker[AsyncSession],
 ) -> None:
     with pytest.raises(DuplicateAppKeyError):
         aiohttp_sqlalchemy.setup(

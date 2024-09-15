@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pytest
 from sqlalchemy import create_engine
-from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession
+from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, async_sessionmaker
 from sqlalchemy.orm import sessionmaker
 
 import aiohttp_sqlalchemy
@@ -43,7 +43,7 @@ def test_bind_with_sync_session() -> None:
 
 
 def test_bind_to_async_session_maker(orm_async_engine: AsyncEngine) -> None:
-    Session = sessionmaker(orm_async_engine, class_=AsyncSession)  # type: ignore
+    Session = async_sessionmaker(orm_async_engine, class_=AsyncSession)
     binding = aiohttp_sqlalchemy.bind(Session)
     Session = binding[0]
     session = Session()

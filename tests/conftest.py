@@ -12,9 +12,9 @@ from sqlalchemy import orm
 from sqlalchemy.ext.asyncio import (
     AsyncEngine,
     AsyncSession,
+    async_sessionmaker,
     create_async_engine,
 )
-from sqlalchemy.orm import Session, sessionmaker
 
 import aiohttp_sqlalchemy
 from aiohttp_sqlalchemy import SA_DEFAULT_KEY, sa_bind, sa_middleware
@@ -45,12 +45,12 @@ def orm_async_engine() -> AsyncEngine:
 
 
 @pytest.fixture
-def session_factory(orm_async_engine: AsyncEngine) -> sessionmaker[Session]:
-    return sessionmaker(orm_async_engine, class_=AsyncSession)  # type: ignore
+def session_factory(orm_async_engine: AsyncEngine) -> async_sessionmaker[AsyncSession]:
+    return async_sessionmaker(orm_async_engine, class_=AsyncSession)
 
 
 @pytest.fixture
-def session(session_factory: sessionmaker[Session]) -> AsyncSession:
+def session(session_factory: async_sessionmaker[AsyncSession]) -> AsyncSession:
     session = session_factory()
     if not isinstance(session, AsyncSession):
         raise TypeError
@@ -63,7 +63,7 @@ def main_middleware() -> THandler:
 
 
 @pytest.fixture
-def middlewared_app(session_factory: sessionmaker[Session]) -> Application:
+def middlewared_app(session_factory: async_sessionmaker[AsyncSession]) -> Application:
     app = web.Application()
     aiohttp_sqlalchemy.setup(app, [sa_bind(session_factory)])
     return app

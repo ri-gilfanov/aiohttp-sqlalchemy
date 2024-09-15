@@ -4,13 +4,12 @@ from typing import TYPE_CHECKING
 
 import pytest
 import sqlalchemy as sa
-from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession
+from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, async_sessionmaker
 
 import aiohttp_sqlalchemy as ahsa
 
 if TYPE_CHECKING:  # pragma: no cover
     from aiohttp.web import Application, Request
-    from sqlalchemy.orm import Session, sessionmaker
 
 
 async def test_db_init(middlewared_app: Application) -> None:
@@ -37,7 +36,7 @@ def test_get_session(mocked_request: Request, session: AsyncSession) -> None:
 def test_get_session_factory(
     mocked_request: Request,
     middlewared_app: Application,
-    session_factory: sessionmaker[Session],
+    session_factory: async_sessionmaker[AsyncSession],
 ) -> None:
     assert ahsa.get_session_factory(mocked_request) is session_factory
     assert ahsa.get_session_factory(middlewared_app) is session_factory

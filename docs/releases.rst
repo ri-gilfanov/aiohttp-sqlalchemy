@@ -1,6 +1,12 @@
 ========
 Releases
 ========
+Version 1.0.post0
+-----------------
+**Changed**
+
+* ``sessionmaker`` replaced on ``async_sessionmaker``.
+
 Version 1.0.0
 -------------
 **Added**
@@ -374,7 +380,7 @@ Version 0.9
 **Removed**
 
 * Removed support of ``AsyncEngine`` type in ``sa_bind()`` signature. Use
-  ``sessionmaker(engine, AsyncSession)`` or custom session factory returning
+  ``async_sessionmaker(engine, AsyncSession)`` or custom session factory returning
   ``AsyncSession`` instance.
 
 Version 0.8
@@ -386,7 +392,7 @@ Version 0.8
 **Deprecated**
 
 * ``AsyncEngine`` type is deprecated in ``sa_bind()`` signature. Use
-  ``sessionmaker(engine, AsyncSession)`` or custom session factory returning
+  ``async_sessionmaker(engine, AsyncSession)`` or custom session factory returning
   ``AsyncSession`` instance.
 
 Version 0.7
