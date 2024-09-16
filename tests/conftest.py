@@ -1,9 +1,8 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING
 
 import pytest
-import sqlalchemy as sa
 from aiohttp import web
 from aiohttp.hdrs import METH_GET
 from aiohttp.test_utils import make_mocked_request
@@ -34,9 +33,10 @@ def wrong_key() -> str:
 
 
 @pytest.fixture
-def base_model() -> orm.Mapper[Any]:
-    metadata = sa.MetaData()
-    return orm.declarative_base(metadata=metadata)  # type: ignore
+def base_model() -> type[orm.DeclarativeBase]:
+    class BaseModel(orm.DeclarativeBase): ...
+
+    return BaseModel
 
 
 @pytest.fixture

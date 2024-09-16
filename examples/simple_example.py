@@ -6,8 +6,8 @@ from sqlalchemy import orm
 
 import aiohttp_sqlalchemy
 
-metadata = sa.MetaData()
-Base = orm.declarative_base(metadata=metadata)
+
+class Base(orm.DeclarativeBase): ...
 
 
 class MyModel(Base):
@@ -38,7 +38,7 @@ async def app_factory():
             aiohttp_sqlalchemy.bind("sqlite+aiosqlite:///"),
         ],
     )
-    await aiohttp_sqlalchemy.init_db(app, metadata)
+    await aiohttp_sqlalchemy.init_db(app, Base.metadata)
 
     app.add_routes([web.get("/", main)])
     return app

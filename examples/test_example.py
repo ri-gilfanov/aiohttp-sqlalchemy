@@ -1,6 +1,5 @@
 from datetime import datetime
 from secrets import choice
-from typing import Any
 
 import sqlalchemy as sa
 from aiohttp import web
@@ -14,9 +13,10 @@ from aiohttp_sqlalchemy import (
     sa_session,
 )
 
-metadata = sa.MetaData()
-Base: Any = orm.declarative_base(metadata=metadata)
 DB_URL = "sqlite+aiosqlite:///"
+
+
+class Base(orm.DeclarativeBase): ...
 
 
 class MyModel(Base):
@@ -87,7 +87,7 @@ async def app_factory():
         ],
     )
     for key in KEY_LIST:
-        await aiohttp_sqlalchemy.init_db(app, metadata, key)
+        await aiohttp_sqlalchemy.init_db(app, Base.metadata, key)
 
     app.add_routes([web.get("/handler_a", function_handler)])
     app.add_routes([web.get("/handler_b", ClassOrganizedHandler().get)])
