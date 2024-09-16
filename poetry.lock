@@ -702,13 +702,13 @@ test = ["objgraph", "psutil"]
 
 [[package]]
 name = "idna"
-version = "3.9"
+version = "3.10"
 description = "Internationalized Domain Names in Applications (IDNA)"
 optional = false
 python-versions = ">=3.6"
 files = [
-    {file = "idna-3.9-py3-none-any.whl", hash = "sha256:69297d5da0cc9281c77efffb4e730254dd45943f45bbfb461de5991713989b1e"},
-    {file = "idna-3.9.tar.gz", hash = "sha256:e5c5dafde284f26e9e0f28f6ea2d6400abd5ca099864a67f576f3981c6476124"},
+    {file = "idna-3.10-py3-none-any.whl", hash = "sha256:946d195a0d259cbba61165e88e65941f16e9b36ea6ddb97f00452bae8b1287d3"},
+    {file = "idna-3.10.tar.gz", hash = "sha256:12f65c9b470abda6dc35cf8e63cc574b1c52b11df2c86030af0ac09b01b13ea9"},
 ]
 
 [package.extras]
@@ -1418,22 +1418,22 @@ sqlcipher = ["sqlcipher3_binary"]
 
 [[package]]
 name = "sqlalchemy-things"
-version = "1.0.0"
+version = "1.0.1"
 description = "Utility collection for development with SQLalchemy ORM."
 optional = false
 python-versions = "<4.0,>=3.8"
 files = [
-    {file = "sqlalchemy_things-1.0.0-py3-none-any.whl", hash = "sha256:7099030d0154e904f232b8339ed27e003e3d184ff0b769674ab6017352d77d9a"},
-    {file = "sqlalchemy_things-1.0.0.tar.gz", hash = "sha256:64f37140bbbfc53b5786336e615d24dfe6bf756b2711a0f7505697f49134f49c"},
+    {file = "sqlalchemy_things-1.0.1-py3-none-any.whl", hash = "sha256:e2380892e0d809ffeb0677d4543008f38079c04581ded04251e12a3c302dd673"},
+    {file = "sqlalchemy_things-1.0.1.tar.gz", hash = "sha256:1668c1a29361cf29120625c30cdb5472ac491f4fe07b976d73be3826518af3e2"},
 ]
 
 [package.dependencies]
 sqlalchemy = ">=2.0.34,<3.0.0"
 
 [package.extras]
-mysql = ["aiomysql (>=0.2.0)"]
-postgresql = ["asyncpg (>=0.29.0)"]
-sqlite = ["aiosqlite (>=0.20.0)"]
+mysql = ["aiomysql (>=0.2.0,<1)"]
+postgresql = ["asyncpg (>=0.29.0,<1)"]
+sqlite = ["aiosqlite (>=0.20.0,<1)"]
 
 [[package]]
 name = "tomli"
@@ -1606,4 +1606,4 @@ sqlite = ["aiosqlite"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "bcf7c7290ca780993199c7247a7827a6461f5cce3f0c220d52c21620b5179bdf"
+content-hash = "7b6e55ce4ff82724ec18e557dae7d0c368aba10e7197c775c619e504b71204cd"
