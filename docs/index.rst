@@ -1,7 +1,7 @@
 ==================================
 aiohttp-sqlalchemy's documentation
 ==================================
-|ReadTheDocs| |PyPI release| |PyPI downloads| |Python versions| |License| |GitHub CI| |Codecov| |Codacy|
+|ReadTheDocs| |PyPI release| |License| |Python versions| |PyPI downloads| |GitHub CI|
 
 .. |ReadTheDocs| image:: https://readthedocs.org/projects/aiohttp-sqlalchemy/badge/?version=latest
   :target: https://aiohttp-sqlalchemy.readthedocs.io/en/latest/?badge=latest
@@ -15,7 +15,7 @@ aiohttp-sqlalchemy's documentation
   :target: https://pepy.tech/project/aiohttp-sqlalchemy
   :alt: PyPI downloads count
 
-.. |Python versions| image:: https://img.shields.io/badge/Python-3.8%20%7C%203.9%20%7C%203.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue
+.. |Python versions| image:: https://img.shields.io/badge/Python-3.9%20%7C%203.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue
   :target: https://pypi.org/project/aiohttp-sqlalchemy/
   :alt: Python version support
 
@@ -26,14 +26,6 @@ aiohttp-sqlalchemy's documentation
 .. |GitHub CI| image:: https://github.com/ri-gilfanov/aiohttp-sqlalchemy/actions/workflows/ci.yml/badge.svg?branch=master
   :target: https://github.com/ri-gilfanov/aiohttp-sqlalchemy/actions/workflows/ci.yml
   :alt: GitHub continuous integration
-
-.. |Codecov| image:: https://codecov.io/gh/ri-gilfanov/aiohttp-sqlalchemy/branch/master/graph/badge.svg
-  :target: https://codecov.io/gh/ri-gilfanov/aiohttp-sqlalchemy
-  :alt: codecov.io status for master branch
-
-.. |Codacy| image:: https://app.codacy.com/project/badge/Grade/19d5c531ed75435988ba8dc91031514c
-  :target: https://www.codacy.com/gh/ri-gilfanov/aiohttp-sqlalchemy/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ri-gilfanov/aiohttp-sqlalchemy&amp;utm_campaign=Badge_Grade
-   :alt: Codacy code quality
 
 `SQLAlchemy 2.0 <https://www.sqlalchemy.org/>`_ support for `AIOHTTP
 <https://docs.aiohttp.org/>`_.
