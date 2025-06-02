@@ -14,5 +14,5 @@ from aiohttp_sqlalchemy import __version__
 def test_version() -> None:
     with Path("./pyproject.toml").open("rb") as f:
         pyproject = tomllib.load(f)
-        version = pyproject["tool"]["poetry"]["version"]
+        version = pyproject["project"]["version"]
         assert __version__ == version
